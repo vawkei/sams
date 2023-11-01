@@ -1,0 +1,29 @@
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 0.5rem;
+    height: 8rem;
+    margin-top: 3rem;
+}
+.footer p{
+    font-weight: bolder;
+}
+.footer a{
+    text-decoration: none;
+}
+
+
+/* .footer {
+    background-color: var(--dark-blue);
+    color: #fff;
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 8rem;
+    p {
+      color: #fff;
+    }
+  } */

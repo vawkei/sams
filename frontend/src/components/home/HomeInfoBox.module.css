@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 2rem auto;
+    border: 1px solid black;
+    width: 50rem;
+    gap: 1rem;
+}
+
+.container2{
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    border-right: 1px solid black;
+    padding: 1rem;
+}
