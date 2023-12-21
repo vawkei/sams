@@ -33,12 +33,14 @@ const MainFooter = () => {
         "Sat"
     ];
 
+    const date = new Date().getDate()
+    
     const day = new Date().getDay();
     const dayInFull = days[day]
     //console.log(dayInFull)
 
     const brand = "<HowZ />"
-    const dateInFull = `${dayInFull} ${monthInFull}, ${year}` 
+    const dateInFull = ` ${dayInFull} ${date} ${monthInFull}, ${year}` 
 
     return ( 
         <div className={classes.footer}>

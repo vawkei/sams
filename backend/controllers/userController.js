@@ -10,6 +10,11 @@ const register = async (req, res) => {
   const { name, email, password, confirmedPassword } = req.body;
 
   //console.log(name,email,password,confirmedPassword);
+  
+
+  //first user registered as admin:
+  const isFirstAccount = await User.countDocuments({}) ===0;
+  //const role = isFirstAccount ? "admin":"customer"
 
   if (!name || !email || !password || !confirmedPassword) {
     return res.status(400).json({ msg: "Input fields shouldn't be empty" });
@@ -27,8 +32,8 @@ const register = async (req, res) => {
 
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  //const tempData = { name, email, password: hashedPassword };
-  const tempData = { name: name, email: email, password: hashedPassword };
+  // const tempData = { name: name, email: email, password: hashedPassword,role:role };
+  const tempData = { name: name, email: email, password: hashedPassword};
 
   try {
     const user = await User.create(tempData);
@@ -52,13 +57,13 @@ const register = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error);
   }
-  //res.send("<h1>Register route</h1>");
+  
 };
 
 //2. login :
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  //console.log(email, password);
 
   if (!email || !password) {
     return res.status(400).json({ msg: "Input fields shouldn't be empty" });
@@ -198,14 +203,18 @@ const getLoginStatus = (req, res) => {
 
 //8. upLoaddUserPhoto:
 const uploadUserPhoto = async (req, res) => {
+  
+  try {
+    
+    if(!req.files){
+      return res.status(400).json({msg:"No files uploaded"})
+    };
+
   const maxSize = 1024 * 1024;
   if(req.files.image.size > maxSize){
     return res.status(400).json({msg:"Please upload image smaller than 1mb"})
   };
   //console.log(req.files.image);
-
-  try {
-    
     const result = await cloudinary.uploader.upload(
       req.files.image.tempFilePath,
       { use_filename: true, folder: "samsUserProfilePhoto" }
@@ -233,8 +242,8 @@ const updateUserPhoto =async  (req, res) => {
   } catch (error) {
     console.log(error);
   }
- // res.send("What is going on?")
 };
+
 
 module.exports = {
   register,

@@ -26,26 +26,10 @@ cloudinary.config({
     api_secret:process.env.CLOUDINARY_API_SECRET
 });
 
-//userRoutes:
-const register = require("./routes/userRoutes");
-const login = require("./routes/userRoutes");
-const logout = require("./routes/userRoutes");
-//const getAllUsers = require("./routes/userRoutes");
-const getSingleUser = require("./routes/userRoutes");
-const updateUser = require("./routes/userRoutes");
-const getLoginStatus = require("./routes/userRoutes");
-const uploadUserPhoto = require("./routes/userRoutes");
-const updateUserPhoto = require("./routes/userRoutes");
 
-// productRoutes:
-const getProducts = require("./routes/productRoutes");
-const getSingleProduct = require("./routes/productRoutes");
-const createProduct = require("./routes/productRoutes");
-const updateProduct = require("./routes/productRoutes");
-const deleteProduct = require("./routes/productRoutes");
-const review = require("./routes/productRoutes");
-const deleteProductReview = require("./routes/productRoutes")
-
+const userRoute = require("./routes/userRoutes");
+const productRoute = require("./routes/productRoutes");
+const categoryRoute = require("./routes/categoryRoutes"); 
 
 app.use(express.urlencoded({extended:false}));
 
@@ -56,44 +40,13 @@ app.use(cors({
 
 
 
-//homeRoute:
+//Routes:
 app.get("/",(req,res)=>{
     res.send("<h1>We live Baby</h1>")
 });
-//userRoutes:
-app.use("/api/v1/auth",register);
-
-app.use("/api/v1/auth",login);
-
-app.use("/api/v1/auth",logout);
-
-//app.use("/api/v1/auth",getAllUsers);
-
-app.use("/api/v1/auth",getSingleUser);
-
-app.use("/api/v1/auth",updateUser);
-
-app.use("/api/v1/auth",getLoginStatus);
-
-app.use("/api/v1/auth",uploadUserPhoto);
-
-app.use("/api/v1/auth",updateUserPhoto);
-
-
-//productRoutes:
-app.use("/api/v1/products",getProducts);
-
-app.use("/api/v1/products",getSingleProduct);
-
-app.use("/api/v1/products",createProduct);
-
-app.use("/api/v1/products",updateProduct);
-
-app.use("/api/v1/products",deleteProduct);
-
-app.use("/api/v1/products",review);
-
-app.use("/api/v1/products",deleteProductReview);
+app.use("/api/v1/auth",userRoute);
+app.use("/api/v1/products",productRoute);
+app.use("/api/v1/categories",categoryRoute)
 
 app.use(errorMiddleware);
 

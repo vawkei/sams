@@ -10,7 +10,11 @@
 .image-container{
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 55%;
     transform: translate(-50%,-50%);
     z-index: 200;
+}
+
+.image-container img{
+    width: 50%;
 }

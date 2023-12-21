@@ -183,3 +183,61 @@ const Profile = () => {
 };
 
 export default Profile;
+
+
+
+// const uploadImageToCloudinary = async () => {
+//   try {
+//     const image = new FormData();
+//     image.append('file', profileImage);
+
+//     if (
+//       profileImage &&
+//       (profileImage.type === 'image/jpeg' ||
+//         profileImage.type === 'image/jpg' ||
+//         profileImage.type === 'image/png')
+//     ) {
+//       const cloudinaryUrl = 'YOUR_CLOUDINARY_UPLOAD_URL'; // Replace with your Cloudinary upload URL
+
+//       const response = await fetch(cloudinaryUrl, {
+//         method: 'POST',
+//         body: image,
+//         headers: {
+//           'X-Requested-With': 'XMLHttpRequest',
+//         },
+//       });
+
+//       if (response.ok) {
+//         const reader = response.body.getReader();
+
+//         const contentLength = +response.headers.get('Content-Length');
+//         let receivedLength = 0;
+//         let chunks = [];
+
+//         while (true) {
+//           const { done, value } = await reader.read();
+
+//           if (done) {
+//             break;
+//           }
+
+//           chunks.push(value);
+//           receivedLength += value.length;
+
+//           const progress = (receivedLength / contentLength) * 100;
+//           setUploadProgress(progress);
+//         }
+
+//         const blob = new Blob(chunks);
+//         const imageDataUrl = URL.createObjectURL(blob);
+
+//         // Handle the Cloudinary response as needed
+//         console.log('Upload complete:', imageDataUrl);
+//       } else {
+//         console.error('Failed to upload image to Cloudinary:', response.statusText);
+//       }
+//     }
+//   } catch (error) {
+//     console.error('Error uploading image:', error);
+//   }
+// };

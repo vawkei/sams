@@ -1,0 +1,40 @@
+.intro{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .allProduct-container td{
+  font-size: 1.2rem;
+} */
+
+
+.allProduct-container table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+  
+  .allProduct-container table thead {
+    background-color: black;
+    padding: 1.5rem;
+    color: white;
+  }
+  .allProduct-container table tbody {
+    text-align: center;
+    padding: 1rem;
+  }
+  .allProduct-container table tbody td {
+    padding: 1rem;
+    border: 1px solid black;
+    text-align: left;
+  }
+  
+  .icons{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+  }

@@ -1,0 +1,33 @@
+.nav-container{
+    width: 100%;
+    border-right: 1px #ccc solid;
+}
+
+.user{
+    background-color: black;
+    padding: 3rem;
+}
+.user h3{
+    color: white;
+}
+
+.nav ul{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    padding: 0;
+}
+.nav ul li{
+    margin: 1rem 0;
+    border-bottom: 1px #ccc solid;
+    width: 100%;
+}
+
+.nav ul li a:hover{
+    color: yellow;
+}
+
+.active{
+    color: red;
+}

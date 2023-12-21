@@ -4,31 +4,31 @@ import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import DrawerToggleButton from "../ui/drawerToggleButton/DrawerToggleButton";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions, logout, getSingleUser } from "../../store/index";
+import {
+  authActions,
+  logout,
+  getSingleUser,
+  getLoginStatus,
+} from "../../store/index";
+import { AdminOnlyLink } from "../adminFolders/adminOnly/AdminOnlyRoute";
 
 const MainNavigation = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
 
   const { user, isLoggedIn } = useSelector((state) => state.auth);
-  // console.log(user);
-  
-    /* {isLoggedIn ? (user ? `hi ${user.name}` : "Hello!") : "Hello!"} */
-  
+  //console.log(user);
+
+  /* {isLoggedIn ? (user ? `hi ${user.name}` : "Hello!") : "Hello!"} */
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user === null) {
-      dispatch(getSingleUser());
-    }
-  }, [dispatch, user]);
 
   useEffect(() => {
     if (isLoggedIn && user) {
       setDisplayName(user.name || "");
     }
-  }, [user]);
+  }, [isLoggedIn, user]);
 
   const hideMenuHandler = () => {
     setShowMenu(false);
@@ -87,32 +87,46 @@ const MainNavigation = () => {
             }></div>
 
           <ul>
-            <NavLink>
+            <AdminOnlyLink>
+              <NavLink className={navDataHandler} to={"/admin/home"}>
+                <li style={{ color: "red" }}>Admin</li>
+              </NavLink>
+            </AdminOnlyLink>
+
+            <NavLink className={navDataHandler} to={"/shop"}>
               <li style={{ color: "red" }}>Shop</li>
             </NavLink>
 
-            <NavLink className={navDataHandler} to={"/login"}>
-              Login
-            </NavLink>
+            {!isLoggedIn && (
+              <NavLink className={navDataHandler} to={"/login"}>
+                Login
+              </NavLink>
+            )}
             {user ? (
               <NavLink className={navDataHandler} to={"/profile"}>
-              {`Hello ${displayName}`} 
-            </NavLink>  
-            ):(
+                {`Hello ${displayName}`}
+              </NavLink>
+            ) : (
               <NavLink className={navDataHandler} to={"/profile"}>
-              {"Hello!"}
-            </NavLink>
+                {"Hello!"}
+              </NavLink>
             )}
 
-            <NavLink className={navDataHandler} to={"/register"}>
-              Register
-            </NavLink>
-            <NavLink className={navDataHandler} to={"/orders"}>
-              My Orders
-            </NavLink>
-            <Link to={"/"} onClick={logOutHandler}>
-              Logout
-            </Link>
+            {!isLoggedIn && (
+              <NavLink className={navDataHandler} to={"/register"}>
+                Register
+              </NavLink>
+            )}
+            {isLoggedIn && (
+              <NavLink className={navDataHandler} to={"/orders"}>
+                My Orders
+              </NavLink>
+            )}
+            {isLoggedIn && (
+              <Link to={"/"} onClick={logOutHandler}>
+                Logout
+              </Link>
+            )}
             <span className={classes["span-cart"]}>{cart}</span>
           </ul>
         </nav>

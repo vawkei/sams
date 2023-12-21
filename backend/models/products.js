@@ -34,8 +34,14 @@ const ProductSchema = mongoose.Schema(
       required: [true, "Please add a description"],
     },
     image:{
-        type:[String]
+        type:Object,
+        required:[true,"Please add an image"]
     },
+    // sku:{
+    //   type:String,
+    //   trim:true,
+    //   required:[true,"Please add an stock keeping unit"]
+    // },
     ratings:{
         type: [Object]
     },

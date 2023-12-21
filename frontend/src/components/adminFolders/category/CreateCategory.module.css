@@ -1,0 +1,19 @@
+
+.create-category label{
+    display: block;
+}
+.create-category input{
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    font: inherit;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+.create-category .action{
+    display: flex;
+    justify-content: center;
+}
+.create-category .btn{
+    padding: 0.5rem 1.2rem;
+}

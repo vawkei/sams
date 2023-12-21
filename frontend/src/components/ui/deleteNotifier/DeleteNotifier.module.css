@@ -1,0 +1,47 @@
+.backdrop{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 200;
+}
+
+.backdrop .modal{
+    position: fixed;
+    left: 40%;
+    top: 40%;
+    transform: translateX(-50%,-50%);
+    width: 42%;
+    z-index: 300;
+}
+
+.backdrop .modal .header{
+    background-color: black;
+    padding: 0.5rem;
+    color: white;
+    text-align: center;
+}
+
+.backdrop .modal p{
+    background-color: white;
+    color: black;
+    padding: 0.5rem;
+    text-align: center;
+
+}
+
+.backdrop .modal .footer{
+    background-color: black;
+    padding-bottom: 0.5rem;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.backdrop .modal .footer .btnOne{
+    background-color: red;
+}
+.backdrop .modal .footer .btnTwo{
+    background-color: green;
+}

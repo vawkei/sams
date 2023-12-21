@@ -8,7 +8,9 @@ const {
     updateProduct,
     deleteProduct,
     review,
-    deleteProductReview
+    deleteProductReview,
+    updateReview,
+    upLoadProductImage
   } = require("../controllers/productController");
 const { authenticateUser, adminOnly } = require("../middlewares/authenticate-user");
 
@@ -16,29 +18,22 @@ router.get("/",getProducts);
 
 router.get("/:id",getSingleProduct);
 
+router.post("/upLoadProductImage", upLoadProductImage)
+
 router.post("/",authenticateUser,adminOnly, createProduct);
 
-router.patch("/:id",updateProduct);
+router.patch("/:id",authenticateUser,adminOnly,updateProduct);//the id is productId
 
-router.delete("/:id",deleteProduct);
+router.delete("/:id",authenticateUser,adminOnly,deleteProduct);//the id is productId
 
-router.patch("/review/:id",authenticateUser,review);
+router.patch("/review/:id",authenticateUser,review);//the id is productId
 
-router.patch("/deleteReview/:id",authenticateUser,deleteProductReview);
+router.patch("/deleteReview/:id",authenticateUser,deleteProductReview);//the id is productId
+
+router.patch("/updateReview/:id",authenticateUser,updateReview);//the id is productId
+
+
 
 module.exports = router
-
-
-// {
-//     "name":"Fried chicken",
-//     "category":"Meals",
-//     "quantity":"100",
-//     "price":"1500"
-// }
-
-// const date = new Date().getDate()
-// const month = new Date().getMonth();
-// const year = new Date().getFullYear()
-// console.log( `${date}-${month}-${year}`)
 
 

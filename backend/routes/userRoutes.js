@@ -4,7 +4,8 @@ const router = express.Router();
 const {
   register,
   login,
-  logout, 
+  logout,
+  //getAllUsers, 
   getSingleUser,
   updateUser,
   getLoginStatus,
@@ -29,8 +30,9 @@ router.patch("/updateUser",authenticateUser, updateUser);
 
 router.get("/loginstatus/getstatus",getLoginStatus);
 
-router.post("/uploadUserPhoto",uploadUserPhoto);
+router.post("/uploadUserPhoto", uploadUserPhoto);
 
 router.patch("/updateUserPhoto",authenticateUser, updateUserPhoto)
 
 module.exports = router
+

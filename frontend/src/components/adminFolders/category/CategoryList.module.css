@@ -1,0 +1,25 @@
+.category-list {
+  margin-top: 3rem;
+}
+
+.category-list table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 1.4rem;
+}
+
+.category-list table thead {
+  background-color: black;
+  padding: 1rem;
+  color: white;
+}
+.category-list table tbody {
+  text-align: center;
+  padding: 1rem;
+}
+.category-list table tbody td {
+  padding: 1rem;
+  border: 1px solid black;
+}

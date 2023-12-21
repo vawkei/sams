@@ -41,8 +41,8 @@ const Login = () => {
       !enteredEmail ||
       !enteredPassword
     ) {
-      console.log("Please fill out the inputs");
-      return;
+      //console.log("Please fill out the inputs");
+      //return;
     }
 
     const userData = { email: enteredEmail, password: enteredPassword };
@@ -54,6 +54,7 @@ const Login = () => {
     if(isLoggedIn && user){
       navigate("/");
       dispatch(authActions.RESET_AUTH())
+      // console.log(user)
     }
   },[isLoggedIn,user,dispatch,navigate])
 

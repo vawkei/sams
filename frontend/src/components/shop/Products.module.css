@@ -1,0 +1,29 @@
+.product-container{
+    display: flex;
+    width: 100%;
+    margin-top: 0;
+    /* position: relative; */
+}
+
+.product-container .filter{
+    width: 15%;
+    /* padding: 0.5rem; */
+    background-color: black;
+    color: white;
+    /* min-height: 80vh; */
+    height: 80vh;
+}
+.product-container .productsList{
+    width: 83%;
+    /* padding: 0.5rem; */
+    
+}
+
+@media screen and (max-width:640px){
+    .product-container .filter{
+        width: 20%;
+        padding: 1rem;
+        position: absolute;
+        left: -200;
+    }   
+}

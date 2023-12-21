@@ -1,4 +1,6 @@
 const Products = require("../models/products");
+const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
 
 //getProducts:
 const getProducts = async (req, res) => {
@@ -28,6 +30,30 @@ const getSingleProduct = async (req, res) => {
   }
 };
 
+//uploadImageToCloudinary:
+const upLoadProductImage = async (req, res) => {
+
+  // const userId = req.user.userId;
+
+  try {
+    if (!req.files) {
+      return res.status(400).json({ msg: "No files uploaded" });
+    }
+    console.log(req.files);
+    const result = await cloudinary.uploader.upload(
+      req.files.image.tempFilePath,
+      { use_filename: true, folder: "samsProductPhotos" }
+    );
+    res
+      .status(200)
+      .json({ msg: { src: result.secure_url, publicID: result.public_id } });
+      fs.unlinkSync(req.files.image.tempFilePath)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+};
+
 //createProducts:
 const createProduct = async (req, res) => {
   const userId = req.user.userId;
@@ -46,6 +72,7 @@ const createProduct = async (req, res) => {
     description: description,
     image: image,
     regularPrice: regularPrice,
+    // sku:sku,
     createdBy: userId,
   };
 
@@ -123,13 +150,16 @@ const review = async (req, res) => {
     "December",
   ];
 
-  const date = new Date().getDate();
+  const day = new Date().getDate();
   const month = new Date().getMonth();
   const adjustedMonth = months[month];
-  const year = new Date().getFullYear();
-  const reviewDate = `${date}-${adjustedMonth}-${year}`;
 
-  
+  const date = new Date();
+  // console.log(date.toLocaleTimeString())
+  const year = new Date().getFullYear();
+  // const reviewDate = `${date}-${adjustedMonth}-${year}`;
+  const reviewDate = `${day}-${adjustedMonth}-${year} ${date.toLocaleTimeString()}`;
+
   //console.log( `${date}-${month}-${year}`);
   //console.log( `${date}-${ex}-${year}`);
 
@@ -151,7 +181,7 @@ const review = async (req, res) => {
 
     if (ratingsExists) {
       return res.status(401).json({
-        msg: "Can't have more than one review for a specific product, kindly delete the other.",
+        msg: "You can't have more than one review for a specific product, kindly delete the other.",
       });
     }
 
@@ -177,11 +207,11 @@ const deleteProductReview = async (req, res) => {
   try {
     const product = await Products.findOne({ _id: productId });
 
-    const ratingsExists = product.ratings.find((rating) => {
+    const loggedInUserIsReviewerPoster = product.ratings.find((rating) => {
       return rating.userId === req.user.userId;
     });
 
-    if (!ratingsExists) {
+    if (!loggedInUserIsReviewerPoster) {
       return res
         .status(401)
         .json({ msg: "You are not authorized to delete this product" });
@@ -195,16 +225,84 @@ const deleteProductReview = async (req, res) => {
     await product.save();
     res.status(200).json({ msg: "Review deleted", product });
   } catch (error) {
-    console.log(error)
+    console.log(error);
+  }
+};
+
+// updateReview:
+const updateReview = async (req, res) => {
+  const productId = req.params.id;
+
+  //console.log(productId);
+  const { star, review, userId } = req.body;
+  console.log(userId);
+  if (!star || !review) {
+    return res
+      .status(400)
+      .json({ msg: "Please add a star and leave a review" });
+  }
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const day = new Date().getDate();
+  const month = new Date().getMonth();
+  const year = new Date().getFullYear();
+  const date = new Date();
+  //console.log(date.toLocaleTimeString());
+
+  const updatedMonth = months[month];
+  //console.log(`${day}-${updatedMonth}-${year}`);
+  const updatedDate = `${day}-${updatedMonth}-${year} ${date.toLocaleTimeString()}`;
+
+  try {
+    const product = await Products.findOne({ _id: productId });
+    if (!product) {
+      return res.status(400).json({ msg: `No product with id: ${productId}` });
+    }
+
+    if (req.user.userId.toString() !== userId) {
+      return res.status(401).json({ msg: "Not authorized to update review" });
+    }
+    const userReview = product.ratings.find((rating) => {
+      return rating.userId.toString() === userId.toString();
+    });
+    if (!userReview) {
+      return res.status(404).json({ msg: "Sorry bro, review not found" });
+    }
+    userReview.star = star;
+    userReview.review = review;
+    userReview.userId = userId;
+    userReview.reviewDate = updatedDate;
+    userReview.name = req.user.name;
+
+    product.markModified("ratings");
+    await product.save();
+    res.status(200).json({ msg: "Review updated", product });
+  } catch (error) {
+    res.status(500).json(error);
   }
 };
 
 module.exports = {
   getProducts,
   getSingleProduct,
+  upLoadProductImage,
   createProduct,
   updateProduct,
   deleteProduct,
   review,
   deleteProductReview,
+  updateReview,
 };
