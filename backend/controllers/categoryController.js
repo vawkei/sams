@@ -57,13 +57,13 @@ const deleteCategory =async (req,res) => {
     const slug = req.params.slug
 
     try{
-        const deleteSlug = await Category.findOneAndRemove({slug});
+        const deleteSlug = await Category.findOneAndDelete({slug});
         if(!deleteSlug){
             return res.status(404).json({msg:"Slug does 'nt exist"}) 
         };
         res.status(200).json({msg:`${slug} category deleted`})
     }catch(error){
-        res.status(500).json(error)
+        res.status(500).json(error.message)
     }
 };
 

@@ -6,6 +6,7 @@ import {
 import authService from "./authService";
 import categorySlice from "./category/categoryIndex";
 import productSlice from "./product/productIndex";
+import filterSlice from "./product/FilterProduct";
 
 const initialAuthState = {
   isLoggedIn: false,
@@ -294,7 +295,7 @@ const authSlice = createSlice({
 });
 
 const store = configureStore({
-  reducer: { auth: authSlice.reducer, category: categorySlice.reducer,product:productSlice.reducer },
+  reducer: { auth: authSlice.reducer, category: categorySlice.reducer,product:productSlice.reducer,filter:filterSlice.reducer },
 });
 
 export const authActions = authSlice.actions;

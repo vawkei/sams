@@ -72,7 +72,7 @@ const createProduct = async (req, res) => {
     description: description,
     image: image,
     regularPrice: regularPrice,
-    // sku:sku,
+    //sku:sku,
     createdBy: userId,
   };
 

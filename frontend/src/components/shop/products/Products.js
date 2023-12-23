@@ -1,10 +1,18 @@
-import ProductsFilter from "./ProductsFilter";
+import ProductsFilter from "../product-filter/ProductsFilter";
 import classes from "./Products.module.css";
-import ProductsList from "./ProductsList";
-import { useState } from "react";
+import ProductsList from "../product-list/ProductsList";
+import { useEffect, useState } from "react";
+import { getProducts } from "../../../store/product/productIndex";
+import { useDispatch } from "react-redux";
 
 const Products = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProducts());
+    //get the products from our db.
+  }, []);
 
   return (
     <div className={classes["product-container"]}>

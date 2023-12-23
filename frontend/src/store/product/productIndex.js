@@ -1,9 +1,11 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
 import productService from "./productService";
 
-const initialProductState = {
+const initialProductState = { 
     product:null,
     products:[],
+    minPrice:null,
+    maxPrice:null,
     isLoading:false,
     isError:false,
     isSuccess:false,
@@ -117,7 +119,22 @@ const productSlice = createSlice({
             state.isError=false;
             state.message="";
             state.isSuccess=false
+        },
+        GET_PRICE_RANGE(state,action){
+            const products = action.payload;
+            //console.log(products)
+            
+            let incominPrice = products.map((product)=>{
+                return product.price
+            });
+            const min =  Math.min(...incominPrice);
+            const max = Math.max(...incominPrice)
+           // console.log(min ,max)
+        
+            state.minPrice = min;
+            state.maxPrice = max
         }
+        
     },
     extraReducers(builder){
         builder
@@ -147,7 +164,7 @@ const productSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.products = action.payload.products;
-            console.log(action.payload)
+            //console.log(action.payload)
         })
         .addCase(getProducts.rejected,(state,action)=>{
             state.isLoading=false;

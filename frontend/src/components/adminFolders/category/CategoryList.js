@@ -10,18 +10,24 @@ import { deleteCategory } from "../../../store/category/categoryIndex";
 
 const CategoryList = () => {
   const [showDeleteNotifier, setShowDeleteNotifier] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
+
 
   const showDeleteNotifierHandlerTrue = (slug) => {
-    setShowDeleteNotifier(slug);
-  };
-  const showDeleteNotifierHandlerFalse = () => {
-    setShowDeleteNotifier(null);
+    setCategoryToDelete(slug);//stores the slug we want to delete in this state
+    setShowDeleteNotifier(true);
   };
 
-  const deleteCategoryHandler = async (slug) => {
-    await dispatch(deleteCategory(slug));
+  const showDeleteNotifierHandlerFalse = () => {
+    setShowDeleteNotifier(false);
+    setCategoryToDelete(null);
+
+  };
+
+  const deleteCategoryHandler = async () => {
+    await dispatch(deleteCategory(categoryToDelete))//slug has been stored in the categoryToDelete curtesy of showDeleteNotifierHandlerFalse()
     await dispatch(getCategories());
-    setShowDeleteNotifier(null)
+    setShowDeleteNotifier(false)
   };
 
   const { categories, isLoading } = useSelector((state) => state.category);
@@ -60,7 +66,7 @@ const CategoryList = () => {
               <tbody>
                 {categories.map((cat, index) => {
                   return (
-                    <tr>
+                    <tr key={cat._id}>
                       <td>{index + 1}</td>
                       <td>{cat.name}</td>
                       <td>{cat.slug}</td>
@@ -76,8 +82,8 @@ const CategoryList = () => {
                       {showDeleteNotifier && (
                         <DeleteNotifier
                           heading={"Delete Category"}
-                          body={`You are about to DELETE ${cat.name} category`}
-                          onConfirm={()=>deleteCategoryHandler(cat.slug)}
+                          body={`You are about to DELETE ${categoryToDelete} category`}
+                          onConfirm={deleteCategoryHandler}
                           cancel={showDeleteNotifierHandlerFalse}
                         />
                       )}
@@ -94,3 +100,13 @@ const CategoryList = () => {
 };
 
 export default CategoryList;
+
+
+
+
+
+
+
+
+
+

@@ -109,12 +109,12 @@ const AddProduct = () => {
   };
 
 //console.log(imageURL)
-  const timeNow = Date.now();
 
   // const skuHandler = (category)=>{
-  //   const name = product.category.slice(0,3)
-  //   const sku =  `${name}-${timeNow}`
-  //   return 
+  //   const name = category.slice(0,3);
+  //   const timeNow = Date.now();
+  //   const sku =`${name}-${timeNow}` ;
+  //   return
   // };
 
   //console.log(skuHandler())
@@ -139,20 +139,9 @@ const AddProduct = () => {
       regularPrice: product.regularPrice,
       //sku: skuHandler(product.category),
     };
-    //console.log(formData)
+      console.log(formData)
      dispatch(createProduct(formData))
   
-    // setProduct({
-    //   name:"",
-    //   category:"",
-    //   quantity:"",
-    //   price:"",
-    //   regularPrice:"",
-    //   image:"",
-    //   description:"",
-    //   sku:""
-    // })
-
   };
 
   useEffect(()=>{

@@ -23,7 +23,7 @@ const getSingleCategory = async (id) => {
 
 //deleteCategory:
 const deleteCategory = async (slug) => {
-  const response = await axios.delete(API_URL + slug , slug);
+  const response = await axios.delete(API_URL + slug);
   return response.data
 };
 

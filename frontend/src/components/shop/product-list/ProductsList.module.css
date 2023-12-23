@@ -19,7 +19,7 @@
     justify-content: center;
     
 }
-label{width: 5rem;}
+.sort label{width: 5rem;}
 
 .toggleButton{
  margin-left: 1.5rem;
@@ -28,9 +28,19 @@ label{width: 5rem;}
  align-items: center;
 }
 
+.items{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3rem;
+    width: 100%;
+}
+
 .item{
     width: 31%;
     margin: 0.5rem ;
+    text-align: center;
 }
 
 .main-image{
@@ -43,11 +53,12 @@ label{width: 5rem;}
     height: 100%;
     object-fit: cover;
 }
-
-.items{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin-left: 3rem;
+.action{
+    width: 100%;
+}
+.btn{
+    width: 100%;
+    text-align: center;
+    /* padding: 1rem 1.2rem; */
+    padding: 1rem 5rem;
 }

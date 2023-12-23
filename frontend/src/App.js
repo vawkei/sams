@@ -13,6 +13,7 @@ import AdminPage from "./pages/AdminPage";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import ShopPage from "./pages/ShopPage";
+import ProductDetail from "./components/shop/product-detail/ProductDetail";
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
             </AdminOnlyRoute>
           } />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
         </Routes>
     </Layout>
   );

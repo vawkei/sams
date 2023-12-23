@@ -51,7 +51,7 @@ const AllProducts = () => {
         {/* <p>Search bar here</p> */}
       </div>
       <>
-        {products && products.length > 1 ? (
+        {products && products.length > 0 ? (
           <div>
             <table>
               <thead>
