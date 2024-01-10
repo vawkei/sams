@@ -1,0 +1,30 @@
+.cardClass ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.cardClass .li{
+    margin-top: 1rem;
+}
+
+.item-container{
+    /* width: 60vw; */
+    width: 50rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.main-image{
+    width: 100%;
+    height: 10rem;
+}
+.main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.bottom{
+    margin-top: 2rem;
+}

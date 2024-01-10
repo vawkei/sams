@@ -8,7 +8,7 @@
 
 .backdrop .modal{
     position: fixed;
-    left: 40%;
+    left: 30%;
     top: 40%;
     transform: translateX(-50%,-50%);
     width: 42%;

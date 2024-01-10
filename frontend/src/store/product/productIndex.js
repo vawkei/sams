@@ -78,7 +78,7 @@ export const deleteProduct = createAsyncThunk(
 export const review = createAsyncThunk(
     "products/review",async({id,formData},thunkAPI)=>{
         try{
-            return await productService.deleteProduct(id,formData)
+            return await productService.review(id,formData)
         }catch(error){
             const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
             return thunkAPI.rejectWithValue(message)
@@ -229,7 +229,7 @@ const productSlice = createSlice({
         })
         .addCase(review.fulfilled,(state,action)=>{
             state.isLoading=false;
-            state.message = action.payload
+            state.message = action.payload.msg
             //toast.success(action.payload)
             console.log(action.payload)
         })

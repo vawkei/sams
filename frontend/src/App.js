@@ -14,12 +14,19 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import ShopPage from "./pages/ShopPage";
 import ProductDetail from "./components/shop/product-detail/ProductDetail";
+import CartPage from "./pages/CartPage";
+import CheckoutDetailsPage from "./pages/CheckoutDetailsPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import OrderHistoryPage from "./pages/OrderHistoryPage";
+import OrderDetails from "./components/order-history/OrderDetails";
+import OrderReview from "./components/order-history/OrderReview";
 
 
 function App() {
   axios.defaults.withCredentials = true;
 
-  const { user} = useSelector((state) => state.auth);
+  const { user,isLoggedIn} = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -48,6 +55,14 @@ function App() {
           } />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout-details" element={<CheckoutDetailsPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/order-history" element={<OrderHistoryPage />} />
+          <Route path="/order-history/:id" element={<OrderDetails />} />
+          <Route path="/order-review/:id" element={<OrderReview />} />
+          <Route path="*" element={<NotFoundPage />} />
+
         </Routes>
     </Layout>
   );

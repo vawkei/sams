@@ -21,6 +21,12 @@ const getSingleProduct = async (req, res) => {
 
   try {
     const product = await Products.findOne({ _id: productId });
+    
+    product.productViews.viewCount ++;
+    //console.log(productViews) to get it back to 0, go and update it in mongoDb atlas products-productViews-viewCount,clickon the number there.
+
+    await product.save();
+
     if (!product) {
       return res.status(404).json({ msg: `No product with id: ${productId}` });
     }
@@ -72,6 +78,7 @@ const createProduct = async (req, res) => {
     description: description,
     image: image,
     regularPrice: regularPrice,
+    // productViews:productViews,
     //sku:sku,
     createdBy: userId,
   };
@@ -132,7 +139,7 @@ const deleteProduct = async (req, res) => {
 //productReview:
 const review = async (req, res) => {
   const productId = req.params.id;
-  const { star, review } = req.body;
+  const { star, productReview } = req.body;
 
   //working on the date for reviewDate:
   const months = [
@@ -163,7 +170,7 @@ const review = async (req, res) => {
   //console.log( `${date}-${month}-${year}`);
   //console.log( `${date}-${ex}-${year}`);
 
-  if (!star || !review) {
+  if (!star || !productReview) {
     return res
       .status(400)
       .json({ msg: "Please drop a star and leave a review" });
@@ -187,7 +194,7 @@ const review = async (req, res) => {
 
     product.ratings.push({
       star: star,
-      review: review,
+      productReview: productReview,
       name: req.user.name,
       userId: req.user.userId,
       reviewDate: reviewDate,
@@ -234,9 +241,9 @@ const updateReview = async (req, res) => {
   const productId = req.params.id;
 
   //console.log(productId);
-  const { star, review, userId } = req.body;
+  const { star, productReview, userId } = req.body;
   console.log(userId);
-  if (!star || !review) {
+  if (!star || !productReview) {
     return res
       .status(400)
       .json({ msg: "Please add a star and leave a review" });
@@ -282,7 +289,7 @@ const updateReview = async (req, res) => {
       return res.status(404).json({ msg: "Sorry bro, review not found" });
     }
     userReview.star = star;
-    userReview.review = review;
+    userReview.review = productReview;
     userReview.userId = userId;
     userReview.reviewDate = updatedDate;
     userReview.name = req.user.name;

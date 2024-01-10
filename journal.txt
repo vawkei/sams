@@ -1,0 +1,5 @@
+Some Stuffs to do After Completion:
+
+1. email verification:check if the email exists during registration.
+2. when i delete a product, i want to delete the image in cloudinary too.
+3. when a user places an order, get the location/api of the user.

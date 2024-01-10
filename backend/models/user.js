@@ -42,6 +42,9 @@ const userSchema = mongoose.Schema(
       required: [true, "Please add your photo"],
       default: "https://i.ibb.co/4pDNDk1/avatar.png",
     },
+    cartItems:{
+      type:[Object]
+    }
   },
   { timestamp: true }
 );

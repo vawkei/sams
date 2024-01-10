@@ -1,0 +1,22 @@
+
+.create-coupon label{
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+.create-coupon input{
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    font: inherit;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+.create-coupon .action{
+    display: flex;
+    justify-content: center;
+}
+.create-coupon .btn{
+    padding: 0.3rem 2rem;
+    /* padding: 0.5rem 1.2rem; */
+}

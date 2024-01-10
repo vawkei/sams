@@ -1,0 +1,81 @@
+.btn{
+    margin: 2rem 0rem;
+    width: 12rem;
+}
+.table{
+    padding: 1rem;
+    margin-top: 5rem;
+}
+table:hover{
+    cursor: pointer;
+}
+.lead{
+    margin-top: 1rem;
+    padding: 1rem;
+}
+.lead p{
+    padding: 0.3rem;
+}
+.lead span{
+    color: blue;
+}
+table{
+    padding: 1rem;
+    border-collapse: collapse;
+}
+table th{
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;  
+    background-color: black;
+    color: white;  
+}
+table td{
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 1px black solid;
+    border-right: 1px black solid;
+}
+table tr:hover{
+    color: blue;
+}
+
+@media screen and (min-width:640px) and (max-width:1024px){
+    .table{
+        width: 100%;
+        padding: 5px;
+        overflow-x: auto;
+        max-width: 40rem;
+        margin-left: 8rem;
+        font-size: 1.2rem;
+    }
+    .table h2{
+        margin-left: 0rem;
+    }
+    .lead{
+        margin-left: 0rem;
+    }
+    .btn{
+        margin: 2rem 0rem;
+    }   
+}
+
+
+@media screen and (max-width:640px){
+    .table{
+        width: 100%;
+        padding: 5px;
+        overflow-x: auto;
+        max-width: 40rem;
+    }
+    .table h2{
+        margin-left: 2rem;
+    }
+    .lead{
+        margin-left: 1rem;
+    }
+    .btn{
+        margin: 2rem 2rem;
+    }
+}

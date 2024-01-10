@@ -244,6 +244,42 @@ const updateUserPhoto =async  (req, res) => {
   }
 };
 
+//10. getCartDb:
+const getCartDb =async (req,res)=>{
+  const {userId}  = req.user;
+  //console.log(userId);
+
+  try{
+    const user = await User.findOne({_id:userId})
+    console.log(user)
+    res.status(200).json({userCart:user.cartItems})
+  }catch(error){
+    res.status(500).json(error)
+  }
+};
+
+//11. saveCartDb:
+const saveCartDb = async(req,res)=>{
+  
+  const id = req.user.userId;
+  // console.log(id)
+  const {cartItems} = req.body;
+  console.log(cartItems);
+
+  try{
+    const user =await User.findOne({_id:id}).select("-password");
+    //console.log(user)
+    if(!user){
+      return res.status(400).json({msg:"User doesn't exist"})
+    }
+    user.cartItems = cartItems;
+    await user.save()
+    console.log(user)
+    res.status(200).json({msg:"cart saved to DB",cartItems}) 
+  }catch(error){
+    res.status(500).json(error)
+  }
+}; 
 
 module.exports = {
   register,
@@ -255,4 +291,6 @@ module.exports = {
   getLoginStatus,
   uploadUserPhoto,
   updateUserPhoto,
+  getCartDb,
+  saveCartDb
 };

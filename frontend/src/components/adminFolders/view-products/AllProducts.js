@@ -8,8 +8,13 @@ import { AiFillEdit } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import DeleteNotifier from "../../ui/deleteNotifier/DeleteNotifier";
 import { deleteProduct } from "../../../store/product/productIndex";
+import Pagination from "../../ui/pagination/Pagination";
+import Search from "../../ui/search/Search";
+import { filterSliceAction } from "../../../store/product/FilterProduct";
 
 const AllProducts = () => {
+  const [search, setSearch] = useState("");
+  console.log(search);
   const [showDeleteNotifier, setShowDeleteNotifier] = useState(false);
 
   const showDeleteNotifierTrue = (id) => {
@@ -17,17 +22,21 @@ const AllProducts = () => {
   };
   const showDeleteNotifierFalse = () => {
     setShowDeleteNotifier(null);
-    
   };
 
   const deleteProductHandler = async (id) => {
     await dispatch(deleteProduct(id));
-    setShowDeleteNotifier(false)
+    setShowDeleteNotifier(false);
     await dispatch(getProducts());
   };
 
   const { products, isLoading } = useSelector((state) => state.product);
-  console.log(products);
+  //console.log(products);
+
+  const {filteredProducts} = useSelector((state)=>state.filter)
+  //console.log(filteredProducts)
+
+  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,13 +51,38 @@ const AllProducts = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
+  useEffect(()=>{
+    dispatch(filterSliceAction.FILTER_BY_SEARCH({products,search}))
+  },[products,search])
+
+  const shortenText = (text, n) => {
+    if (text.length > 15) {
+      const shortenedText = text.substring(0, 15).concat("...");
+      return shortenedText;
+    }
+    return text;
+  };
+
+  //Pagination stuff:
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  const indexLastItem = currentPage * itemsPerPage; //=6
+  const indexFirstItem = indexLastItem - itemsPerPage; //=0
+
+  //const currentItems = products.slice(indexFirstItem, indexLastItem);
+  const currentItems = filteredProducts.slice(indexFirstItem, indexLastItem);
+  //console.log(currentItems);
+
   return (
     <div className={classes["allProduct-container"]}>
       <h2>All Products</h2>
       {isLoading && <Loader />}
       <div className={classes.intro}>
         <p>{products.length} products found</p>
-        {/* <p>Search bar here</p> */}
+        <div className={classes.search}>
+          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
       </div>
       <>
         {products && products.length > 0 ? (
@@ -66,11 +100,12 @@ const AllProducts = () => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product, index) => {
+                {/* {products.map((product, index) => { */}
+                {currentItems.map((product) => {
                   return (
                     <tr key={product._id}>
-                      <td>{index + 1}</td>
-                      <td>{product.name.slice(0,8)}...</td>
+                      {/* <td>{index + 1}</td> */}
+                      <td>{shortenText(product.name,15)}</td>
                       <td>{product.category}</td>
                       <td>
                         {nairaSymbol} {product.price.toFixed(2)}
@@ -107,6 +142,13 @@ const AllProducts = () => {
                 })}
               </tbody>
             </table>
+            <Pagination
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              itemsPerPage={itemsPerPage}
+              products={products}
+              filteredProducts={filteredProducts}
+            />
           </div>
         ) : (
           <p>No Product found</p>

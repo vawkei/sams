@@ -19,6 +19,7 @@ const ProductSchema = mongoose.Schema(
     sold: {
       type: Number,
       trim:true,
+      default: 0,
     },
     regularPrice: {
       type: Number,
@@ -35,7 +36,13 @@ const ProductSchema = mongoose.Schema(
     },
     image:{
         type:Object,
-        required:[true,"Please add an image"]
+        // required:[true,"Please add an image"]
+    },
+    productViews:{
+      viewCount:{
+        type:Number,
+        default:0
+      }
     },
     // sku:{
     //   type:String,

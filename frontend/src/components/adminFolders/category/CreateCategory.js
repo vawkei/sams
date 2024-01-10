@@ -40,7 +40,7 @@ const CreateCategory = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {/* {isLoading && <Loader />} */}
 
       <div className={classes["create-category"]}>
         <h2>

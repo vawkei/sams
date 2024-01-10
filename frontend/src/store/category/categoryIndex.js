@@ -1,6 +1,5 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
-import { getSingleProduct } from "../product/productIndex";
 
 const initialCategoryState = {
     category:null,
@@ -110,7 +109,7 @@ const categorySlice = createSlice({
             state.category = action.payload;
             console.log(action.payload);
         })
-        .addCase(getSingleProduct.rejected,(state,action)=>{
+        .addCase(getSingleCategory.rejected,(state,action)=>{
             state.isLoading = false;
             state.category = null;
             state.isError=true;

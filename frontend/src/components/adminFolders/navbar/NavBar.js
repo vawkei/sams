@@ -6,6 +6,8 @@ import { IoIosAdd } from "react-icons/io";
 import { GrOverview } from "react-icons/gr";
 import {useSelector} from "react-redux";
 import { BiCategory } from "react-icons/bi";
+// import { BiSolidCoupon } from "react-icons/bi"
+import { RiCoupon2Line } from "react-icons/ri";
 
 
 const NavBar = () => {
@@ -42,6 +44,12 @@ const NavBar = () => {
           <li>
             <NavLink className={navDataHandler} to={"orders"}>
               <TbFileInvoice size={40} />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={navDataHandler} to={"coupon"}>
+            {/* <BiSolidCoupon  size={40} /> */}
+            <RiCoupon2Line  size={40}/>
             </NavLink>
           </li>
           <li>

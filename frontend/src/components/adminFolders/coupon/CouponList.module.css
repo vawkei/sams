@@ -1,0 +1,25 @@
+.coupon-list {
+    margin-top: 3rem;
+  }
+  
+  .coupon-list table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 1.4rem;
+  }
+  
+  .coupon-list table thead {
+    background-color: black;
+    padding: 1rem;
+    color: white;
+  }
+  /* .coupon-list table tbody {
+    text-align: center;
+    padding: 1rem;
+  } */
+  .coupon-list table tbody td {
+    padding: 1rem;
+    border: 1px solid black;
+  }
+  

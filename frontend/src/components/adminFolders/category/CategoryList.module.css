@@ -15,10 +15,10 @@
   padding: 1rem;
   color: white;
 }
-.category-list table tbody {
+/* .category-list table tbody {
   text-align: center;
   padding: 1rem;
-}
+} */
 .category-list table tbody td {
   padding: 1rem;
   border: 1px solid black;

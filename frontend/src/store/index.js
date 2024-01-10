@@ -7,6 +7,10 @@ import authService from "./authService";
 import categorySlice from "./category/categoryIndex";
 import productSlice from "./product/productIndex";
 import filterSlice from "./product/FilterProduct";
+import cartSlice from "./cart/cartIndex";
+import couponSlice from "./coupon/couponIndex";
+import orderSlice from "./order/orderIndex";
+import paystackSlice from "./paystack/paystackIndex";
 
 const initialAuthState = {
   isLoggedIn: false,
@@ -191,7 +195,7 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(logout.fulfilled, (state, action) => {
-        state.isLoggedIn = true;
+        state.isLoggedIn = false;
         state.isError = false;
         state.user = null;
         state.message = action.payload;
@@ -295,7 +299,16 @@ const authSlice = createSlice({
 });
 
 const store = configureStore({
-  reducer: { auth: authSlice.reducer, category: categorySlice.reducer,product:productSlice.reducer,filter:filterSlice.reducer },
+  reducer: {
+    auth: authSlice.reducer,
+    category: categorySlice.reducer,
+    product: productSlice.reducer,
+    filter: filterSlice.reducer,
+    cart: cartSlice.reducer,
+    coupon:couponSlice.reducer,
+    order:orderSlice.reducer,
+    paystack:paystackSlice.reducer
+  },
 });
 
 export const authActions = authSlice.actions;

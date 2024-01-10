@@ -1,7 +1,15 @@
-.disclaimer{
-    /* margin: 15rem; */
+/* .disclaimer{
+    
     margin: 10rem;
     text-align: center;
+} */
+
+
+.disclaimer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .disclaimer p{

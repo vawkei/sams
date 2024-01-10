@@ -36,7 +36,7 @@ const deleteProduct = async (id) => {
 
 //review:
 const review = async (id, formData) => {
-  const response = await axios.patch(API_URL + "review" + id, formData);
+  const response = await axios.patch(API_URL + "review/" + id, formData);
   return response.data;
 };
 

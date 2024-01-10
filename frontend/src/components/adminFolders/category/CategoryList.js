@@ -50,6 +50,8 @@ const CategoryList = () => {
       </h2>
       <Card>
         {isLoading && <Loader />}
+        {/* {isLoading && categories.length ===0 ? <Loader /> : null} */}
+        {isLoading && categories.length === 0 ? <Loader /> :null}
         {categories.length === 0 ? (
           <p>No Categories Found</p>
         ) : (

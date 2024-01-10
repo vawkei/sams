@@ -3,11 +3,15 @@ import classes from "./Products.module.css";
 import ProductsList from "../product-list/ProductsList";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../store/product/productIndex";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+//import Loader from "../../ui/loader/Loader";
+import Spinner from "../../ui/spinner/Spinner";
 
 const Products = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const dispatch = useDispatch();
+
+  const {isLoading} = useSelector((state)=>state.product)
 
   useEffect(() => {
     dispatch(getProducts());
@@ -15,7 +19,10 @@ const Products = () => {
   }, []);
 
   return (
-    <div className={classes["product-container"]}>
+    <>
+    {isLoading && <Spinner />}
+    {!isLoading ?(
+      <div className={classes["product-container"]}>
       <aside
         className={
           showMobileFilter
@@ -29,6 +36,11 @@ const Products = () => {
         <ProductsList />
       </div>
     </div>
+    ):(
+      null
+    ) }
+    
+    </>
   );
 };
 

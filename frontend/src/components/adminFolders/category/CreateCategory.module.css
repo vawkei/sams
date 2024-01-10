@@ -1,6 +1,8 @@
 
 .create-category label{
     display: block;
+    margin-top: 1rem;
+    font-weight: bold;
 }
 .create-category input{
     display: block;
@@ -16,4 +18,6 @@
 }
 .create-category .btn{
     padding: 0.5rem 1.2rem;
+    /* padding: 0.3rem 2rem; */
+    
 }

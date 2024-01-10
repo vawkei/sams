@@ -11,6 +11,7 @@ import {
   getLoginStatus,
 } from "../../store/index";
 import { AdminOnlyLink } from "../adminFolders/adminOnly/AdminOnlyRoute";
+import { cartSliceActions } from "../../store/cart/cartIndex";
 
 const MainNavigation = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -18,6 +19,8 @@ const MainNavigation = () => {
 
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
+  const {cartTotalQty,cartItems} = useSelector((state)=>state.cart);
+  //console.log(cartTotalQty);
 
   /* {isLoggedIn ? (user ? `hi ${user.name}` : "Hello!") : "Hello!"} */
 
@@ -29,6 +32,11 @@ const MainNavigation = () => {
       setDisplayName(user.name || "");
     }
   }, [isLoggedIn, user]);
+
+
+  useEffect(()=>{
+    dispatch(cartSliceActions.CART_TOTAL_QUANTITY())
+  },[dispatch,cartItems]);
 
   const hideMenuHandler = () => {
     setShowMenu(false);
@@ -63,7 +71,7 @@ const MainNavigation = () => {
         <div className={classes.cart}>
           <p>Cart</p>
           <FaShoppingCart size={20} />
-          <p>0</p>
+          <p>{cartTotalQty}</p>
         </div>
       </NavLink>
     </span>
@@ -118,7 +126,7 @@ const MainNavigation = () => {
               </NavLink>
             )}
             {isLoggedIn && (
-              <NavLink className={navDataHandler} to={"/orders"}>
+              <NavLink className={navDataHandler} to={"/order-history"}>
                 My Orders
               </NavLink>
             )}
