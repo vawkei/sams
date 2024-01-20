@@ -86,11 +86,11 @@ export const review = createAsyncThunk(
     }
 );
 
-//deleteReview:
-export const deleteReview = createAsyncThunk(
-    "products/deleteReview",async(id,thunkAPI)=>{
+//deleteProductReview:
+export const deleteProductReview = createAsyncThunk(
+    "products/deleteProductReview",async(id,thunkAPI)=>{
         try{
-            return await productService(id)
+            return await productService.deleteProductReview(id)
         }catch(error){
             const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
             return thunkAPI.rejectWithValue(message)
@@ -102,7 +102,7 @@ export const deleteReview = createAsyncThunk(
 export const updateReview = createAsyncThunk(
     "products/updateReview",async({id,formData},thunkAPI)=>{
         try{
-            return await productService(id,formData)
+            return await productService.updateReview(id,formData)
         }catch(error){
             const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
             return thunkAPI.rejectWithValue(message)
@@ -188,6 +188,7 @@ const productSlice = createSlice({
             state.isLoading=false;
             state.isError = true
             state.product= null
+            console.log(action.payload)
         })
 
         //updateProduct:
@@ -239,17 +240,17 @@ const productSlice = createSlice({
             //toast.success(action.payload)
             console.log(action.payload)
         })
-        //deleteReview:
-        .addCase(deleteReview.pending,(state)=>{
+        //deleteProductReview:
+        .addCase(deleteProductReview.pending,(state)=>{
             state.isLoading = true
         })
-        .addCase(deleteReview.fulfilled,(state,action)=>{
+        .addCase(deleteProductReview.fulfilled,(state,action)=>{
             state.isLoading=false;
             state.message = action.payload
             //toast.success(action.payload)
             console.log(action.payload)
         })
-        .addCase(deleteReview.rejected,(state,action)=>{
+        .addCase(deleteProductReview.rejected,(state,action)=>{
             state.isLoading= false;
             state.isError=true;
             //toast.success(action.payload)
@@ -263,7 +264,7 @@ const productSlice = createSlice({
         .addCase(updateReview.fulfilled,(state,action)=>{
             state.isLoading = false;
             state.isSuccess = true;
-            state.message = action.payload;
+            state.message = action.payload.msg;
             //toast.success(action.payload)
             console.log(action.payload)
         })

@@ -8,6 +8,8 @@ import classes from "./AdminRoutes.module.css";
 import { Route,Routes } from "react-router-dom";
 import EditProduct from "../add-product/EditProduct";
 import Coupon from "../coupon/Coupon"
+import OrderStatus from "../orders/OrderStatus";
+import OrderDetails from "../orders/OrderDetails";
 
 
 const AdminRoutes = () => {
@@ -22,6 +24,8 @@ const AdminRoutes = () => {
                     <Route  path="view-products" element={<AllProducts />}/>
                     <Route  path="add-product" element={<AddProduct />}/>
                     <Route  path="orders" element={<Orders />}/>
+                    <Route path="order-details/:id" element={<OrderDetails />} />
+                    <Route path="order-status" element={<OrderStatus />} />
                     <Route  path="category" element={<Category />} />
                     <Route  path="coupon" element={<Coupon />} />
 

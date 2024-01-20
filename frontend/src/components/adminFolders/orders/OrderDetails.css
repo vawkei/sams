@@ -1,0 +1,26 @@
+.container{
+    width: 100%;
+    margin-left: 5rem ;
+}
+.intro{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+.intro p{
+    margin-top: 0.5rem;
+}
+.main-image{
+     width: 10rem;
+     height: 5rem;
+     overflow: hidden;
+}
+.main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.action .btn{
+    margin-top: 0rem;
+}
+

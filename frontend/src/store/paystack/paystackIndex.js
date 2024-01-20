@@ -51,7 +51,8 @@ const paystackSlice = createSlice({
     SAVE_ORDER_DATA(state,action){
         const orders = action.payload
         console.log(orders);
-        state.orders = action.payload
+        state.orders = action.payload;
+        localStorage.setItem("cartItems", JSON.stringify([]));
     }
   },
   extraReducers(builder) {
@@ -63,7 +64,8 @@ const paystackSlice = createSlice({
       .addCase(acceptpayment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.iSuccess = true;
-        //window.location.href = action.payload.paymentUrl;
+        state.message = "Honor Blackman is Pussy Galore"
+        window.location.href = action.payload.paymentUrl;
         // state.message = "Order created";
         console.log(action.payload);
       })
@@ -80,10 +82,7 @@ const paystackSlice = createSlice({
       .addCase(verifypayment.fulfilled, (state, action) => {
         state.isLoading = false;
         state.iSuccess = true;
-        // state.message =
-        //   action.payload.msg === "Payment verified successfully"
-        //     ? "Payment verified successfully"
-        //     : "Unknown error occurred";
+        
         if(action.payload.msg==="Payment verified successfully"){
             state.message = "Honor Blackman is Pussy Galore"
         }else{

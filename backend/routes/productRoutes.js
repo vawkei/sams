@@ -28,7 +28,7 @@ router.delete("/:id",authenticateUser,adminOnly,deleteProduct);//the id is produ
 
 router.patch("/review/:id",authenticateUser,review);//the id is productId
 
-router.patch("/deleteReview/:id",authenticateUser,deleteProductReview);//the id is productId
+router.patch("/deleteProductReview/:id",authenticateUser,deleteProductReview);//the id is productId
 
 router.patch("/updateReview/:id",authenticateUser,updateReview);//the id is productId
 

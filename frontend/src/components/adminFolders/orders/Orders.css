@@ -1,0 +1,40 @@
+.table{
+    width: 100%; 
+    max-width: 50rem; 
+    margin: 3rem -0.5rem
+}
+.table-table{
+    width: 100%;
+    margin-left:0 ;
+}
+.table-table .thead{
+    width: 100%;
+}
+.table-table .tbody{
+    width: 100%;
+}
+.time-string{
+    text-align: right;
+    vertical-align: middle;
+}
+.stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.92rem;
+    padding: 1.5rem 0;
+    border: 0.1px solid black;
+} 
+
+.delivered{
+    /* color: rgb(15, 236, 15); */
+    color:#0ed915 ;  
+}
+.processing{
+    color: #FF9800;
+}
+.pending{
+    color: #9E9E9E;
+}
+

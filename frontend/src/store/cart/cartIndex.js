@@ -130,6 +130,8 @@ const cartSlice = createSlice({
       localStorage.setItem("cartTotalAmount", JSON.stringify(0));
       localStorage.setItem("initialCartTotalAmount", JSON.stringify(0));
       localStorage.setItem("cartTotalQty", JSON.stringify(0));
+      localStorage.removeItem("cartItems");
+
       console.log("local storage emptied")
     },
     CART_TOTAL_QUANTITY(state) {
@@ -205,13 +207,16 @@ const cartSlice = createSlice({
         state.isSuccess = true;
         state.message = action.payload;
 
-        localStorage.setItem(
-          "cartItems",
-          JSON.stringify(action.payload.userCart)
-        );
+        // localStorage.setItem(
+        //   "cartItems",
+        //   JSON.stringify(action.payload.userCart)
+        // );
+        // console.log(action.payload.userCart);
 
-        console.log(action.payload.userCart);
-        if (action.payload.userCart.length > 0) {
+        localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
+
+        
+        if (state.cartItems.length > 0) {
           window.location.href = `${FRONT_URL}/cart`;
         } else {
           window.location.href = `${FRONT_URL}`;

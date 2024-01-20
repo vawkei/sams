@@ -4,7 +4,7 @@ import orderService from "./orderService";
 const initialOrderState = {
     order:null,
     orders:[],
-    getAdminOrders:[],
+    adminOrders:[],
     message:"",
     isSuccess:false,
     isError:false,
@@ -28,7 +28,7 @@ export const createOrder = createAsyncThunk(
 export const getAdminOrders = createAsyncThunk(
     "orders/getAdminOrders",async(_,thunkAPI)=>{
         try{
-            return await orderService.getOrders()
+            return await orderService.getAdminOrders()
         }catch(error){
             const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
             return thunkAPI.rejectWithValue(message)
@@ -61,9 +61,9 @@ export const getSingleOrder = createAsyncThunk(
 
 //updateOrderStatus:
 export const updateOrderStatus = createAsyncThunk(
-    "orders/updateOrderStatus",async(formData,thunkAPI)=>{
+    "orders/updateOrderStatus",async({id,formData},thunkAPI)=>{
         try{
-            return await orderService.updateOrderStatus(formData)
+            return await orderService.updateOrderStatus(id,formData)
         }catch(error){
             const message = (error.response && error.response.data && error.response.msg) || error.msg || error.toString()
             return thunkAPI.rejectWithValue(message)
@@ -78,6 +78,12 @@ const orderSlice = createSlice({
         SAVE_ORDER_DATA(state,action){
             const incomingOrderData = action.payload;
             //console.log(incomingOrderData);
+        },
+        RESET_ORDER_STATE(state){
+            state.message = "";
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = false
         }   
     },
     extraReducers(builder){
@@ -103,9 +109,9 @@ const orderSlice = createSlice({
         })
         .addCase(getAdminOrders.fulfilled,(state,action)=>{
             state.isLoading = false;
-            state.getAdminOrders = action.payload.allOrders;
+            state.adminOrders = action.payload.allOrders;
             state.message = action.payload.msg
-            console.log(action.payload.allOrders);
+            console.log(action.payload);
         })
         .addCase(getAdminOrders.rejected,(state,action)=>{
             state.isLoading = false;

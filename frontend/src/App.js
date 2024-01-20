@@ -2,6 +2,7 @@ import Layout from "./components/layout/Layout";
 import {Routes,Route} from "react-router-dom"
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 import LoginPage from "./pages/LoginPage";
 import Profile from "./components/profile/Profile";
 import axios from "axios";
@@ -21,6 +22,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import OrderDetails from "./components/order-history/OrderDetails";
 import OrderReview from "./components/order-history/OrderReview";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 
 function App() {
@@ -46,7 +49,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />}/>
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/admin/*" element={
             <AdminOnlyRoute>

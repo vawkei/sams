@@ -38,17 +38,34 @@ h1{
 /* .btn{
     text-align: center;
 } */
-.login{
+/* .login{
     text-align: center;
     margin-top: 1rem;
+    cursor: pointer;
+} */
+
+.links{
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.login .forgot a{
     cursor: pointer;
 }
 .login a:hover{
     color: red;
 }
-.login a{
+.login  a{
     text-decoration: none;
 }
+.forgot a:hover{
+    color: red;
+}
+.forgot  a{
+    text-decoration: none;
+}
+
 
 .cardClass{
     width: 30rem;
@@ -72,6 +89,7 @@ h1{
     top: 53%;
     right: 4%;
 }
+
 
 @keyframes slideIn {
     from{transform:translateX(-200px) }

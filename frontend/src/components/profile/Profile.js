@@ -4,13 +4,14 @@ import ProfileHeader from "./ProfileHeader";
 import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import Loader from "../ui/loader/Loader";
+import Spinner from "../ui/spinner/Spinner";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleUser, updateUser, updateUserPhoto } from "../../store/index";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const { isLoggedIn, user,isLoading } = useSelector((state) => state.auth);
   //console.log(user);
 
 
@@ -18,7 +19,10 @@ const Profile = () => {
   const [enteredEmail,setEnteredEmail] = useState("" );
   const [enteredPhone, setEnteredPhone] = useState("");
   const [enteredAddress, setEnteredAddress] = useState("");
-
+  const [enteredTown, setEnteredTown] = useState("");
+  const [enteredState, setEnteredState] = useState("");
+  const [enteredSurname,setEnteredSurname] = useState("");
+ 
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -37,6 +41,9 @@ const Profile = () => {
       setEnteredEmail(user.email || "")
       setEnteredPhone(user.phone || "");
       setEnteredAddress(user.address ||"");
+      setEnteredSurname(user.surname || "");
+      setEnteredState(user.state || "");
+      setEnteredTown(user.town || "");
     }
   },[user]);
 
@@ -85,20 +92,26 @@ const Profile = () => {
     e.preventDefault();
     const userData = {
       name: enteredName,
+      surname:enteredSurname,
       phone: enteredPhone,
       address: enteredAddress,
+      town:enteredTown,
+      state:enteredState
     };
    // console.log(profileData);
    await dispatch(updateUser(userData))
     setEnteredName("");
+    setEnteredSurname("");
     setEnteredPhone("");
     setEnteredAddress("");
+    setEnteredTown("");
+    setEnteredState("")
   };
 
   return (
     <>
       {useStateIsLoading && <Loader />}
-
+      {isLoading && <Spinner />}
       <div className={classes["over-all-container"]}>
         <ProfileHeader />
         <h2>
@@ -129,9 +142,10 @@ const Profile = () => {
           <form action="" onSubmit={submitHandler}>
             <div className={classes.control}>
               <label htmlFor="name">
-                Role: {isLoggedIn ? (user ? user.role : "") : ""}
+                <b>Role:</b> {isLoggedIn ? (user ? user.role : "") : ""}
               </label>
               <input
+                
                 type="file"
                 accept="image/*"
                 name="image"
@@ -139,7 +153,7 @@ const Profile = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="name">Name:</label>
+              <label htmlFor="name"><b>Name:</b></label>
               <input
                 type="text"
                 placeholder="Please enter name"
@@ -149,11 +163,21 @@ const Profile = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="email">Email:</label>
+              <label htmlFor="name"><b>Surname:</b></label>
+              <input
+                type="text"
+                placeholder="Please enter your surname"
+                value={enteredSurname}
+                required
+                onChange={(e) => setEnteredSurname(e.target.value)}
+              />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="email"><b>Email:</b></label>
               <input type="text" disabled value={enteredEmail} />
             </div>
             <div className={classes.control}>
-              <label htmlFor="phone">Phone:</label>
+              <label htmlFor="phone"><b>Phone:</b></label>
               <input
                 type="text"
                 placeholder="Please enter phone number"
@@ -163,13 +187,33 @@ const Profile = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="phone">Address:</label>
+              <label htmlFor="address"><b>Address:</b></label>
               <input
                 type="text"
-                placeholder="Please enter residential address, city, state"
+                placeholder="Please enter residential address here"
                 value={enteredAddress}
                 required
                 onChange={(e) => setEnteredAddress(e.target.value)}
+              />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="phone"><b>Town:</b></label>
+              <input
+                type="text"
+                placeholder="Please enter town of residence"
+                value={enteredTown}
+                required
+                onChange={(e) => setEnteredTown(e.target.value)}
+              />
+            </div>
+            <div className={classes.control}>
+              <label htmlFor="state"><b>State:</b></label>
+              <input
+                type="text"
+                placeholder="Please enter state of residence"
+                value={enteredState}
+                required
+                onChange={(e) => setEnteredState(e.target.value)}
               />
             </div>
             <div className={classes.action}>

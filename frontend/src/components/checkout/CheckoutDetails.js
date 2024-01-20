@@ -33,19 +33,27 @@ const CheckoutDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
- 
 
   const cartTotalQty = useSelector((state) => state.cart.cartTotalQty);
   const cartTotalAmnt = useSelector((state) => state.cart.cartTotalAmount);
   // console.log(cartTotalAmnt)
-  const { user } = useSelector((state) => state.auth);
-  //console.log(user);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  console.log(user);
 
-  const {message} = useSelector((state)=>state.paystack);
+  const { message } = useSelector((state) => state.paystack);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
 
-
+  useEffect(() => {
+    if (user && isLoggedIn) {
+      firstNameInputRef.current.value = user.name || "";
+      surnameInputRef.current.value = user.surname || "";
+      phoneNumberInputRef.current.value = "";
+      residentialAddressInputRef.current.value = user.address || "";
+      townInputRef.current.value = user.town || "";
+      stateInputRef.current.value = user.state || "";
+    }
+  }, [isLoggedIn, user]);
 
   let formData;
 
@@ -96,7 +104,7 @@ const CheckoutDetails = () => {
 
     console.log("God Please Bless my Handwork");
 
-   formData = {
+    formData = {
       firstName: enteredFirstName,
       surname: enteredSurname,
       residentialAddress: enteredResidentialAddress,
@@ -105,26 +113,27 @@ const CheckoutDetails = () => {
       phoneNumber: enteredPhoneNumber,
       cartItems: cartItems,
       orderAmount: cartTotalAmnt,
-      cartTotalQty:cartTotalQty,
+      cartTotalQty: cartTotalQty,
       orderDate: new Date().toDateString(),
       orderTime: new Date().toLocaleTimeString(),
       coupon: coupon ? coupon : null,
       orderStatus: "Order Placed",
       email: user.email,
     };
-    dispatch(paystackSliceAction.SAVE_ORDER_DATA(formData))
+    dispatch(paystackSliceAction.SAVE_ORDER_DATA(formData));
     const paymentData = { amount: cartTotalAmnt, email: user.email };
     dispatch(orderSliceActions.SAVE_ORDER_DATA(formData));
     const transactionReference = await dispatch(acceptpayment(paymentData));
     console.log(transactionReference);
-    
+
     handleVerify();
-    if(message === "Honor Blackman is Pussy Galore"){
-      dispatch(createOrder(formData))
-      dispatch(cartSliceActions.RESET_CART());
-      console.log("order placed...");
-      navigate("/checkout")
-    }
+
+    dispatch(createOrder(formData));
+    localStorage.setItem("cartItems", JSON.stringify([]));
+    await dispatch(cartSliceActions.RESET_CART());
+    console.log("order placed...");
+    navigate("/checkout");
+
     //====================================stops here=============
     // dispatch(createOrder(formData))
 
@@ -140,26 +149,13 @@ const CheckoutDetails = () => {
     }
   };
 
-  // useEffect(()=>{
-  //   if(message === "Honor Blackman is Pussy Galore"){
-  //     dispatch(createOrder(formData))
-  //     dispatch(cartSliceActions.RESET_CART());
-  //     console.log("order placed...")
-  //   }
-  // },[dispatch,message,formData]);
-
-
-  // useEffect(() => {
-  //   if (message === "Honor Blackman is Pussy Galore") {
-  //     dispatch(createOrder(formData)).then(() => {
-  //       dispatch(cartSliceActions.RESET_CART());
-  //       console.log("order placed...");
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-  //   }
-  //  }, [dispatch, message, formData]);
-   
+  useEffect(() => {
+    if (message === "Honor Blackman is Pussy Galore") {
+      dispatch(createOrder(formData));
+      dispatch(cartSliceActions.RESET_CART());
+      console.log("order placed...");
+    }
+  }, [dispatch, message, formData]);
 
   const onCancel = () => {
     stateInputRef.current.value = "";
@@ -178,30 +174,43 @@ const CheckoutDetails = () => {
         <Fragment>
           <div className={classes["checkout-details"]}>
             <h2>Checkout Details</h2>
+            <p>Please check if the details are correct before proceeding</p>
             <Card>
               <form action="" onSubmit={confirmHandler}>
                 <div
                   className={`${classes.control} ${
                     !formValidity.firstName ? classes.invalid : ""
                   }`}>
-                  <label>First Name:</label>
-                  <input type="text" ref={firstNameInputRef} />
+                  <label><b>First Name:</b></label>
+                  <input
+                    type="text"
+                    ref={firstNameInputRef}
+                    placeholder="please enter your first name here"
+                  />
                   {!formValidity.firstName && <p>Please fill out the input</p>}
                 </div>
                 <div
                   className={`${classes.control} ${
                     !formValidity.surname ? classes.invalid : ""
                   }`}>
-                  <label htmlFor="">Surname:</label>
-                  <input type="text" ref={surnameInputRef} />
+                  <label htmlFor=""><b>Surname:</b></label>
+                  <input
+                    type="text"
+                    ref={surnameInputRef}
+                    placeholder="please enter your surname here"
+                  />
                   {!formValidity.surname && <p>Please fill out the input</p>}
                 </div>
                 <div
                   className={`${classes.control} ${
                     !formValidity.residentialAddress ? classes.invalid : ""
                   }`}>
-                  <label htmlFor="">Residential Address:</label>
-                  <input type="text" ref={residentialAddressInputRef} />
+                  <label htmlFor=""><b>Residential Address:</b></label>
+                  <input
+                    type="text"
+                    ref={residentialAddressInputRef}
+                    placeholder="please enter your house address here"
+                  />
                   {!formValidity.residentialAddress && (
                     <p>Please fill out the input</p>
                   )}
@@ -210,24 +219,36 @@ const CheckoutDetails = () => {
                   className={`${classes.control} ${
                     !formValidity.town ? classes.invalid : ""
                   }`}>
-                  <label htmlFor="">Town:</label>
-                  <input type="text" ref={townInputRef} />
+                  <label htmlFor=""><b>Town:</b></label>
+                  <input
+                    type="text"
+                    ref={townInputRef}
+                    placeholder="please enter the town you reside here"
+                  />
                   {!formValidity.town && <p>Please fill out the input</p>}
                 </div>
                 <div
                   className={`${classes.control} ${
                     !formValidity.state ? classes.invalid : ""
                   }`}>
-                  <label htmlFor="">State:</label>
-                  <input type="text" ref={stateInputRef} />
+                  <label htmlFor=""><b>State:</b></label>
+                  <input
+                    type="text"
+                    ref={stateInputRef}
+                    placeholder="please enter the state you reside here"
+                  />
                   {!formValidity.state && <p>Please fill out the input</p>}
                 </div>
                 <div
                   className={`${classes.control} ${
                     !formValidity.phoneNumber ? classes.invalid : ""
                   }`}>
-                  <label htmlFor="">Phone Number:</label>
-                  <input type="text" ref={phoneNumberInputRef} />
+                  <label htmlFor=""><b>Phone Number:</b></label>
+                  <input
+                    type="text"
+                    ref={phoneNumberInputRef}
+                    placeholder="please enter your phone number here"
+                  />
                   {!formValidity.phoneNumber && (
                     <p>Phone number should be 11 digits</p>
                   )}

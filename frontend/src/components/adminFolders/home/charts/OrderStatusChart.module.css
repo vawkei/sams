@@ -1,0 +1,7 @@
+.cardClass1{
+    width: 50%;
+}
+.action{
+    display: flex;
+    justify-content: center;
+}

@@ -28,8 +28,8 @@ const getSingleOrder = async(id)=>{
 };
 
 //updateOrderStatus:
-const updateOrderStatus = async(formData)=>{
-    const response = await axios.patch(API_URL + "updateOrderStatus", formData)
+const updateOrderStatus = async(id,formData)=>{
+    const response = await axios.patch(API_URL + "updateOrderStatus/" + id, formData)
     return response.data
 };
 

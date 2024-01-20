@@ -101,10 +101,10 @@ const AllProducts = () => {
               </thead>
               <tbody>
                 {/* {products.map((product, index) => { */}
-                {currentItems.map((product) => {
+                {currentItems.map((product,index) => {
                   return (
                     <tr key={product._id}>
-                      {/* <td>{index + 1}</td> */}
+                      <td>{index + 1}</td>
                       <td>{shortenText(product.name,15)}</td>
                       <td>{product.category}</td>
                       <td>

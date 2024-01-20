@@ -13,7 +13,7 @@ import { RiCoupon2Line } from "react-icons/ri";
 const NavBar = () => {
 
   const {user} = useSelector((state)=>state.auth);
-  console.log(user)
+  //console.log(user)
 
   const navDataHandler = (navData) => {
    return navData.isActive ? classes.active : "";

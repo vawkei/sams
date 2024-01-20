@@ -79,15 +79,10 @@ const createOrder = async (req, res) => {
 //getAdminOrders:
 const getAdminOrders = async (req, res) => {
   const { userId } = req.user;
-  console.log(userId);
-
-  const user = await User.findOne({ _id: userId });
-  if (!user) {
-    return res.status(404).json(`${user} does not exist`);
-  }
+  //console.log(userId);
 
   try {
-    if (user.role === "admin") {
+    
       const allOrders = await Order.find({}).sort("-createdAt");
 
       if (!allOrders) {
@@ -96,10 +91,10 @@ const getAdminOrders = async (req, res) => {
 
       return res.status(200).json({
         msg: "These are all the others",
-        allOrders,
+        allOrders:allOrders,
         nbhits: allOrders.length,
       });
-    }
+    
   } catch (error) {
     res.status(500).json(error);
   }

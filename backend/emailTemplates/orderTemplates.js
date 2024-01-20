@@ -2,7 +2,7 @@ const orderSuccessEmail = (name,cartItems) => {
     const email = {
         body: {
             name:name,
-            intro:"Your order has been successfully places",
+            intro:"Your order has been successfully placed",
             table:{
                 data:cartItems.map((item)=>{
                     return{

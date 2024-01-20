@@ -28,7 +28,8 @@ const sendEmail = async (subject, send_to, template, reply_to, cc) => {
 
   //options for sending email:
   const options = {
-    from: process.env.EMAIL_USER,
+    // from: process.env.EMAIL_USER,
+    from: '"Sams"<sams@gmail.com>',
     to: send_to,
     reply_to: reply_to,
     subject: subject,

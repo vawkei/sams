@@ -71,7 +71,23 @@ const OrderHistory = (props) => {
                           {nairaSymbol}
                           {order.orderAmount}
                         </td>
-                        <td>{order.orderStatus}</td>
+                        <td className="stats">
+                        <p
+                          className={
+                            order.orderStatus === "Delivered"
+                              ? "delivered"
+                              : order.orderStatus === "Processing"
+                              ? "processing"
+                              : order.orderStatus === "Order Placed"
+                              ? "pending"
+                              : ""
+                          }>
+                          {order.orderStatus}
+                        </p>
+                        
+                        <p>{new Date(order.updatedAt).toLocaleString()}</p>{" "}
+                        {/* <p>{new Date(order.updatedAt).toLocaleTimeString()}</p>{" "} */}
+                      </td>
                       </tr>
                     );
                   })}

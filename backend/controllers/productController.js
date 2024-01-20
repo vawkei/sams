@@ -1,4 +1,5 @@
 const Products = require("../models/products");
+const Users = require("../models/user");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
@@ -18,6 +19,8 @@ const getProducts = async (req, res) => {
 //getSingleProducts:
 const getSingleProduct = async (req, res) => {
   const productId = req.params.id;
+
+  const users = await Users.find({});
 
   try {
     const product = await Products.findOne({ _id: productId });
@@ -249,6 +252,8 @@ const updateReview = async (req, res) => {
       .json({ msg: "Please add a star and leave a review" });
   }
 
+  // return res.status(200).json({star,productReview});
+
   const months = [
     "January",
     "February",
@@ -289,7 +294,7 @@ const updateReview = async (req, res) => {
       return res.status(404).json({ msg: "Sorry bro, review not found" });
     }
     userReview.star = star;
-    userReview.review = productReview;
+    userReview.productReview = productReview;
     userReview.userId = userId;
     userReview.reviewDate = updatedDate;
     userReview.name = req.user.name;

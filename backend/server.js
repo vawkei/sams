@@ -4,15 +4,17 @@ require("express-async-errors");
 
 const express = require("express");
 const app = express();
+
+const cors = require("cors");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+
 const fileUpload = require ("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 
+// rest of the packages
+
 const errorMiddleware = require("./middlewares/error-handler-middleware");
-
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-
 
 const userRoute = require("./routes/userRoutes");
 const productRoute = require("./routes/productRoutes");
@@ -42,7 +44,7 @@ app.use(session({
 
 app.use("/api/v1/paystack",paystackRoute);
 //note: we put the paystackRoute above the express.json() cuz we dont want the express.json() applied to it, since we will be using a webhook for the paystackRoute.
-
+             
 
 app.use(express.json());
 

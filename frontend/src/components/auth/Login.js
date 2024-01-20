@@ -22,7 +22,7 @@ const Login = () => {
 
   const redirect = urlParams.get("redirect");
 
-  const { isLoggedIn, user,isLoading } = useSelector((state) => state.auth);
+  const { isLoggedIn, user,isLoading,isSuccess } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -58,7 +58,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn && user) {
+    if (isLoggedIn && isSuccess) {
       if (redirect === "cart") {
         dispatch(
           saveCartDb({
@@ -71,7 +71,30 @@ const Login = () => {
       dispatch(getCartDb());
     }
     dispatch(authActions.RESET_AUTH());
-  }, [isLoggedIn, user, dispatch, navigate,redirect]);
+  }, [isLoggedIn, isSuccess, dispatch, navigate,redirect]);
+
+
+
+  // useEffect(() => {
+  //   if (isLoggedIn && user) {
+  //     if (redirect === "cart") {
+  //       const savedCart = JSON.parse(localStorage.getItem("cartItems"));
+  //       if (savedCart && savedCart.length > 0) {
+  //         dispatch(
+  //           saveCartDb({
+  //             cartItems: savedCart,
+  //           })
+  //         );
+  //         return navigate("/cart");
+  //       } else {
+  //         return navigate("/home");
+  //       }
+  //     }
+  //     dispatch(getCartDb());
+  //   }
+  //   dispatch(authActions.RESET_AUTH());
+  //  }, [isLoggedIn, user, dispatch, navigate, redirect]);
+   
 
   return (
     <div>
@@ -117,10 +140,14 @@ const Login = () => {
               <div className={classes.action}>
                 <Button className={classes.btn}>Login</Button>
               </div>
-              <div>
+              <div className={classes.links}>
                 <p className={classes.login}>
-                  <Link to={"/register"}>Don't have an account</Link>
+                  <Link to={"/register"}>Don't have an account ?</Link>
                 </p>
+                <p className={classes.forgot}>
+                  <Link to={"/forgot-password"}>Forgot your password ?</Link>
+                </p>
+
               </div>
             </form>
           </Card>

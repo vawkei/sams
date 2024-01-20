@@ -3,14 +3,18 @@ const router = express.Router();
 
 const {
   register,
+  verifyEmail,
   login,
   logout,
+  forgotPassword,
+  resetPassword,
   //getAllUsers, 
   getSingleUser,
   updateUser,
   getLoginStatus,
   uploadUserPhoto,
   updateUserPhoto,
+  clearCart,
   saveCartDb,
   getCartDb
 } = require("../controllers/userController");
@@ -19,9 +23,15 @@ const {authenticateUser, adminOnly} =require("../middlewares/authenticate-user")
 
 router.post("/register",register);
 
+router.post("/verifyEmail", verifyEmail)
+
 router.post("/login",login);
 
 router.get("/logout",logout);
+
+router.post("/forgotPassword",forgotPassword)
+
+router.post("/resetPassword",resetPassword)
 
 router.get("/getSingleUser",authenticateUser, getSingleUser);
 
@@ -34,6 +44,7 @@ router.post("/uploadUserPhoto", uploadUserPhoto);
 router.patch("/updateUserPhoto",authenticateUser, updateUserPhoto);
 
 //user Cart:
+router.patch("/clearCart",authenticateUser,clearCart);
 router.get("/getCartDb",authenticateUser,getCartDb);
 router.patch("/saveCartDb",authenticateUser,saveCartDb)
 

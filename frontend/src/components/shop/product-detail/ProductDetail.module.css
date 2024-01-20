@@ -1,5 +1,7 @@
 .product-detail-container{
     width: 100%;
+    z-index: 200;
+    position: relative;
 }
 .content{
     display: flex;
@@ -17,6 +19,10 @@
     object-fit: cover;
     border-radius: 12px;
 }
+.product-reviews h2{
+    border-bottom: yellow solid 0.1rem;
+}
+
 .details{
     width: 60%;
 }
@@ -39,7 +45,29 @@
     display: flex;
     justify-content: center;
 }
+.actionOne{
+    display: flex;
+    gap: 1rem;
+    /* justify-content: right; */
+}
 .btn{
     text-align: center;
     padding: 0.2rem 2rem;
+}
+
+/*================================ edit review stuff ================*/
+.editCardClass{
+    width: 40%;
+    position: absolute;
+    top: 35rem;
+    left: 0;
+    z-index: 500;
+}
+
+.edit-content{
+    width: 100%;
+}
+.edit-action{
+    display: flex;
+    justify-content: center;
 }
