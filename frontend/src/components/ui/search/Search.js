@@ -3,7 +3,7 @@ import { BiSearch } from "react-icons/bi";
 
 const Search = (props) => {
   return (
-    <div className={classes.search}>
+    <div className={`${classes.search} ${props.className}`}>
       <BiSearch size={18}  className={classes.icon}/>
       <input
         placeholder="search"

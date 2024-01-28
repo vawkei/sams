@@ -70,12 +70,11 @@ const cartSlice = createSlice({
   reducers: {
     ADD_TO_CART(state, action) {
       const cartqty = getCartQuantityById(state.cartItems, action.payload._id);
-      console.log(cartqty);
 
       const productIndex = state.cartItems.findIndex((item) => {
         return item._id === action.payload._id;
       });
-      console.log(productIndex);
+    
 
       if (productIndex >= 0) {
         if (cartqty === action.payload.quantity) {

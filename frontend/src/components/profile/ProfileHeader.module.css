@@ -1,12 +1,14 @@
+
+.profile-header{
+    margin-top: -2rem;   
+}
+
 .profile-header-ul{
     background-color: black;
     border-radius: 6px;
     padding: 1rem;
     width: 40rem;
     margin: 0 auto;
-}
-
-.profile-header-ul{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,4 +20,7 @@
 }
 .profile-header-ul a:hover{
     color: yellow;
+}
+.active{
+    color: orange;
 }

@@ -41,6 +41,12 @@ const getSingleUser = async () => {
   const response = await axios.get(API_URL + "getSingleUser");
   return response.data;
 };
+
+const getAllUsers = async ()=>{
+  const response = await axios.get(API_URL + "getAllUsers");
+  return response.data
+};
+
 const updateUser = async (userData) => {
   const response = await axios.patch(API_URL + "updateUser", userData);
   return response.data;
@@ -65,6 +71,7 @@ const authService = {
   logout,
   forgotPassword,
   resetPassword,
+  getAllUsers,
   getSingleUser,
   updateUser,
   getLoginStatus,

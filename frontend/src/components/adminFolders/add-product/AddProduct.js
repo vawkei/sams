@@ -240,7 +240,6 @@ const AddProduct = () => {
             <label htmlFor="">Product quantity</label>
             <input
               type="number"
-              required
               name="quantity"
               value={product.quantity}
               onChange={handleInputChange}

@@ -13,8 +13,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSliceActions, saveCartDb } from "../../../store/cart/cartIndex";
 import StarsRating from "react-star-rate";
-import Spinner from "../../ui/spinner/Spinner"
-
+import Spinner from "../../ui/spinner/Spinner";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -32,10 +31,9 @@ const ProductDetail = () => {
   };
 
   const { product, message, isLoading } = useSelector((state) => state.product);
-
+  console.log(product);
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
-
+  // console.log(user);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   //console.log(cartItems);
@@ -57,6 +55,9 @@ const ProductDetail = () => {
 
   const showEditFormHandler = () => {
     setShowEditForm(true);
+  };
+  const showEditFormHandlerFalse = () => {
+    setShowEditForm(false);
   };
 
   const editReviewHandler = async (e, productID) => {
@@ -80,11 +81,10 @@ const ProductDetail = () => {
     }
   };
 
-  
   useEffect(() => {
     if (message === "Review updated") {
       dispatch(getSingleProduct(id));
-      setShowEditForm(false)
+      setShowEditForm(false);
     }
     dispatch(productActions.RESET_PRODUCT_STATE());
   }, [navigate, message, id]);
@@ -109,18 +109,23 @@ const ProductDetail = () => {
   return (
     <div className={classes["product-detail-container"]}>
       {isLoading && <Spinner />}
-      <h2>Product Detail</h2>
+      <div className={classes.top}>
+        <h2>Product Detail</h2>
 
-      <p
-        style={{ margin: "3rem 0", cursor: "pointer" }}
-        onClick={backToProducts}>
-        &larr; Back to Products
-      </p>
+        <p
+          style={{ }}
+          onClick={backToProducts}>
+          &larr; Back to Products
+        </p>
+      </div>
 
       <div className={classes["content"]}>
-{/* ====left-hand side starts here ================================================*/}
+        {/* ====left-hand side starts here ================================================*/}
         <div className={classes["main-image"]}>
-          <img src={product?.image} alt="meal" />
+          <div className={classes["image-div"]}>
+            <img src={product?.image} alt="meal" />
+          </div>
+
           <Card className={classes["product-reviews"]}>
             {product?.ratings.length < 1 ? (
               <p>
@@ -155,7 +160,7 @@ const ProductDetail = () => {
                           Edit review
                         </Button>
                       </div>
-            {/*=====morftide starts here==================================== */}
+                      {/*=====editForm starts here==================================== */}
                       {showEditForm && (
                         <form
                           action=""
@@ -182,6 +187,9 @@ const ProductDetail = () => {
                                   setProductReview(e.target.value)
                                 }></textarea>
                               <div className={classes["edit-action"]}>
+                                <Button onClick={showEditFormHandlerFalse}>
+                                  Cancel
+                                </Button>{" "}
                                 <Button>Submit</Button>
                               </div>
                             </div>
@@ -196,9 +204,9 @@ const ProductDetail = () => {
             )}
           </Card>
 
-  {/* ====left-handside ends here================================================*/}
+          {/* ====left-handside ends here================================================*/}
         </div>
-  {/* ====right-handside starts here=================================== */}      
+        {/* ====right-handside starts here=================================== */}
         <Card className={classes.details}>
           <h2>{product?.name}</h2>
           <ul className={classes.ul}>
@@ -235,7 +243,11 @@ const ProductDetail = () => {
               <Button onClick={() => addToCartHandler(product)}>+</Button>
             </div>
           )}
-          {isItemAdded < 0 ? (
+          {product?.quantity === 0 ? (
+            <Button className={classes.btnRed} disable>
+              Out of Stock
+            </Button>
+          ) : (
             <div className={classes.action}>
               <Button
                 className={classes.btn}
@@ -243,7 +255,7 @@ const ProductDetail = () => {
                 Add to Cart
               </Button>
             </div>
-          ) : null}
+          )}
 
           <Card>
             <h3>{product?.description}</h3>

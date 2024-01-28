@@ -14,16 +14,28 @@
     text-decoration: none;
 }
 
+@media screen and (min-width:641px) and (max-width:1240px){
+    /* .footer{
+        background-color: blue;
+      } */
+}   
 
-/* .footer {
-    background-color: var(--dark-blue);
-    color: #fff;
-    font-size: 1.6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 8rem;
-    p {
-      color: #fff;
+/* This is for screen sizes btwn 360px and 640px phones like:
+iphone se,xr,12pro,14promax, pxl7, galaxyS20 Ultra, */  
+ @media screen and (min-width:361px) and (max-width:640px){
+    .footer{
+        flex-direction: column-reverse;
     }
-  } */
+      
+}
+
+/* This is for screen sizes smaller than 360px: Galaxyfold,galaxy S8+ */
+@media screen and (max-width: 360px) {
+  .footer{
+    flex-direction: column;
+  }
+}
+
+
+
+  

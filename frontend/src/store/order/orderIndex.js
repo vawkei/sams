@@ -126,7 +126,7 @@ const orderSlice = createSlice({
             state.isLoading = false;
             state.orders = action.payload.userOrders;
             state.message = action.payload.msg
-            console.log(action.payload.allOrders);
+            console.log(action.payload);
         })
         .addCase(getOrders.rejected,(state,action)=>{
             state.isLoading = false;

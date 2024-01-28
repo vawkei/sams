@@ -28,3 +28,66 @@
 .bottom{
     margin-top: 2rem;
 }
+
+@media screen and (min-width:641px) and (max-width:1024px){
+    .heading{
+        text-align: center;
+    }
+    .orderDetails-container{
+        width: 90%;
+        background-color: purple;
+    }
+    .orderDetails-container .btn1{
+        padding: 0.1rem 0.2rem;
+        margin-left: 3rem;
+    }
+    .intro{
+        margin-top: 1rem;
+        margin-left: 4rem;
+    }
+    .cardClass{
+        margin-top: 2rem;
+        /* background-color: green; */
+    }
+    .item-container{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    .left{
+        width: 100%;
+    }
+    .right{
+        text-align: center;
+    }
+}
+
+@media screen and (max-width:640px){
+    .heading{
+        text-align: center;
+    }
+    .orderDetails-container{
+        width: 90%;
+        background-color: blue;
+    }
+    .orderDetails-container .btn1{
+        padding: 0.1rem 0.2rem;
+        margin-left: 1.5rem;
+    }
+    .intro{
+        margin-top: 1rem;
+        margin-left: 2rem;
+    }
+    .cardClass{
+        margin-top: 2rem;
+        background-color: yellow;
+    }
+    .item-container{
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+    }
+    .right{
+        text-align: center;
+    }
+}

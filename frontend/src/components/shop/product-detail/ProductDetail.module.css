@@ -54,6 +54,9 @@
     text-align: center;
     padding: 0.2rem 2rem;
 }
+.btnRed{
+    background-color: red;
+}
 
 /*================================ edit review stuff ================*/
 .editCardClass{
@@ -69,5 +72,53 @@
 }
 .edit-action{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+@media screen and (min-width:641px) and (max-width:1024px){
+    .product-detail-container{
+        width: 100%;
+        position: relative;
+        /* background-color: red; */
+        
+    }
+    .top h2{
+        text-align: center;
+    }
+    .top p {
+        margin-left: 1.5rem;
+    }
+    .content{
+        width: 95%;
+    }
+}
+
+
+@media screen and (max-width:640px){
+    .product-detail-container{
+        width: 100%;
+        position: relative;
+        /* background-color: yellow; */
+    }
+    .product-detail-container h2{
+        text-align: center;
+    }
+    .top p{
+        margin-left: -13rem;
+    }
+    .content{
+        display: flex;
+        flex-direction: column;
+        width: 98%;
+    }
+    .main-image {
+        width: 80%;
+    }
+    .details{
+        margin-top: 20%;
+        width: 95%;
+    }
+    .editCardClass{
+        width: 90%;
+    }
 }

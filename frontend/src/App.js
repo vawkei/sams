@@ -4,7 +4,6 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 import LoginPage from "./pages/LoginPage";
-import Profile from "./components/profile/Profile";
 import axios from "axios";
 import { getLoginStatus, getSingleUser } from "./store";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +23,8 @@ import OrderDetails from "./components/order-history/OrderDetails";
 import OrderReview from "./components/order-history/OrderReview";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
-
+import ProfileHome from "./components/profile/ProfileHome";
+import ProfileForm from "./components/profile/ProfileForm";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -53,7 +53,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<ProfileHome />} />
+          <Route path="/profile/edit-profile" element={<ProfileForm />} />
           <Route path="/admin/*" element={
             <AdminOnlyRoute>
                 <AdminPage />

@@ -1,11 +1,13 @@
 import classes from "./ProductsList.module.css";
 import Search from "../../ui/search/Search";
-//import { getProducts } from "../../../store/product/productIndex";
 import { useDispatch, useSelector } from "react-redux";
+
+//import { getProducts } from "../../../store/product/productIndex";
 //import { DUMMY_ITEMS } from "../products/DummyItems";
 // import Button from "../../ui/button/Button";
 // import Card from "../../ui/card/Card";
 // import { Link } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 import { filterSliceAction } from "../../../store/product/FilterProduct";
 import Pagination from "../../ui/pagination/Pagination";
@@ -31,7 +33,7 @@ import { getCartDb } from "../../../store/cart/cartIndex";
 //   );
 // });
 
-const ProductsList = () => {
+const ProductsList = (props) => {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("Latest");
 
@@ -42,8 +44,6 @@ const ProductsList = () => {
 
   const dispatch = useDispatch();
 
-  
-
   useEffect(() => {
     dispatch(filterSliceAction.FILTER_BY_SEARCH({ products, search }));
     //we get the products from the Products.js file, which gets the product from db, then we send it to redux with search.
@@ -52,7 +52,7 @@ const ProductsList = () => {
   useEffect(() => {
     dispatch(filterSliceAction.FILTER_BY_SORT({ products, sort }));
   }, [products, sort]);
-  
+
   //Pagination stuff:
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
@@ -66,7 +66,7 @@ const ProductsList = () => {
   return (
     <div className={classes["productsList-container"]}>
       <h2>ProductsList</h2>
-      <p>{filteredProducts.length} products found </p>
+      <p className={classes.length}>{filteredProducts.length} products found </p>
       <div className={classes.heading}>
         <div className={classes.search}>
           <Search value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -80,7 +80,11 @@ const ProductsList = () => {
             <option value="A-Z">A-Z</option>
             <option value="Z-A">Z-A</option>
           </select>
-          <button className={classes.toggleButton}>&#9776;</button>
+          <button
+            className={classes.toggleButton}
+            onClick={props.showMobileFilterHandler}>
+            &#9776;
+          </button>
         </div>
       </div>
       {/* LIST OF ITEMS */}

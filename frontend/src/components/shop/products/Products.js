@@ -4,14 +4,17 @@ import ProductsList from "../product-list/ProductsList";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../store/product/productIndex";
 import { useDispatch, useSelector } from "react-redux";
-//import Loader from "../../ui/loader/Loader";
 import Spinner from "../../ui/spinner/Spinner";
 
 const Products = () => {
   const [showMobileFilter, setShowMobileFilter] = useState(false);
   const dispatch = useDispatch();
 
-  const {isLoading} = useSelector((state)=>state.product)
+  const { isLoading } = useSelector((state) => state.product);
+
+  const showMobileFilterHandler = () => {
+    setShowMobileFilter((prevState) => !prevState);
+  };
 
   useEffect(() => {
     dispatch(getProducts());
@@ -19,28 +22,31 @@ const Products = () => {
   }, []);
 
   return (
-    <>
-    {isLoading && <Spinner />}
-    {!isLoading ?(
-      <div className={classes["product-container"]}>
-      <aside
-        className={
-          showMobileFilter
-            ? `${classes.filter} ${classes.show}`
-            : classes.filter
-        }>
-        <ProductsFilter />
-      </aside>
+    <div>
+      {isLoading ? (
+      <Spinner />
+      ) : (
+        <div className={classes["product-container"]}>
+          <div
+            className={showMobileFilter ? classes.backdrop : ""}
+            onClick={showMobileFilterHandler}></div>
 
-      <div className={classes.productsList}>
-        <ProductsList />
-      </div>
+          <aside
+            className={
+              showMobileFilter
+                ? `${classes.filter} ${classes.showFilter}`
+                : `${classes.filter}`
+            }>
+        
+            <ProductsFilter showMobileFilterHandler={showMobileFilterHandler} />
+          </aside>
+          
+          <div className={classes.productsList}>
+            <ProductsList showMobileFilterHandler={showMobileFilterHandler} />
+          </div>
+        </div>
+      )}
     </div>
-    ):(
-      null
-    ) }
-    
-    </>
   );
 };
 

@@ -8,6 +8,8 @@ import {useSelector} from "react-redux";
 import { BiCategory } from "react-icons/bi";
 // import { BiSolidCoupon } from "react-icons/bi"
 import { RiCoupon2Line } from "react-icons/ri";
+import { FaRegUser } from "react-icons/fa6";
+
 
 
 const NavBar = () => {
@@ -29,6 +31,11 @@ const NavBar = () => {
           <li>
             <NavLink className={navDataHandler} to={"/admin/home"}>
               <FaHome size={40}/>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={navDataHandler} to={"/admin/users"}>
+            <FaRegUser size={40} />
             </NavLink>
           </li>
           <li>

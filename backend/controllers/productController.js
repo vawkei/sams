@@ -3,7 +3,7 @@ const Users = require("../models/user");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 
-//getProducts:
+//getProducts:========================================================================
 const getProducts = async (req, res) => {
   try {
     const products = await Products.find({});
@@ -16,7 +16,7 @@ const getProducts = async (req, res) => {
   }
 };
 
-//getSingleProducts:
+//getSingleProducts:==================================================================
 const getSingleProduct = async (req, res) => {
   const productId = req.params.id;
 
@@ -39,7 +39,7 @@ const getSingleProduct = async (req, res) => {
   }
 };
 
-//uploadImageToCloudinary:
+//uploadImageToCloudinary:============================================================
 const upLoadProductImage = async (req, res) => {
 
   // const userId = req.user.userId;
@@ -63,13 +63,13 @@ const upLoadProductImage = async (req, res) => {
   }
 };
 
-//createProducts:
+//createProducts:==================================================================
 const createProduct = async (req, res) => {
   const userId = req.user.userId;
   const { name, category, quantity, price, description, image, regularPrice } =
     req.body;
 
-  if (!name || !category || !quantity || !price || !description) {
+  if (!name || !category || !quantity  || !price || !description) {
     return res.status(400).json({ msg: "Please fill out the inputs" });
   }
 
@@ -92,7 +92,7 @@ const createProduct = async (req, res) => {
   //res.send("Create product route");
 };
 
-//updateProducts:
+//updateProducts:=======================================================================
 const updateProduct = async (req, res) => {
   const productId = req.params.id;
 
@@ -124,7 +124,7 @@ const updateProduct = async (req, res) => {
   }
 };
 
-//deleteProducts:
+//deleteProducts:=====================================================================
 const deleteProduct = async (req, res) => {
   const productId = req.params.id;
 
@@ -139,7 +139,7 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-//productReview:
+//productReview:=======================================================================
 const review = async (req, res) => {
   const productId = req.params.id;
   const { star, productReview } = req.body;
@@ -210,7 +210,7 @@ const review = async (req, res) => {
   }
 };
 
-//deleteProductReview:
+//deleteProductReview:=================================================================
 const deleteProductReview = async (req, res) => {
   const productId = req.params.id;
 
@@ -239,7 +239,7 @@ const deleteProductReview = async (req, res) => {
   }
 };
 
-// updateReview:
+// updateReview:====================================================================
 const updateReview = async (req, res) => {
   const productId = req.params.id;
 

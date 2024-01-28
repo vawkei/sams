@@ -1,0 +1,109 @@
+
+NOTE: these codes have issues, i will delete them soon. After spending almost 6 hours trying to debug what exactly was causing the issue: when i click on the button, this function runs showMobileFilterHandler, it is meant to show the backdrop and productFilter if set to true,but the problem is that it only shows the backdrop when its set to tru and doesnt show the productFilter.
+Managed to figure out the problem, for some reason when i exclude product-container from   .filter css, it seemed to work fine.
+
+html:
+
+
+import ProductsFilter from "../product-filter/ProductsFilter";
+import classes from "./Products.module.css";
+import ProductsList from "../product-list/ProductsList";
+import { useEffect, useState } from "react";
+import { getProducts } from "../../../store/product/productIndex";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../../ui/spinner/Spinner";
+
+const Products = () => {
+  const [showMobileFilter, setShowMobileFilter] = useState(false);
+  const dispatch = useDispatch();
+
+  const { isLoading } = useSelector((state) => state.product);
+
+  const showMobileFilterHandler = () => {
+    setShowMobileFilter((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    dispatch(getProducts());
+    //get the products from our db.
+  }, []);
+
+  return (
+    <>
+      {isLoading && <Spinner />}
+      {!isLoading ? (
+        <div className={classes["product-container"]}>
+          <div
+            className={showMobileFilter ? classes.backdrop : ""}
+            onClick={showMobileFilterHandler}></div>
+
+          <aside
+            className={
+              showMobileFilter
+                ? `${classes.filter} ${classes.showFilter}`
+                : `${classes.filter}`
+            }>
+               <p>Test Text</p>
+            <ProductsFilter  />
+          </aside>
+
+          <div className={classes.productsList}>
+            <ProductsList showMobileFilterHandler={showMobileFilterHandler} />
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+};
+
+export default Products;
+
+
+
+========================================================================================
+css:
+
+.product-container {
+  display: flex;
+  width: 100%;
+  margin-top: 0;
+  /* position: relative; */
+}
+
+.product-container .filter {
+  width: 15%;
+  /* padding: 0.5rem; */
+  background-color: black;
+  color: white;
+  /* min-height: 80vh; */
+  height: 80vh;
+  transition: all 0.3s;
+}
+.product-container .productsList {
+  width: 83%;
+  /* padding: 0.5rem; */
+}
+
+@media screen and (max-width: 768px) {
+  .product-container .filter {
+    width: 100%;
+    padding: 1rem;
+    position: absolute;
+    left: -200%;
+    top: 17rem;
+    z-index: 301;
+    background-color: black;
+  }
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100vh;
+    z-index: 200;
+  }
+  .showFilter {
+    left: 10%;
+  }
+}

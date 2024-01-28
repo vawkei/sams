@@ -1,0 +1,850 @@
+/* the codes appear very ok both for desktop and mobile version, however, when on mobile version and i rotate it, it falls into the media query i have set for another screen size dimension. and the slide, slider and content together with the slide image all appaer terrible, its like they get too big for the container and it overlaps with the other content of the screen. here are my codes: */
+
+
+/* FORMER CODE WITH THE ERRORS */
+
+.slider {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    background-color: #fff;
+    margin-top: -2rem;
+    
+  }
+  
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    
+    top: -7rem;
+    left: -16rem;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateX(-50%);
+  }
+  
+  
+  .main-image {
+    width: 100vw;
+    height: 100vh;
+    /* overflow: hidden; */
+  }
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: none;
+    z-index: 0;
+  }
+  
+  .current {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .prev {
+    position: absolute;
+    top: 10rem;
+    left: 0;
+    color: orange;
+  }
+  .next {
+    position: absolute;
+    top: 10rem;
+    right: 0;
+    color: green;
+  }
+  .content {
+    position: absolute;
+    top: 30rem;
+    left: 40rem;
+    text-align: center;
+    background-color: blue;
+    border-radius: 6px;
+    padding: 1.5rem;
+    animation-name: slide-up;
+    animation-duration: 2.5s;
+  
+    /* justify-self: center;
+    align-items: center;
+    flex-direction: column; */
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(40px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+  
+  /* MEDIA QUERY STARTS HERE: */
+  
+  
+  /* This is for screen sizes smaller than 360px: Galaxyfold,galaxy S8+ */
+  @media screen and (max-width: 360px) {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 80vh;
+    }
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: green;
+      top: -6rem;
+      left: -1rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+  
+    .slide img {
+      width: 100%;
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    }
+    .content {
+      position: absolute;
+      top: 30rem;
+      left: 1rem;
+      width: 100%;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  
+  /* Styles for landscape mode on mobile devices */
+  /* @media screen and (min-width: 361px) and (max-width: 640px) {
+    
+    .slider {
+        position: relative;
+        width: 10%;
+        height: 20vh;
+        margin-top: 5rem;
+        z-index: 30;
+        overflow: visible;
+      }
+    
+      .slide {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-color: red;
+        top: 0rem;
+        left: -1rem;
+        opacity: 0;
+        transition: all 0.5s ease;
+        transform: translateX(-50%);
+        z-index: 30;
+      }
+      .current {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      .prev {
+        position: absolute;
+        top: 20rem;
+        left: 0;
+        color: orange;
+      }
+      .next {
+        position: absolute;
+        top: 20rem;
+        right: 0;
+        color: green;
+      }
+    
+      .slide img {
+        width: 20%;
+      }
+    
+      .slideFirstDiv {
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .slideFirstDiv {
+        text-align: center;
+      }
+    
+      .slideFirstDiv p {
+        text-align: left;
+        inline-size: 250px;
+        font-size: 1.5rem;
+      }
+      .content {
+        position: absolute;
+        top: 30rem;
+        left: 3rem;
+        text-align: center;
+    
+        background-color: black;
+        color: white;
+        border-radius: 6px;
+        padding: 1.5rem;
+        animation-name: slide-up;
+        animation-duration: 2.5s;
+      }
+      
+    }
+     */
+  /* This is for screen sizes btwn 361px and 640px phones like:
+  iphone se,xr,12pro,14promax, pxl7, galaxyS20 Ultra, IN PORTRAIT MODE/STANDING MODE */
+  @media screen and (min-width: 361px) and (max-width: 640px)  {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      margin-top: -1.5rem;
+      z-index: 30;
+    }
+  
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: red;
+      top: 0rem;
+      left: -1rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+      z-index: 30;
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+  
+    .slide img {
+      width: 100%;
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    }
+    .content {
+      position: absolute;
+      top: 30rem;
+      left: 3rem;
+      text-align: center;
+  
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  /* MEDIA QUERY FOR TABLETS:   */
+  @media screen and (min-width: 641px) and (max-width: 768px) {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      /* height: 80vh;
+      margin-top: 1rem; */
+      background-color: brown;
+       margin-top: 1rem; 
+    }
+  
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: blue;
+      top: 1rem;
+      left: -5rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+  
+    .slide img {
+      width: 100%;
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    }
+    .content {
+      position: absolute;
+      top: 38rem;
+      left: 18rem;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  
+  
+  /* MEDIA QUERY FOR TABLETS: iPadPro,iPadAir,iPadMini  */
+  @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 50vh;
+      margin-top: 1rem;
+      background-color: orange; 
+      z-index: 30;
+      
+    }
+  
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-color: blue;
+      top: 1rem;
+      left: 0rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+      
+    }
+    .main-image img{
+      position: absolute;
+      left: 8rem;
+      top: -20rem;
+      width: 60%;
+      height: 100vh;
+      
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    }
+    .content {
+      position: absolute;
+      top: 25rem;
+      left: 16rem;
+      text-align: center;
+  
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /* NEW CODE THAT GETS THE MEDIA QUERY GOOD */
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 90vh;
+  overflow: hidden;
+  background-color: #fff;
+  margin-top: -2rem;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  
+  top: -7rem;
+  left: -16rem;
+  opacity: 0;
+  transition: all 0.5s ease;
+  transform: translateX(-50%);
+}
+
+.slideFirstDiv {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+.slideFirstDiv p {
+  text-align: left;
+  inline-size: 250px;
+  font-size: 1.5rem;
+} 
+
+
+.main-image {
+  width: 100vw;
+  height: 100vh;
+  /* overflow: hidden; */
+}
+.main-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: none;
+  z-index: 0;
+}
+
+.current {
+  opacity: 1;
+  transform: translateX(0);
+}
+.prev {
+  position: absolute;
+  top: 10rem;
+  left: 0;
+  color: orange;
+}
+.next {
+  position: absolute;
+  top: 10rem;
+  right: 0;
+  color: green;
+}
+.content {
+  position: absolute;
+  top: 30rem;
+  left: 40rem;
+  text-align: center;
+  background-color: blue;
+  border-radius: 6px;
+  padding: 1.5rem;
+  animation-name: slide-up;
+  animation-duration: 2.5s;
+
+  /* justify-self: center;
+  align-items: center;
+  flex-direction: column; */
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(40px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+
+/* MEDIA QUERY STARTS HERE: */
+
+
+/* This is for screen sizes smaller than 360px: Galaxyfold,galaxy S8+ */
+@media screen and (max-width: 360px) {
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+  }
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: green;
+    top: -6rem;
+    left: -1rem;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateX(-50%);
+  }
+  .current {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .prev {
+    position: absolute;
+    top: 20rem;
+    left: 0;
+    color: orange;
+  }
+  .next {
+    position: absolute;
+    top: 20rem;
+    right: 0;
+    color: green;
+  }
+
+  .slide img {
+    width: 100%;
+  }
+
+  .slideFirstDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .slideFirstDiv {
+    text-align: center;
+  }
+
+  .slideFirstDiv p {
+    text-align: left;
+    inline-size: 250px;
+    font-size: 1.5rem;
+  }
+  .content {
+    position: absolute;
+    top: 30rem;
+    left: 1rem;
+    width: 100%;
+    text-align: center;
+    background-color: black;
+    color: white;
+    border-radius: 6px;
+    padding: 1.5rem;
+    animation-name: slide-up;
+    animation-duration: 2.5s;
+  }
+}
+
+/* Styles for portrait mode on mobile devices */
+@media screen and (min-width: 361px) and (max-width: 640px) {
+  
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin-top: -1.5rem;
+    z-index: 30;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: red;
+    top: 0rem;
+    left: -1rem;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateX(-50%);
+    z-index: 30;
+  }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      width: 100%;
+    }
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    } 
+    .content {
+      position: absolute;
+      top: 30rem;
+      left: 3rem;
+      text-align: center;
+      
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+    
+  }
+  
+
+  /* Tablets */
+  @media screen and (min-width: 641px) and (max-width:1024px){
+    .slider {
+      position: relative;
+      width: 100vw;
+      height:60vh;
+      margin-top:3rem;
+      background-color: aqua;
+    }
+  
+    .slide {
+      width: 100%;
+      height: 100%;
+      /* background-color: bisque; */
+      position: absolute;   
+      top: 0rem;
+      left: 0rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+      z-index: 30;
+    }
+    .slideFirstDiv {
+
+      /* background-color: blueviolet; */
+      text-align: center;
+      width: 100%;
+      height: 60vh;
+    }
+    .slideFirstDiv p {
+      text-align: left;
+      inline-size: 250px;
+      font-size: 1.5rem;
+    }
+
+    .main-image {
+      width: 50vw;
+      height: 60vh;
+      position: absolute;
+      top: 10vh;
+      left: 25vw;
+      /* overflow: hidden; */
+    }
+    .main-image img{
+      width: 100%;
+      height: 100%;
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .content {
+      position: absolute;
+      top: 40vh;
+      left: 35vw;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }  
+  }

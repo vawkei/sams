@@ -1,29 +1,85 @@
-.product-container{
-    display: flex;
-    width: 100%;
-    margin-top: 0;
-    /* position: relative; */
+.product-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0;
+  width: 100%;
 }
 
-.product-container .filter{
-    width: 15%;
-    /* padding: 0.5rem; */
-    background-color: black;
+.filter {
+  width: 15%;
+  background-color: black;
+  color: white;
+  /* height: 80vh; */
+  height: 100vh;
+  transition: all 0.3s;
+}
+
+.productList {
+  width: 83%;
+}
+
+
+/* media query */
+@media screen and (min-width: 640px) and (max-width:1024) {
+  /* .productList {
+    margin: 0 auto;
+    width: 60%;
+    noticed that this code has no effect
+  } */  
+
+
+  .filter {
+    left: -200%;
+    top: 17rem;
+    margin-left: 0;
+    position: absolute;
+    width: 50%;
+    /* background-color: black; */
+    border-radius: 12px;
+    height: 150vh;
+    z-index: 300;
+    padding: 1rem;
     color: white;
-    /* min-height: 80vh; */
-    height: 80vh;
-}
-.product-container .productsList{
-    width: 83%;
-    /* padding: 0.5rem; */
-    
+  }
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 130vh;
+    z-index: 200;
+  }
+  .showFilter {
+    left: 0;
+  }
 }
 
-@media screen and (max-width:640px){
-    .product-container .filter{
-        width: 20%;
-        padding: 1rem;
-        position: absolute;
-        left: -200;
-    }   
+
+@media screen and (max-width: 640px) {
+  .filter {
+    left: -200%;
+    top: 17rem;
+    margin-left: 0;
+    position: absolute;
+    width: 50%;
+    /* background-color: black; */
+    border-radius: 12px;
+    height: 100vh;
+    z-index: 300;
+    padding: 1rem;
+    color: white;
+  }
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 130vh;
+    z-index: 200;
+  }
+  .showFilter {
+    left: 0;
+  }
 }

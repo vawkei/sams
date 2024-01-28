@@ -6,7 +6,7 @@ const sendEmail = require("../utils/sendEmail");
 const { updateProductQuantity } = require("../utils/index");
 
 //======================================================start here
-//createOrder:
+//createOrder:=====================================================================
 const createOrder = async (req, res) => {
   const {
     firstName,
@@ -76,7 +76,7 @@ const createOrder = async (req, res) => {
   //res.send("createOrders route");
 };
 
-//getAdminOrders:
+//getAdminOrders:=====================================================================
 const getAdminOrders = async (req, res) => {
   const { userId } = req.user;
   //console.log(userId);
@@ -100,7 +100,7 @@ const getAdminOrders = async (req, res) => {
   }
 };
 
-//getOrders
+//getOrders===========================================================================
 const getOrders = async (req, res) => {
   const { userId } = req.user;
   console.log(userId);
@@ -132,7 +132,7 @@ const getOrders = async (req, res) => {
   //res.send("getOrders route");
 };
 
-//getSingleOrder:
+//getSingleOrder:===================================================================
 const getSingleOrder = async (req, res) => {
   const orderId = req.params.id;
   //console.log(orderId);
@@ -174,7 +174,7 @@ const getSingleOrder = async (req, res) => {
   //res.send("getSingleOrder route");
 };
 
-//updateOrderStatus:
+//updateOrderStatus:==================================================================
 const updateOrderStatus = async (req, res) => {
   const { orderStatus } = req.body;
   console.log(orderStatus);

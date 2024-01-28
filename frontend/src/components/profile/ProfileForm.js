@@ -1,16 +1,19 @@
 import { useState, useEffect } from "react";
-import classes from "./Profile.module.css";
+import classes from "./ProfileForm.module.css";
 import ProfileHeader from "./ProfileHeader";
 import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import Loader from "../ui/loader/Loader";
 import Spinner from "../ui/spinner/Spinner";
 
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleUser, updateUser, updateUserPhoto } from "../../store/index";
 
-const Profile = () => {
+const ProfileForm = () => {
   const dispatch = useDispatch();
+  
+  const navigate = useNavigate();
   const { isLoggedIn, user,isLoading } = useSelector((state) => state.auth);
   //console.log(user);
 
@@ -226,7 +229,7 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileForm;
 
 
 

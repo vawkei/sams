@@ -16,7 +16,8 @@ const {
   updateUserPhoto,
   clearCart,
   saveCartDb,
-  getCartDb
+  getCartDb,
+  getAllUsers
 } = require("../controllers/userController");
 
 const {authenticateUser, adminOnly} =require("../middlewares/authenticate-user");
@@ -31,7 +32,9 @@ router.get("/logout",logout);
 
 router.post("/forgotPassword",forgotPassword)
 
-router.post("/resetPassword",resetPassword)
+router.post("/resetPassword",resetPassword);
+
+router.get("/getAllUsers",getAllUsers)
 
 router.get("/getSingleUser",authenticateUser, getSingleUser);
 

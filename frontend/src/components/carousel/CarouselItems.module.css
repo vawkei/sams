@@ -1,78 +1,92 @@
-/* .items-container{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin:  auto;
-  flex-wrap: wrap;
-  gap: 1rem;
-  width: 60%;
-  cursor: pointer;
+.cardClass{
+  width: 20rem;
 }
-.items-container .li:hover{
-  background-color: green;
-} */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*zino's=========================================================================
-/* .carouselItem {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  width: 23rem;
-  height: 35rem;
-  /* //   margin: auto 1rem; */
-  /* margin-right: 5px;
-  text-align: center;
-  overflow: hidden;
-} */
-/* div.carousel-desc {
-  font-size: 1.5rem;
-  font-weight: 300;
-  line-height: 1.3;
-  color: var(--color-dark);
-}
-.product--image {
+.cardClass img {
   width: 100%;
-  height: 65%;
-  cursor: pointer;
+  height: 16em;
   object-fit: cover;
 }
-.price { */
-  /* color: red;
-} /* // font-size: 22px; */
-/*span {
-  color: #333;
-}  */
+
+.content{
+  text-align: center;
+}
+.action{
+  display: flex;
+  justify-content: center;
+}
+.action .btn{
+  width: 100%;
+  padding: 0.5rem 5.5rem;
+}
+
+
+
+/* Media query starts here */
+/* this is for tablets */
+@media screen and (min-width:641px) and (max-width:1024px){
+  .cardClass{
+    width: 100%;
+  }
+  .action{
+    display: flex;
+    justify-content: center;
+  }
+  .action .btn{
+    width: 100%;
+    padding: 1rem 8.0rem;
+  }
+}
+
+/* this is for regular phones like: iphone:xr,se,12pro14promax, pixl 7, galaxys20ultra*/
+@media screen and (min-width:359px) and (max-width:640px){
+  
+  .cardClass{
+    width: 100%;
+  }
+
+  .action .btn{
+    width: 100%;
+    padding: 1rem 9.5rem;
+    background-color: red;
+  }
+  
+}
+
+/* media query for galaxy fold, galaxy s8+ */
+@media screen and (max-width:360px){
+  .cardClass{
+    width: 100%;
+  }
+  .action{
+    display: flex;
+    justify-content: center;
+  }
+  .action .btn{
+    width: 100%;
+    padding: 0.2rem 5.5rem;
+    background-color: blue;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

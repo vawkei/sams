@@ -1,0 +1,29 @@
+.container{
+    /* width: 30%; */
+    margin: 1rem auto; 
+    width: 80%;
+    max-width: 35rem;
+    padding: 1rem;
+}
+
+.main-image{
+    margin: 1rem auto;
+    width: 10rem;
+    height: 5rem;
+    
+}
+.main-image img{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.content{
+    padding: 2rem 0;
+}
+.content p{
+    padding-top: 1rem;
+}
+.email{
+    color: green;
+}

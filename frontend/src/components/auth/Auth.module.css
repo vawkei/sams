@@ -155,5 +155,10 @@ h1{
         top: 53%;
         right: 15%;
     }
+    .links{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 

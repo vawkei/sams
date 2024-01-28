@@ -286,7 +286,7 @@ const CheckoutDetails = () => {
             </div>
 
             <Card className={classes.itemCard}>
-              {cartItems.map((item, index) => {
+              {cartItems.map((item) => {
                 return (
                   <div key={item._id} className={classes.item}>
                     <h4>

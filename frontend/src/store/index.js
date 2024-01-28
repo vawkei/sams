@@ -11,6 +11,7 @@ import cartSlice from "./cart/cartIndex";
 import couponSlice from "./coupon/couponIndex";
 import orderSlice from "./order/orderIndex";
 import paystackSlice from "./paystack/paystackIndex";
+import filteredUserSlice from "./filterUser";
 
 const initialAuthState = {
   isLoggedIn: false,
@@ -18,6 +19,7 @@ const initialAuthState = {
   isSuccess: false,
   isError: false,
   user: null,
+  users:[],
   message: "",
   showRegForm: true,
 };
@@ -103,6 +105,22 @@ export const resetPassword = createAsyncThunk(
   async (formData, thunkApi) => {
     try {
       return await authService.resetPassword(formData);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.msg ||
+        error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
+//getAllUsers:
+export const getAllUsers = createAsyncThunk(
+  "/getAllUsers",
+  async (_, thunkApi) => {
+    try {
+      return await authService.getAllUsers();
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.msg) ||
@@ -304,6 +322,21 @@ const authSlice = createSlice({
           state.isError = true;
           console.log(action.payload)
         })
+        //getAllUsers======================================================
+        .addCase(getAllUsers.pending,(state)=>{
+          state.isLoading = true;
+        })
+        .addCase(getAllUsers.fulfilled,(state,action)=>{
+          state.isLoading = false;
+          state.users=action.payload.users;
+          state.isSuccess=true;
+          console.log(action.payload)
+        })
+        .addCase(getAllUsers.rejected,(state,action)=>{
+          state.isLoading = false;
+          state.isError = true;
+          state.isSuccess = false;
+        })
       //8:getSingleUser:===================================================
       .addCase(getSingleUser.pending, (state) => {
         state.isLoading = true;
@@ -405,6 +438,7 @@ const store = configureStore({
     coupon: couponSlice.reducer,
     order: orderSlice.reducer,
     paystack: paystackSlice.reducer,
+    filterUser : filteredUserSlice.reducer
   },
 });
 

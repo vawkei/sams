@@ -58,7 +58,7 @@ const OrderReview= () => {
 
   return (
     <div>
-      <h1>Review Product</h1>
+      <h2>Review Product</h2>
       {isLoading && <Loader />}
       <form action="" onSubmit={onSubmitHandler}>
         <Card className={classes.cardClass}>

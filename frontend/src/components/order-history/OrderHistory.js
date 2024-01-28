@@ -1,17 +1,20 @@
 import { Fragment } from "react";
 import Button from "../ui/button/Button";
 import classes from "./OrderHistory.module.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OrderHistory = (props) => {
+  var nairaSymbol = "\u20A6";
+  const navigate = useNavigate();
 
-    var nairaSymbol = "\u20A6";
+  const navigateHomeHandler = () => {
+    navigate("/");
+  };
 
   return (
     <div className={classes.table}>
-      <Link to={"/"}>
-        <Button className={classes.btn}> &larr; Back home</Button>
-      </Link>
+      <Button className={classes.btn} onClick={navigateHomeHandler}>&larr; Back home</Button>
+
       <h2>Your Order History</h2>
       {props.isLoading ? (
         <p style={{ marginLeft: "6rem" }}>Fetching Orders...</p>
@@ -53,9 +56,9 @@ const OrderHistory = (props) => {
                 </thead>
                 <tbody>
                   {props.orders.map((order, index) => {
-                    {
+                    
                       /* {filteredOrders.map((order, index) => { */
-                    }
+                    
                     // const {date,orderid,orderAmount,orderStatus} =order;
                     return (
                       <tr
@@ -63,7 +66,9 @@ const OrderHistory = (props) => {
                         onClick={() => props.orderDetailsHandler(order._id)}>
                         <td>{index + 1}</td>
                         <td>{new Date(order.orderDate).toDateString()}</td>
-                        <td>{`${new Date(order.orderTime).toLocaleTimeString()}`}</td>
+                        <td>{`${new Date(
+                          order.orderTime
+                        ).toLocaleTimeString()}`}</td>
                         <td>{order._id}</td>
                         <td>{order.firstName}</td>
                         {/* <td>{order.transactionRef}</td> */}
@@ -72,22 +77,21 @@ const OrderHistory = (props) => {
                           {order.orderAmount}
                         </td>
                         <td className="stats">
-                        <p
-                          className={
-                            order.orderStatus === "Delivered"
-                              ? "delivered"
-                              : order.orderStatus === "Processing"
-                              ? "processing"
-                              : order.orderStatus === "Order Placed"
-                              ? "pending"
-                              : ""
-                          }>
-                          {order.orderStatus}
-                        </p>
-                        
-                        <p>{new Date(order.updatedAt).toLocaleString()}</p>{" "}
-                        {/* <p>{new Date(order.updatedAt).toLocaleTimeString()}</p>{" "} */}
-                      </td>
+                          <p
+                            className={
+                              order.orderStatus === "Delivered"
+                                ? "delivered"
+                                : order.orderStatus === "Processing"
+                                ? "processing"
+                                : order.orderStatus === "Order Placed"
+                                ? "pending"
+                                : ""
+                            }>
+                            {order.orderStatus}
+                          </p>
+                          <p>{new Date(order.updatedAt).toLocaleString()}</p>{" "}
+                          {/* <p>{new Date(order.updatedAt).toLocaleTimeString()}</p>{" "} */}
+                        </td>
                       </tr>
                     );
                   })}

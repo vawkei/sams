@@ -105,12 +105,16 @@
         flex-direction: column-reverse;
         gap: 2rem;
     } 
+    .item p{
+        text-align: left;
+    }
     .checkout-details{
         width: 100%;
     }
-    .checkout-details > h2{
+    .checkout-details h2, p{
         text-align: center;
     }
+
     .action{
         display: flex;
         align-items: center;

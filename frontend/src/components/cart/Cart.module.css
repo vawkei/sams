@@ -43,10 +43,8 @@
 .counter > * {
   margin-right: 0.5rem;
   margin-top: 1rem;
-  /*This adds a right margin of 1rem{right & top} to the direct children of counter. */
+  /*This adds a margin of 1rem{right & top} to the direct children of counter. */
 }
-
-
 
 .clearcart-checkout {
   display: flex;
@@ -80,13 +78,31 @@
   padding:1rem;
 }
 
-@media screen and (min-width:640px) and (max-width:1024px){
+
+/* Media query *==================================================================*/
+@media screen and (min-width:641px) and (max-width:1024px){
+
+  .container {
+    width: 100%;
+    overflow: scroll;
+  }
   .image {
     width: 100%;
+  }
+  .container > p {
+    text-align: center;
   }
   .content p{
     font-size: x-large;
   }
+  .product {
+    width: 100%;
+    display: flex;
+    flex-direction: column;    
+    gap: 0rem;
+    overflow-x: hidden;
+  }
+
   .left{
     margin-left: 5rem;
   }
@@ -94,18 +110,39 @@
      display: flex;
     justify-content: flex-start;
     gap: 3rem;
+    width: 100%;
+    margin-top: 0;
   }
+
+
   .trash{margin-left: 5rem;}
   .btn, .counter p{
     margin-left: 1rem;
   }
   
-  .btn{
+  .action{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn {
+    width: 5rem;
     font-size: 1.5rem;
   }
-  
+  .clearcart-checkout {
+    position: static;
+    margin-top: 2rem;
+    width: 100%;
+    
+  }
+  .checkoutSummary{
+    text-align: center;
+    width: 100%;  
+  }
+
 }
 
+/* @media screen and (max-width: 768px) { */
 @media screen and (max-width: 640px) {
   .container {
     width: 100%;
@@ -118,7 +155,6 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    /* padding: 0rem; */
     gap: 0rem;
     overflow-x: hidden;
   }
@@ -144,89 +180,3 @@
   
   }
 }
-
-
-/* @media screen and (min-width:410px) and (max-width:640px){ */
-@media screen and (min-width:640px) and (max-width:1200px){
-  
-  .container {
-    width: 100%;
-    overflow: scroll;
-  }
-  .container > p {
-    text-align: center;
-  }
-  .product {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    
-    gap: 0rem;
-    overflow-x: hidden;
-  }
-
-  .right {
-    width: 100%;
-    margin-top: 0;
-  }
-
-
-  .btn {
-    width: 5rem;
-  }
-  .clearcart-checkout {
-    position: static;
-    margin-top: 2rem;
-    width: 100%;
-    
-  }
-  .checkoutSummary{
-    text-align: center;
-    width: 100%;
-  
-  }
-};
-
-
-/* .cart-container table{
-    width: 100%;
-    border: 1px solid black;
-    border-collapse: collapse;
-    font-size: 1.2rem;
-}
-
-.cart-container table thead {
-    background-color: black;
-    padding: 1.5rem;
-    color: white;
-  }
-  .cart-container table tbody {
-    text-align: center;
-    padding: 1rem;
-    margin: auto;
-  }
-  .cart-container table tbody td {
-    padding: 0.4rem;
-    border: 1px solid black;
-    text-align: left;
-  }
-
-  .counter{
-    display: flex;
-    align-items: center;
-    /* justify-content: center; */
-    /* width: 6rem;
-  } */
-  /* .counter > * {
-    margin-right: 0.5rem;
-    margin-top: 1rem;  */
-    /*This adds a right margin of 1rem{right & top} to the direct children of counter. */
-  /* } */
-/*   
-  .icons{
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    cursor: pointer;
-    margin: auto;
-  } */

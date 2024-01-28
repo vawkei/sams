@@ -10,6 +10,7 @@ import EditProduct from "../add-product/EditProduct";
 import Coupon from "../coupon/Coupon"
 import OrderStatus from "../orders/OrderStatus";
 import OrderDetails from "../orders/OrderDetails";
+import AllUsers from "../all-users/AllUsers";
 
 
 const AdminRoutes = () => {
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
             <div className={classes.content}>
                 <Routes>
                     <Route  path="home" element={<Home />} />
+                    <Route  path="users" element={<AllUsers />} />
                     <Route  path="view-products" element={<AllProducts />}/>
                     <Route  path="add-product" element={<AddProduct />}/>
                     <Route  path="orders" element={<Orders />}/>

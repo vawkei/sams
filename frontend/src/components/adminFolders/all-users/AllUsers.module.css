@@ -1,0 +1,33 @@
+.user-container{
+    width: 100%;
+}
+
+.tablez{
+    width: 100%; 
+    max-width: 50rem; 
+    margin: 3rem -0.5rem;    
+}
+
+
+.searchComp{
+    width: 85%;
+}
+.name-content{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* text-align: left; */
+}
+
+.main-image{
+    height: 5rem;
+    width: 5rem;
+}
+.main-image img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.name-content .name{
+    text-align: start;
+}
