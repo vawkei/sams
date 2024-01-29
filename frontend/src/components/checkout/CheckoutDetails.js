@@ -120,7 +120,7 @@ const CheckoutDetails = () => {
       orderStatus: "Order Placed",
       email: user.email,
     };
-    dispatch(paystackSliceAction.SAVE_ORDER_DATA(formData));
+    
     const paymentData = { amount: cartTotalAmnt, email: user.email };
     dispatch(orderSliceActions.SAVE_ORDER_DATA(formData));
     const transactionReference = await dispatch(acceptpayment(paymentData));

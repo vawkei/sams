@@ -199,7 +199,10 @@ const payStack = {
       req.session.transactionReference = paystackResponse.data.data.reference;
       res
         .status(200)
-        .json({ paymentUrl: paystackResponse.data.data.authorization_url,ref:paystackResponse.data.data.reference });
+        .json({
+          paymentUrl: paystackResponse.data.data.authorization_url,
+          ref: paystackResponse.data.data.reference,
+        });
     } catch (error) {
       console.log(error);
       res.status(500).json(error);
@@ -208,8 +211,8 @@ const payStack = {
 
   //VerifyPayment controller:
   verifyPayment: async (req, res) => {
-    const reference  = req.session.transactionReference;
-   // console.log(reference)
+    const reference = req.session.transactionReference;
+    // console.log(reference)
     // res.json(reference)
     // dvsgvn2mwh
 
@@ -226,9 +229,9 @@ const payStack = {
       console.log(verifyResponse);
       // res.json({babe:verifyResponse.data})
       if (verifyResponse.data.message === "Verification successful") {
-        res.status(200).json({ msg: 'Payment verified successfully' });
+        res.status(200).json({ msg: "Payment verified successfully" });
       } else {
-        res.json({msg: "payment verification failed" });
+        res.json({ msg: "payment verification failed" });
       }
     } catch (error) {
       console.log(error);
@@ -249,7 +252,7 @@ const initializePayment = payStack;
 const crypto = require("crypto");
 
 const webhook = (req, res) => {
-  const hash = crypto
+  const hash = crypto 
     .createHmac("sha512", process.env.SECRET_KEY)
     .update(JSON.stringify(req.body))
     .digest("hex");
@@ -260,9 +263,13 @@ const webhook = (req, res) => {
     //do something with event:
     if (event && event.event === "transfer.success") {
       return res.status(200).json({ message: "Transfer successful" });
+    }  else {
+      // Invalid signature
+      console.error('Invalid Paystack signature');
+      return res.status(400).json({ message: "Invalid Paystack signature" });
     }
   }
-  res.status(200);
+  res.status(200).json({ message: "Webhook received successfully" });
   //   res.send("payWithPaystackWebhook route");
 };
 

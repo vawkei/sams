@@ -26,7 +26,7 @@ const paystackRoute = require("./routes/paystackRoutes");
 app.use(express.urlencoded({extended:false}));
 
 app.use(cors({
-    origin:["http://localhost:3001","https://shopito.com"],
+    origin:["http://localhost:3001","https://samsapp.com"],
     credentials:true
 }));
 

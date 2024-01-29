@@ -16,5 +16,6 @@ const verifypayment = async(reference)=>{
     return response.data;
 };
 
+
 const paystackService = {acceptpayment,verifypayment}
 export default paystackService;
