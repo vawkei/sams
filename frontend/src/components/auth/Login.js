@@ -12,6 +12,9 @@ import Button from "../ui/button/Button";
 import { getCartDb, saveCartDb } from "../../store/cart/cartIndex";
 import Spinner from "../ui/spinner/Spinner";
 
+import { motion } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
+
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
@@ -22,7 +25,11 @@ const Login = () => {
 
   const redirect = urlParams.get("redirect");
 
-  const { isLoggedIn, user,isLoading,isSuccess } = useSelector((state) => state.auth);
+  const { isLoggedIn, user, isLoading, isSuccess } = useSelector(
+    (state) => state.auth
+  );
+
+  const isMobile = useMediaQuery({ maxWidth: 640 });
 
   const dispatch = useDispatch();
 
@@ -71,9 +78,7 @@ const Login = () => {
       dispatch(getCartDb());
     }
     dispatch(authActions.RESET_AUTH());
-  }, [isLoggedIn, isSuccess, dispatch, navigate,redirect]);
-
-
+  }, [isLoggedIn, isSuccess, dispatch, navigate, redirect]);
 
   // useEffect(() => {
   //   if (isLoggedIn && user) {
@@ -94,7 +99,6 @@ const Login = () => {
   //   }
   //   dispatch(authActions.RESET_AUTH());
   //  }, [isLoggedIn, user, dispatch, navigate, redirect]);
-   
 
   return (
     <div>
@@ -106,50 +110,162 @@ const Login = () => {
         </div>
         <div className={classes.cardDiv}>
           <Card className={classes.cardClass}>
-            <form action="" className={classes.form} onSubmit={submitHandler}>
-              <div className={classes.control}>
-                <label htmlFor="">Your Email</label>
-                <input
-                  type="email"
-                  value={enteredEmail}
-                  onChange={enteredEmailChangeHandler}
-                />
-              </div>
-              <div className={classes.control}>
-                <label htmlFor="">Your Password</label>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  value={enteredPassword}
-                  onChange={enteredPasswordChangeHandler}
-                />
-                {showPassword ? (
-                  <AiOutlineEye
-                    size={24}
-                    onClick={passwordTypeToggle}
-                    className={classes.passwordToggle}
-                  />
-                ) : (
-                  <AiFillEyeInvisible
-                    size={24}
-                    onClick={passwordTypeToggle}
-                    className={classes.passwordToggle}
-                  />
-                )}
-              </div>
+            {/* animationsEmail ===================================================*/}
+            {isMobile ? (
+              <motion.form 
+              exit={{x:1000,transition:{delay:1.5,type:'spring',stiffness:500}}}
+              //this is to exit the form and nothin else
 
-              <div className={classes.action}>
-                <Button className={classes.btn}>Login</Button>
-              </div>
-              <div className={classes.links}>
-                <p className={classes.login}>
-                  <Link to={"/register"}>Don't have an account ?</Link>
-                </p>
-                <p className={classes.forgot}>
-                  <Link to={"/forgot-password"}>Forgot your password ?</Link>
-                </p>
+              action="" className={classes.form} onSubmit={submitHandler}>
+                <motion.div
+                  initial={{ x: -600 }}
+                  animate={{
+                    x: 0,
+                    transition: {
+                      delay: 3,
+                      type: "spring",
+                      stiffness: 500,
+                    },
+                  }}
+                  className={classes.control}>
+                  <label htmlFor="">Your Email</label>
+                  <input
+                    type="email"
+                    value={enteredEmail}
+                    onChange={enteredEmailChangeHandler}
+                  />
+                </motion.div>
+                {/* animation4Password====================================== */}
+                <motion.div
+                  initial={{ x: 600 }}
+                  animate={{
+                    x: 0,
+                    transition: {
+                      delay: 4,
+                      type: "spring",
+                      stiffness: 500,
+                    },
+                  }}
+                  className={classes.control}>
+                  <label htmlFor="">Your Password</label>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={enteredPassword}
+                    onChange={enteredPasswordChangeHandler}
+                  />
+                  {showPassword ? (
+                    <AiOutlineEye
+                      size={24}
+                      onClick={passwordTypeToggle}
+                      className={classes.passwordToggle}
+                    />
+                  ) : (
+                    <AiFillEyeInvisible
+                      size={24}
+                      onClick={passwordTypeToggle}
+                      className={classes.passwordToggle}
+                    />
+                  )}
+                </motion.div>
+                {/* animation4Login ================================*/}
+                <div className={classes.action}>
+                  {isMobile ? (
+                    <motion.span
+                      initial={{ y: -600 }}
+                      animate={{
+                        y: 0,
+                        transition: {
+                          delay: 7,
+                          type: "spring",
+                          stiffness: 500,
+                        },
+                      }}>
+                      <Button className={classes.btn}>Login</Button>
+                    </motion.span>
+                  ) : (
+                    <Button className={classes.btn}>Login</Button>
+                  )}
+                </div>
+                {/* animation4Links ================================*/}
+                <div className={classes.links}>
+                  <>
+                    <motion.p
+                      initial={{ y: -600 }}
+                      animate={{
+                        y: 0,
+                        transition: {
+                          delay: 5,
+                          type: "spring",
+                          stiffness: 500,
+                        },
+                      }}
+                      className={classes.login}>
+                      <Link to={"/register"}>Don't have an account ?</Link>
+                    </motion.p>
+                    <motion.p
+                      initial={{ y: -600 }}
+                      animate={{
+                        y: 0,
+                        transition: {
+                          delay: 6,
+                          type: "spring",
+                          stiffness: 500,
+                        },
+                      }}
+                      className={classes.forgot}>
+                      <Link to={"/forgot-password"}>
+                        Forgot your password ?
+                      </Link>
+                    </motion.p>
+                  </>
+                </div>
+              </motion.form>
+            ) : (
+              <form action="" className={classes.form} onSubmit={submitHandler}>
+                <div className={classes.control}>
+                  <label htmlFor="">Your Email</label>
+                  <input
+                    type="email"
+                    value={enteredEmail}
+                    onChange={enteredEmailChangeHandler}
+                  />
+                </div>
+                <div className={classes.control}>
+                  <label htmlFor="">Your Password</label>
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={enteredPassword}
+                    onChange={enteredPasswordChangeHandler}
+                  />
+                  {showPassword ? (
+                    <AiOutlineEye
+                      size={24}
+                      onClick={passwordTypeToggle}
+                      className={classes.passwordToggle}
+                    />
+                  ) : (
+                    <AiFillEyeInvisible
+                      size={24}
+                      onClick={passwordTypeToggle}
+                      className={classes.passwordToggle}
+                    />
+                  )}
+                </div>
 
-              </div>
-            </form>
+                <div className={classes.action}>
+                  <Button className={classes.btn}>Login</Button>
+                </div>
+                <div className={classes.links}>
+                  <p className={classes.login}>
+                    <Link to={"/register"}>Don't have an account ?</Link>
+                  </p>
+                  <p className={classes.forgot}>
+                    <Link to={"/forgot-password"}>Forgot your password ?</Link>
+                  </p>
+                </div>
+              </form>
+            )}
+            {/* animationsEnds ===================================================*/}
           </Card>
         </div>
       </section>

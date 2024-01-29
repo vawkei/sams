@@ -4,14 +4,11 @@ import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import DrawerToggleButton from "../ui/drawerToggleButton/DrawerToggleButton";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  authActions,
-  logout,
-  getSingleUser,
-  getLoginStatus,
-} from "../../store/index";
+import { authActions, logout } from "../../store/index";
 import { AdminOnlyLink } from "../adminFolders/adminOnly/AdminOnlyRoute";
 import { cartSliceActions } from "../../store/cart/cartIndex";
+import { useMediaQuery } from "react-responsive";
+import { motion } from "framer-motion";
 
 const MainNavigation = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -19,7 +16,7 @@ const MainNavigation = () => {
 
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
-  const {cartTotalQty,cartItems} = useSelector((state)=>state.cart);
+  const { cartTotalQty, cartItems } = useSelector((state) => state.cart);
   //console.log(cartTotalQty);
 
   /* {isLoggedIn ? (user ? `hi ${user.name}` : "Hello!") : "Hello!"} */
@@ -27,16 +24,17 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+
   useEffect(() => {
     if (isLoggedIn && user) {
       setDisplayName(user.name || "");
     }
   }, [isLoggedIn, user]);
 
-
-  useEffect(()=>{
-    dispatch(cartSliceActions.CART_TOTAL_QUANTITY())
-  },[dispatch,cartItems]);
+  useEffect(() => {
+    dispatch(cartSliceActions.CART_TOTAL_QUANTITY());
+  }, [dispatch, cartItems]);
 
   const hideMenuHandler = () => {
     setShowMenu(false);
@@ -52,11 +50,25 @@ const MainNavigation = () => {
   const logOutHandler = async () => {
     await dispatch(logout());
     dispatch(authActions.RESET_AUTH());
-    dispatch(cartSliceActions.RESET_CART())
+    dispatch(cartSliceActions.RESET_CART());
     navigate("/login");
   };
 
-  const logo = (
+  const logo = isMobile ? (
+    <motion.div
+      initial={{ x: "1000" }}
+      animate={{
+        x: 0,
+        transition: { delay: 2, type: "spring", stiffness: 100 },
+      }}
+      className={classes.logo}>
+      <h1>
+        <NavLink to={"/"} className={navDataHandler}>
+          Sam<span>s</span>
+        </NavLink>
+      </h1>
+    </motion.div>
+  ) : (
     <div className={classes.logo}>
       <h1>
         <NavLink to={"/"} className={navDataHandler}>
@@ -66,10 +78,32 @@ const MainNavigation = () => {
     </div>
   );
 
-  const cart = (
+
+  const cart =isMobile? (
     <span>
       <NavLink to={"/cart"}>
-        <div className={classes.cart}>
+        <motion.div
+          initial={{ x: "-1000" }}
+          animate={{
+            x: 0,
+            transition: {
+              delay: 2,
+              type: "spring",
+              stiffness: 100,
+            },
+          }}
+          className={classes.cart}>
+          <p>Cart</p>
+          <FaShoppingCart size={20} />
+          <p>{cartTotalQty}</p>
+        </motion.div>
+      </NavLink>
+    </span>
+  ):(
+    <span>
+      <NavLink to={"/cart"}>
+        <div
+          className={classes.cart}>
           <p>Cart</p>
           <FaShoppingCart size={20} />
           <p>{cartTotalQty}</p>
@@ -95,7 +129,7 @@ const MainNavigation = () => {
                 : `${classes["nav-backdrop"]}`
             }></div>
 
-          <ul>
+          <ul onClick={toggleMenuHandler}>
             <AdminOnlyLink>
               <NavLink className={navDataHandler} to={"/admin/home"}>
                 <li style={{ color: "red" }}>Admin</li>
@@ -146,7 +180,16 @@ const MainNavigation = () => {
           ) : (
             <div className={classes["conditional-cart"]}>
               <span>{cart}</span>
-              <DrawerToggleButton toggle={toggleMenuHandler} />
+              {isMobile ?
+              (<motion.span
+                initial={{y:-100}}
+                animate={{y:0, transition:{delay:1.5,type:"spring",stiffness:500}}}
+              >
+                  <DrawerToggleButton toggle={toggleMenuHandler} />
+              </motion.span>):(
+                <DrawerToggleButton toggle={toggleMenuHandler} />
+              )}
+              
             </div>
           )}
         </div>

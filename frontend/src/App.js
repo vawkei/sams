@@ -1,5 +1,5 @@
 import Layout from "./components/layout/Layout";
-import {Routes,Route} from "react-router-dom"
+import {Routes,Route, useLocation} from "react-router-dom"
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
@@ -25,11 +25,15 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ProfileHome from "./components/profile/ProfileHome";
 import ProfileForm from "./components/profile/ProfileForm";
+import {AnimatePresence} from "framer-motion"
 
 function App() {
   axios.defaults.withCredentials = true;
 
   const { user,isLoggedIn} = useSelector((state) => state.auth);
+
+
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -45,8 +49,9 @@ function App() {
 
   return (
     <Layout>
+      <AnimatePresence >
       <ToastContainer />
-        <Routes>
+        <Routes location={location} key={location.key}>
           <Route path="/" element={<HomePage />}/>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
@@ -71,6 +76,7 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
 
         </Routes>
+        </AnimatePresence>
     </Layout>
   );
 }
