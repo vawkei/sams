@@ -8,10 +8,17 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const MongoDBStore = require('connect-mongodb-session')(session);
 
 const fileUpload = require ("express-fileupload");
 const cloudinary = require("cloudinary").v2;
+
+// Import and initialize express-session here
+const session = require("express-session");
+const MongoDBStore = require('connect-mongodb-session')(session);
+const store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: 'sessions',
+});
 
 // rest of the packages
 
@@ -35,12 +42,6 @@ app.use(cors({
 app.use(cookieParser())
 
 
-const store = new MongoDBStore({
-    uri: process.env.MONGO_URI,
-    collection: 'sessions',
-  })
-
-const session = require("express-session")
 app.use(session({
  secret: process.env.EXPRESS_SESSION_SECRET,
  resave: false,
