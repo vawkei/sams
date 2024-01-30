@@ -44,7 +44,6 @@ const register = async (req, res) => {
     verificationToken: verificationToken,
   };
 
-  
   const origin = process.env.REACT_APP_FRONTEND_URL;
   try {
     const user = await User.create(tempData);
@@ -126,6 +125,10 @@ const login = async (req, res) => {
         path: "/",
         httpOnly: true,
         expires: new Date(Date.now() + oneDay),
+        // secure:true, should be commented out during development
+        // sameSite:"none"
+        secure: true,
+        sameSite: "none",
       });
       res.status(201).json({
         msg: "User loggedin",

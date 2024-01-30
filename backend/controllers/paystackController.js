@@ -262,6 +262,7 @@ const webhook = (req, res) => {
     const event = req.body;
     //do something with event:
     if (event && event.event === "transfer.success") {
+      console.log(event)
       return res.status(200).json({ message: "Transfer successful" });
     }  else {
       // Invalid signature
