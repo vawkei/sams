@@ -129,6 +129,7 @@ const login = async (req, res) => {
         // sameSite:"none"
         secure: true,
         sameSite: "none",
+        domain: ".onrender.com",
       });
       res.status(201).json({
         msg: "User loggedin",
