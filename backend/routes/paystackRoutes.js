@@ -9,7 +9,7 @@ router.post("/acceptpayment", express.json(), initializePayment.acceptPayment);
 
 router.get("/verifypayment/:reference",express.json(), initializePayment.verifyPayment);
 
-router.post("/charge",express.json(), initializePayment.chargeCard);
+router.post("/charge",express.json(), initializePayment.initiateCardPayment);
 
 router.post(
   "/webhook",
