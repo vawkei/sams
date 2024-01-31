@@ -206,20 +206,17 @@ const cartSlice = createSlice({
         state.isSuccess = true;
         state.message = action.payload;
 
-        // localStorage.setItem(
-        //   "cartItems",
-        //   JSON.stringify(action.payload.userCart)
-        // );
-        // console.log(action.payload.userCart);
 
         localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
 
         
-        if (state.cartItems.length > 0) {
-          window.location.href = `${FRONT_URL}/cart`;
-        } else {
-          window.location.href = `${FRONT_URL}`;
-        }
+        // if (state.cartItems.length > 0) {
+        //   window.location.href = `${FRONT_URL}/cart`;
+        // } else {
+        //   window.location.href = `${FRONT_URL}`;
+        // }handled this in the Login.js useEffect
+
+
         //whenever getCartDb is called,we will first set our localstorage with the cartItems got frm the db. Then it will check if there is an item in our cart which is coming from our db. if there isan item, it takes us to the cart page. Or if none, then it takes us to home page
       })
       .addCase(getCartDb.rejected, (state, action) => {

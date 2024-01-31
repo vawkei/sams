@@ -29,6 +29,8 @@ const Login = () => {
     (state) => state.auth
   );
 
+  const {cartItems} = useSelector((state)=>state.cart);
+
   const isMobile = useMediaQuery({ maxWidth: 640 });
 
   const dispatch = useDispatch();
@@ -75,7 +77,12 @@ const Login = () => {
         return navigate("/cart");
         // The return statement in the useEffect hook in ds code is used to provide a cleanup function that runs when the component unmounts or before the effect runs again. However, in ds specific case, the return statement is being used to immediately exit the function once the condition if (redirect === "cart") is met.
       }
-      dispatch(getCartDb());
+      //dispatch(getCartDb());
+      if (cartItems.length > 0) {
+          navigate("/cart")
+        } else {
+          navigate("/")
+        }
     }
     dispatch(authActions.RESET_AUTH());
   }, [isLoggedIn, isSuccess, dispatch, navigate, redirect]);
