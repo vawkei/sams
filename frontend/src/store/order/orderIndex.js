@@ -5,6 +5,7 @@ const initialOrderState = {
     order:null,
     orders:[],
     adminOrders:[],
+    incomingOrder:[],
     message:"",
     isSuccess:false,
     isError:false,
@@ -77,7 +78,8 @@ const orderSlice = createSlice({
     reducers:{
         SAVE_ORDER_DATA(state,action){
             const incomingOrderData = action.payload;
-            //console.log(incomingOrderData);
+            console.log(incomingOrderData);
+            state.incomingOrder = incomingOrderData;
         },
         RESET_ORDER_STATE(state){
             state.message = "";

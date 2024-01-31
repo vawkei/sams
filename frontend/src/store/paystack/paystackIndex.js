@@ -105,3 +105,18 @@ const paystackSlice = createSlice({
 
 export default paystackSlice;
 export const paystackSliceAction = paystackSlice.actions;
+
+
+// .addCase(verifypayment.fulfilled, (state, action) => {
+//   state.isLoading = false;
+//   state.iSuccess = true;
+
+//   if (action.payload.msg === "Payment verified successfully") {
+//     // Redirect to a success page or handle accordingly
+//     window.location.href = `${FRONT_URL}/success`;
+//   } else {
+//     state.message = "Unknown error occurred";
+//   }
+
+//   console.log(action.payload);
+// })

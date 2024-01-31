@@ -38,9 +38,10 @@ const CheckoutDetails = () => {
   const cartTotalAmnt = useSelector((state) => state.cart.cartTotalAmount);
   // console.log(cartTotalAmnt)
   const { user, isLoggedIn } = useSelector((state) => state.auth);
-  console.log(user);
+  //console.log(user);
 
   const { message } = useSelector((state) => state.paystack);
+  console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
 
