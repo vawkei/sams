@@ -127,8 +127,8 @@ const login = async (req, res) => {
         expires: new Date(Date.now() + oneDay),
         // secure:true, should be commented out during development
         // sameSite:"none"
-        // secure: true,
-        // sameSite: "none",
+        secure: true,
+        sameSite: "none",
       });
       res.status(201).json({
         msg: "User loggedin",
@@ -148,8 +148,8 @@ const logout = (req, res) => {
       path: "/",
       httpOnly: true,
       expires: new Date(0),
-      // secure:true,
-      // sameSite:"none"
+      secure:true,
+      sameSite:"none"
     });
     res.status(200).json({ msg: "User logged out successfully" });
   } catch (error) {
