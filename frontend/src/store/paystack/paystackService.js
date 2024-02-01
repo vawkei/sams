@@ -8,11 +8,12 @@ const acceptpayment = async(paymentData)=>{
     const response = await axios.post(API_URL + "acceptpayment", paymentData);
     return response.data
 };
-//acceptpayment:
+
+//verifypayment:
 
 const verifypayment = async(reference)=>{
-    // const response = await axios.get(API_URL + "verifypayment", reference);
-    const response = await axios.get(`${API_URL}verifypayment/${reference}`);
+    const response = await axios.post(API_URL + "verifypayment", reference);
+    // const response = await axios.get(`${API_URL}verifypayment/${reference}`);
     return response.data;
 };
 

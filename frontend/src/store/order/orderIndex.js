@@ -103,7 +103,7 @@ const orderSlice = createSlice({
             state.isLoading = false;
             state.isSuccess=false;
             state.isError = true;
-            console.log(action.payload.msg)
+            console.log(action.payload)
         })
         // getAdminOrders:
         .addCase(getAdminOrders.pending,(state)=>{

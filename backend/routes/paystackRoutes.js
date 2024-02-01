@@ -7,7 +7,8 @@ const {initializePayment,webhook} = require("../controllers/paystackController")
 //paystack routes
 router.post("/acceptpayment", express.json(), initializePayment.acceptPayment);
 
-router.get("/verifypayment/:reference",express.json(), initializePayment.verifyPayment);
+//router.get("/verifypayment/:reference",express.json(), initializePayment.verifyPayment);
+router.post("/verifypayment",express.json(), initializePayment.verifyPayment);
 
 router.post("/charge",express.json(), initializePayment.initiateCardPayment);
 

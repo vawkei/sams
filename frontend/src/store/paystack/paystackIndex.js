@@ -30,7 +30,8 @@ export const acceptpayment = createAsyncThunk(
 
 //verifypayment:
 export const verifypayment = createAsyncThunk(
-  "verifypayment/:reference",
+  //"verifypayment/:reference",
+  "verifypayment/",
   async (reference, thunkAPI) => {
     try {
       return await paystackService.verifypayment(reference);

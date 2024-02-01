@@ -200,7 +200,7 @@ const payStack = {
           "Content-Type": "application/json",
         },
       });
-      console.log(paystackResponse);
+      console.log("AcceptPayment respnse:",paystackResponse);
 
       req.session.transactionReference = paystackResponse.data.data.reference;
       res.status(200).json({
@@ -215,9 +215,11 @@ const payStack = {
 
   //VerifyPayment controller==========================================================:
   verifyPayment: async (req, res) => {
-    const reference = req.session.transactionReference;
-    console.log(reference);
-    // res.json(reference)
+    const referenceFrmDBackend = req.session.transactionReference;
+    console.log("Received referenceBackend:",referenceFrmDBackend)
+   
+    const {reference} = req.body
+    console.log("Received reference:", reference)
     // dvsgvn2mwh
 
     try {
@@ -230,7 +232,7 @@ const payStack = {
           },
         }
       );
-      console.log(verifyResponse);
+      console.log("verify response:",verifyResponse);
       // res.json({babe:verifyResponse.data})
       if (verifyResponse.data.message === "Verification successful") {
         res.status(200).json({ msg: "Payment verified successfully" });

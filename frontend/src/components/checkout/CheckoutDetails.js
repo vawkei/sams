@@ -40,21 +40,51 @@ const CheckoutDetails = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message } = useSelector((state) => state.paystack);
+  const { message, } = useSelector((state) => state.paystack);
   console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
 
-  useEffect(() => {
-    if (user && isLoggedIn) {
-      firstNameInputRef.current.value = user.name || "";
-      surnameInputRef.current.value = user.surname || "";
-      phoneNumberInputRef.current.value = "";
-      residentialAddressInputRef.current.value = user.address || "";
-      townInputRef.current.value = user.town || "";
-      stateInputRef.current.value = user.state || "";
+  // useEffect(() => {
+  //   if (user && isLoggedIn) {      
+  //     firstNameInputRef.current.value = user?.name || "";
+  //     surnameInputRef.current.value = user?.surname || "";
+  //     phoneNumberInputRef.current.value = "";
+  //     residentialAddressInputRef.current.value = user?.address || "";
+  //     townInputRef.current.value = user?.town || "";
+  //     stateInputRef.current.value = user?.state || "";
+  //   }
+  // }, [isLoggedIn, user]);
+
+useEffect(() => {
+  if (user && isLoggedIn) {
+    if (firstNameInputRef.current) {
+      firstNameInputRef.current.value = user?.name || "";
     }
-  }, [isLoggedIn, user]);
+    if (surnameInputRef.current) {
+      surnameInputRef.current.value = user?.surname || "";
+    }
+    if (phoneNumberInputRef.current) {
+      phoneNumberInputRef.current.value = user?.phoneNumber || "";
+    }
+    if (residentialAddressInputRef.current) {
+      residentialAddressInputRef.current.value = user?.address || "";
+    }
+    if (townInputRef.current) {
+      townInputRef.current.value = user?.town || "";
+    }
+    if (stateInputRef.current) {
+      stateInputRef.current.value = user?.state || "";
+    }
+    
+    //firstNameInputRef.current.value = user?.name || "";
+    //surnameInputRef.current.value = user?.surname || "";
+    //phoneNumberInputRef.current.value = "";
+    //residentialAddressInputRef.current.value = user?.address || "";
+    //townInputRef.current.value = user?.town || "";
+    //stateInputRef.current.value = user?.state || "";
+  }
+}, [isLoggedIn, user]);
 
   let formData;
 
@@ -126,14 +156,17 @@ const CheckoutDetails = () => {
     dispatch(orderSliceActions.SAVE_ORDER_DATA(formData));
     const transactionReference = await dispatch(acceptpayment(paymentData));
     console.log(transactionReference);
+    console.log(transactionReference.payload.ref)
+    await dispatch(verifypayment({reference:transactionReference.payload.ref}));
+    // handleVerify();
+    // handleVerify(transactionReference.payload.ref);
 
-    handleVerify();
-
-    dispatch(createOrder(formData));
+    await dispatch(createOrder(formData));
     localStorage.setItem("cartItems", JSON.stringify([]));
-    await dispatch(cartSliceActions.RESET_CART());
+     dispatch(cartSliceActions.RESET_CART());
     console.log("order placed...");
     navigate("/checkout");
+    // await dispatch(verifypayment({reference:transactionReference.payload.ref}));
 
     //====================================stops here=============
     // dispatch(createOrder(formData))
@@ -142,13 +175,13 @@ const CheckoutDetails = () => {
     // dispatch(cartSliceActions.CLEAR_CART());
   };
 
-  const handleVerify = async (reference) => {
-    try {
-      await dispatch(verifypayment(reference));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleVerify = async (reference) => {
+  //   try {
+  //     await dispatch(verifypayment(reference));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     if (message === "Honor Blackman is Pussy Galore") {
@@ -320,3 +353,34 @@ const CheckoutDetails = () => {
 };
 
 export default CheckoutDetails;
+
+
+// useEffect(() => {
+//   if (user && isLoggedIn) {
+//     if (firstNameInputRef.current) {
+//       firstNameInputRef.current.value = user?.name || "";
+//     }
+//     if (surnameInputRef.current) {
+//       surnameInputRef.current.value = user?.surname || "";
+//     }
+//     if (phoneNumberInputRef.current) {
+//       phoneNumberInputRef.current.value = user?.phoneNumber || "";
+//     }
+//     if (residentialAddressInputRef.current) {
+//       residentialAddressInputRef.current.value = user?.address || "";
+//     }
+//     if (townInputRef.current) {
+//       townInputRef.current.value = user?.town || "";
+//     }
+//     if (stateInputRef.current) {
+//       stateInputRef.current.value = user?.state || "";
+//     }
+    
+//     //firstNameInputRef.current.value = user?.name || "";
+//     //surnameInputRef.current.value = user?.surname || "";
+//     //phoneNumberInputRef.current.value = "";
+//     //residentialAddressInputRef.current.value = user?.address || "";
+//     //townInputRef.current.value = user?.town || "";
+//     //stateInputRef.current.value = user?.state || "";
+//   }
+// }, [isLoggedIn, user]);
