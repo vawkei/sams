@@ -11,7 +11,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const VerifyPayment = async () => {
+const VerifyPayment =  () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { incomingOrder } = useSelector((state) => state.order);

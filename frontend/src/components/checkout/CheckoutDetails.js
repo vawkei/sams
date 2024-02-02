@@ -36,10 +36,12 @@ const CheckoutDetails = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message, iSuccess } = useSelector((state) => state.paystack);
+  const { message, paymentUrl } = useSelector((state) => state.paystack);
   console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
+
+
 
   // useEffect(() => {
   //   if (user && isLoggedIn) {
@@ -172,6 +174,7 @@ const CheckoutDetails = () => {
     // props.onPayStackSubmitHandler(formData);
     // dispatch(cartSliceActions.CLEAR_CART());
   };
+
 
   // https://checkout.paystack.com/h2fz8xc6zszuumo
   const onCancel = () => {
