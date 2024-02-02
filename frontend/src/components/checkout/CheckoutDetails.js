@@ -10,6 +10,7 @@ import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
 import {
   acceptpayment,
   paystackSliceAction,
+  postWebhook,
   verifypayment,
 } from "../../store/paystack/paystackIndex";
 
@@ -158,7 +159,7 @@ useEffect(() => {
     console.log(transactionReference);
     console.log(transactionReference.payload.ref)
     await dispatch(verifypayment({reference:transactionReference.payload.ref}));
-
+    await dispatch(postWebhook())
 
      await dispatch(createOrder(formData));
     // localStorage.setItem("cartItems", JSON.stringify([]));
