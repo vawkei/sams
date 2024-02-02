@@ -155,7 +155,6 @@ const CheckoutDetails = () => {
       const transactionReference = await dispatch(acceptpayment(paymentData));
       console.log(transactionReference);
       console.log(transactionReference.payload.ref);
-      navigate("/verify-payment")
     } catch (error) {
       console.log("Error initializing payment:", error);
       // Handle the error, e.g., show an error message to the user

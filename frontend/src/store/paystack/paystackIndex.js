@@ -80,10 +80,8 @@ const paystackSlice = createSlice({
       })
       .addCase(acceptpayment.fulfilled, (state, action) => {
         state.isLoading = false;
-        // state.iSuccess = true;
-        state.message = "Honor Blackman is Pussy Galore";
-        window.location.href = action.payload.paymentUrl;
-        // state.message = "Order created";
+        state.iSuccess = true;
+        state.message = "Payment initiated";
         console.log(action.payload);
       })
       .addCase(acceptpayment.rejected, (state, action) => {
