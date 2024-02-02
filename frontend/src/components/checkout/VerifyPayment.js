@@ -31,8 +31,8 @@ const VerifyPayment = async () => {
         } else {
           throw new Error('No transaction reference found');
         }
-      } catch (err) {
-        setError(err.message);
+      } catch (error) {
+        console.log("Something went wrong:",error)
       }
     };
 
