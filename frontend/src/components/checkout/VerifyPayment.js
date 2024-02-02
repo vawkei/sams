@@ -15,6 +15,7 @@ const VerifyPayment =  () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { incomingOrder } = useSelector((state) => state.order);
+  console.log(incomingOrder);
 
   const query = useQuery();
 
@@ -42,9 +43,6 @@ const VerifyPayment =  () => {
   return (
     <div className={classes["account-confirmation"]}>
       <h2>Payment Verified</h2>
-      <Link to={"/checkout"}>
-        <Button className={classes.btn}></Button>
-      </Link>
     </div>
   );
 };

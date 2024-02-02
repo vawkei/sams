@@ -30,7 +30,7 @@ const payStack = {
           "Content-Type": "application/json",
         },
       });
-      console.log("AcceptPayment respnse:",paystackResponse);
+      console.log("AcceptPayment respnse:", paystackResponse);
 
       req.session.transactionReference = paystackResponse.data.data.reference;
       res.status(200).json({
@@ -46,10 +46,10 @@ const payStack = {
   //VerifyPayment controller==========================================================:
   verifyPayment: async (req, res) => {
     const referenceFrmDBackend = req.session.transactionReference;
-    console.log("Received referenceBackend:",referenceFrmDBackend)
-   
-    const {reference} = req.body
-    console.log("Received reference:", reference)
+    console.log("Received referenceBackend:", referenceFrmDBackend);
+
+    const { reference } = req.body;
+    console.log("Received reference:", reference);
     // dvsgvn2mwh
 
     try {
@@ -62,7 +62,7 @@ const payStack = {
           },
         }
       );
-      console.log("verify response:",verifyResponse);
+      console.log("verify response:", verifyResponse);
       // res.json({babe:verifyResponse.data})
       if (verifyResponse.data.message === "Verification successful") {
         res.status(200).json({ msg: "Payment verified successfully" });
@@ -116,32 +116,74 @@ const initializePayment = payStack;
 //payWithPaystackWebhook===========================================================:
 const crypto = require("crypto");
 
+// const webhook = (req, res) => {
+//   const hash = crypto
+//     .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
+//     .update(JSON.stringify(req.body))
+//     .digest("hex");
+
+//   // Log the calculated hash and the received signature
+//   console.log(`Calculated Hash: ${hash}`);
+
+//   if (hash === req.headers["x-paystack-signature"]) {
+//     //retrieve the request's body:
+//     // Convert the request's body to a JavaScript object:
+//     const event = JSON.parse(req.body.toString());
+//     console.log("Received Paystack Webhook Event:", event);
+
+//     //do something with event:
+//     if (event && event.event === "transfer.success") {
+//       // Handle transfer success event
+//       console.log("Transfer successful:", event);
+//       return res.status(200).json({ message: "Transfer successful" });
+//     } else {
+//       // Invalid signature
+//       console.error("Invalid Paystack signature");
+//       return res.status(400).json({ message: "Invalid Paystack signature" });
+//     }
+//   }
+//   res.status(200).json({ message: "Webhook received successfully" });
+//   //   res.send("payWithPaystackWebhook route");
+// };
+
 const webhook = (req, res) => {
-  const hash = crypto
-    .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-    .update(JSON.stringify(req.body))
-    .digest("hex");
-
-  if (hash == req.headers["x-paystack-signature"]) {
-    //retrieve the request's body:
-      // Convert the request's body to a JavaScript object:
-      const event = JSON.parse(req.body.toString());
-      console.log("Received Paystack Webhook Event:", event)
-
-    //do something with event:
-    if (event && event.event === "transfer.success") {
-      // Handle transfer success event
-      console.log("Transfer successful:", event);
-      return res.status(200).json({ message: "Transfer successful" });
-    } else {
-      // Invalid signature
-      console.error("Invalid Paystack signature");
-      return res.status(400).json({ message: "Invalid Paystack signature" });
-    }
+  try {
+     const hash = crypto
+        .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
+        .update(JSON.stringify(req.body))
+        .digest("hex");
+ 
+     // Log the calculated hash and the received signature
+     console.log(`Calculated Hash: ${hash}`);
+     console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
+ 
+     if (hash === req.headers["x-paystack-signature"]) {
+        // Retrieve the request's body:
+        const event = JSON.parse(req.body.toString());
+        console.log("Received Paystack Webhook Event:", event);
+ 
+        // Do something with the event:
+        if (event && event.event === "transfer.success") {
+          // Handle transfer success event
+          console.log("Transfer successful:", event);
+          return res.status(200).json({ message: "Transfer successful" });
+        } else {
+          // Invalid signature
+          console.error("Invalid Paystack signature");
+          return res.status(400).json({ message: "Invalid Paystack signature" });
+        }
+     } else {
+        // Signatures do not match
+        console.error("Signatures do not match");
+        return res.status(400).json({ message: "Signatures do not match" });
+     }
+  } catch (error) {
+     // An error occurred during the processing of the webhook
+     console.error("Error processing webhook:", error);
+     return res.status(500).json({ message: "An error occurred while processing the webhook" });
   }
-  res.status(200).json({ message: "Webhook received successfully" });
-  //   res.send("payWithPaystackWebhook route");
-};
+ };
+ 
 
 module.exports = { initializePayment, webhook };
 
@@ -167,5 +209,3 @@ module.exports = { initializePayment, webhook };
 //     // ... other details
 //   }
 // }
-
-
