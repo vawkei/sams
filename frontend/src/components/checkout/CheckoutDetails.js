@@ -3,7 +3,6 @@ import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import classes from "./CheckoutDetails.module.css";
 import { useDispatch, useSelector } from "react-redux";
-// import { cartActions } from "../../../store";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
 import { orderSliceActions } from "../../store/order/orderIndex";
@@ -26,7 +25,7 @@ const CheckoutDetails = () => {
   const stateInputRef = useRef();
   const phoneNumberInputRef = useRef();
 
-  const navigate = useNavigate();
+ 
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -36,10 +35,15 @@ const CheckoutDetails = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message, paymentUrl } = useSelector((state) => state.paystack);
-  console.log(message);
+  const { message} = useSelector((state) => state.paystack);
+  //console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
+  const {incomingOrder} = useSelector((state)=>state.order)
+  console.log(incomingOrder);
+
   var nairaSymbol = "\u20A6";
+
+
 
 
 
@@ -151,7 +155,7 @@ const CheckoutDetails = () => {
     };
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
-    dispatch(orderSliceActions.SAVE_ORDER_DATA(formData));
+    dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
 
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));
@@ -162,13 +166,7 @@ const CheckoutDetails = () => {
       // Handle the error, e.g., show an error message to the user
     }
 
-    // localStorage.setItem("cartItems", JSON.stringify([]));
-    //  dispatch(cartSliceActions.RESET_CART());
-    // console.log("order placed...");
-    // navigate("/checkout");
-    // await dispatch(verifypayment({reference:transactionReference.payload.ref}));
 
-    //====================================stops here=============
     // dispatch(createOrder(formData))
 
     // props.onPayStackSubmitHandler(formData);
@@ -176,7 +174,7 @@ const CheckoutDetails = () => {
   };
 
 
-  // https://checkout.paystack.com/h2fz8xc6zszuumo
+
   const onCancel = () => {
     stateInputRef.current.value = "";
     firstNameInputRef.current.value = "";

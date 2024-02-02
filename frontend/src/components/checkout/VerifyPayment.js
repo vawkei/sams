@@ -14,20 +14,21 @@ const VerifyPayment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { incomingOrder } = useSelector((state) => state.order);
+  console.log(incomingOrder)
 
   const query = useQuery();
 
   const verifyPayment = async () => {
     try {
       const reference = query.get("reference");
-      if (reference) {
+      if (reference && incomingOrder) {
         await dispatch(verifypayment({ reference }));
-        await dispatch(createOrder(incomingOrder));
+        await dispatch(createOrder({incomingOrder}));
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
         navigate("/checkout");
       } else {
-        throw new Error("No transaction reference found");
+        throw new Error("No transaction reference or incomingOrder found");
       }
     } catch (error) {
       console.log("Something went wrong:", error);
@@ -38,7 +39,7 @@ const VerifyPayment = () => {
   useEffect(() => {
     timer = setTimeout(() => {
       verifyPayment();
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
