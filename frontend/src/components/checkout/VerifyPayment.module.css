@@ -1,0 +1,11 @@
+.account-confirmation{
+    margin-top: 6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.account-confirmation .btn{
+    padding: 1rem 2.5rem;
+}

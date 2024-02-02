@@ -6,13 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 // import { cartActions } from "../../../store";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
-import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
-import {
-  acceptpayment,
-  paystackSliceAction,
-  postWebhook,
-  verifypayment,
-} from "../../store/paystack/paystackIndex";
+import { orderSliceActions } from "../../store/order/orderIndex";
+import { acceptpayment } from "../../store/paystack/paystackIndex";
 
 const CheckoutDetails = () => {
   const [formValidity, setFormValidity] = useState({
@@ -41,13 +36,13 @@ const CheckoutDetails = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message,iSuccess} = useSelector((state) => state.paystack);
+  const { message, iSuccess } = useSelector((state) => state.paystack);
   console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
 
   // useEffect(() => {
-  //   if (user && isLoggedIn) {      
+  //   if (user && isLoggedIn) {
   //     firstNameInputRef.current.value = user?.name || "";
   //     surnameInputRef.current.value = user?.surname || "";
   //     phoneNumberInputRef.current.value = "";
@@ -57,35 +52,35 @@ const CheckoutDetails = () => {
   //   }
   // }, [isLoggedIn, user]);
 
-useEffect(() => {
-  if (user && isLoggedIn) {
-    if (firstNameInputRef.current) {
-      firstNameInputRef.current.value = user?.name || "";
+  useEffect(() => {
+    if (user && isLoggedIn) {
+      if (firstNameInputRef.current) {
+        firstNameInputRef.current.value = user?.name || "";
+      }
+      if (surnameInputRef.current) {
+        surnameInputRef.current.value = user?.surname || "";
+      }
+      if (phoneNumberInputRef.current) {
+        phoneNumberInputRef.current.value = user?.phoneNumber || "";
+      }
+      if (residentialAddressInputRef.current) {
+        residentialAddressInputRef.current.value = user?.address || "";
+      }
+      if (townInputRef.current) {
+        townInputRef.current.value = user?.town || "";
+      }
+      if (stateInputRef.current) {
+        stateInputRef.current.value = user?.state || "";
+      }
+
+      //firstNameInputRef.current.value = user?.name || "";
+      //surnameInputRef.current.value = user?.surname || "";
+      //phoneNumberInputRef.current.value = "";
+      //residentialAddressInputRef.current.value = user?.address || "";
+      //townInputRef.current.value = user?.town || "";
+      //stateInputRef.current.value = user?.state || "";
     }
-    if (surnameInputRef.current) {
-      surnameInputRef.current.value = user?.surname || "";
-    }
-    if (phoneNumberInputRef.current) {
-      phoneNumberInputRef.current.value = user?.phoneNumber || "";
-    }
-    if (residentialAddressInputRef.current) {
-      residentialAddressInputRef.current.value = user?.address || "";
-    }
-    if (townInputRef.current) {
-      townInputRef.current.value = user?.town || "";
-    }
-    if (stateInputRef.current) {
-      stateInputRef.current.value = user?.state || "";
-    }
-    
-    //firstNameInputRef.current.value = user?.name || "";
-    //surnameInputRef.current.value = user?.surname || "";
-    //phoneNumberInputRef.current.value = "";
-    //residentialAddressInputRef.current.value = user?.address || "";
-    //townInputRef.current.value = user?.town || "";
-    //stateInputRef.current.value = user?.state || "";
-  }
-}, [isLoggedIn, user]);
+  }, [isLoggedIn, user]);
 
   let formData;
 
@@ -152,16 +147,19 @@ useEffect(() => {
       orderStatus: "Order Placed",
       email: user.email,
     };
-    
+
     const paymentData = { amount: cartTotalAmnt, email: user.email };
     dispatch(orderSliceActions.SAVE_ORDER_DATA(formData));
-    const transactionReference = await dispatch(acceptpayment(paymentData));
-    console.log(transactionReference);
-    console.log(transactionReference.payload.ref)
-    await dispatch(verifypayment({reference:transactionReference.payload.ref}));
-    await dispatch(postWebhook())
 
-     await dispatch(createOrder(formData));
+    try {
+      const transactionReference = await dispatch(acceptpayment(paymentData));
+      console.log(transactionReference);
+      console.log(transactionReference.payload.ref);
+    } catch (error) {
+      console.log("Error initializing payment:", error);
+      // Handle the error, e.g., show an error message to the user
+    }
+
     // localStorage.setItem("cartItems", JSON.stringify([]));
     //  dispatch(cartSliceActions.RESET_CART());
     // console.log("order placed...");
@@ -175,18 +173,7 @@ useEffect(() => {
     // dispatch(cartSliceActions.CLEAR_CART());
   };
 
-
-
-  useEffect(() => {
-    if (iSuccess && message === "Payment verified successfully") {
-      // await dispatch(createOrder(formData));
-      localStorage.setItem("cartItems", JSON.stringify([]));
-       dispatch(cartSliceActions.RESET_CART());
-      console.log("order placed...");
-      navigate("/checkout");
-    }
-  }, [dispatch, message, iSuccess, navigate]);
-
+  // https://checkout.paystack.com/h2fz8xc6zszuumo
   const onCancel = () => {
     stateInputRef.current.value = "";
     firstNameInputRef.current.value = "";
@@ -211,7 +198,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.firstName ? classes.invalid : ""
                   }`}>
-                  <label><b>First Name:</b></label>
+                  <label>
+                    <b>First Name:</b>
+                  </label>
                   <input
                     type="text"
                     ref={firstNameInputRef}
@@ -223,7 +212,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.surname ? classes.invalid : ""
                   }`}>
-                  <label htmlFor=""><b>Surname:</b></label>
+                  <label htmlFor="">
+                    <b>Surname:</b>
+                  </label>
                   <input
                     type="text"
                     ref={surnameInputRef}
@@ -235,7 +226,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.residentialAddress ? classes.invalid : ""
                   }`}>
-                  <label htmlFor=""><b>Residential Address:</b></label>
+                  <label htmlFor="">
+                    <b>Residential Address:</b>
+                  </label>
                   <input
                     type="text"
                     ref={residentialAddressInputRef}
@@ -249,7 +242,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.town ? classes.invalid : ""
                   }`}>
-                  <label htmlFor=""><b>Town:</b></label>
+                  <label htmlFor="">
+                    <b>Town:</b>
+                  </label>
                   <input
                     type="text"
                     ref={townInputRef}
@@ -261,7 +256,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.state ? classes.invalid : ""
                   }`}>
-                  <label htmlFor=""><b>State:</b></label>
+                  <label htmlFor="">
+                    <b>State:</b>
+                  </label>
                   <input
                     type="text"
                     ref={stateInputRef}
@@ -273,7 +270,9 @@ useEffect(() => {
                   className={`${classes.control} ${
                     !formValidity.phoneNumber ? classes.invalid : ""
                   }`}>
-                  <label htmlFor=""><b>Phone Number:</b></label>
+                  <label htmlFor="">
+                    <b>Phone Number:</b>
+                  </label>
                   <input
                     type="text"
                     ref={phoneNumberInputRef}
@@ -349,5 +348,3 @@ useEffect(() => {
 };
 
 export default CheckoutDetails;
-
-

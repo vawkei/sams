@@ -26,6 +26,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ProfileHome from "./components/profile/ProfileHome";
 import ProfileForm from "./components/profile/ProfileForm";
 import {AnimatePresence} from "framer-motion"
+import VerifyPayment from "./components/checkout/VerifyPayment";
 
 function App() {
   axios.defaults.withCredentials = true;
@@ -73,6 +74,7 @@ function App() {
           <Route path="/order-history" element={<OrderHistoryPage />} />
           <Route path="/order-history/:id" element={<OrderDetails />} />
           <Route path="/order-review/:id" element={<OrderReview />} />
+          <Route path="/verify-payment" element={<VerifyPayment />} />
           <Route path="*" element={<NotFoundPage />} />
 
         </Routes>
