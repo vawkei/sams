@@ -40,7 +40,7 @@ const CheckoutDetails = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message,iSuccess} = useSelector((state) => state.paystack);
+  const { message, } = useSelector((state) => state.paystack);
   console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   var nairaSymbol = "\u20A6";
@@ -158,13 +158,14 @@ useEffect(() => {
     console.log(transactionReference);
     console.log(transactionReference.payload.ref)
     await dispatch(verifypayment({reference:transactionReference.payload.ref}));
+    // handleVerify();
+    // handleVerify(transactionReference.payload.ref);
 
-
-     await dispatch(createOrder(formData));
-    // localStorage.setItem("cartItems", JSON.stringify([]));
-    //  dispatch(cartSliceActions.RESET_CART());
-    // console.log("order placed...");
-    // navigate("/checkout");
+    await dispatch(createOrder(formData));
+    localStorage.setItem("cartItems", JSON.stringify([]));
+     dispatch(cartSliceActions.RESET_CART());
+    console.log("order placed...");
+    navigate("/checkout");
     // await dispatch(verifypayment({reference:transactionReference.payload.ref}));
 
     //====================================stops here=============
@@ -174,17 +175,21 @@ useEffect(() => {
     // dispatch(cartSliceActions.CLEAR_CART());
   };
 
-
+  // const handleVerify = async (reference) => {
+  //   try {
+  //     await dispatch(verifypayment(reference));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
-    if (iSuccess && message === "Payment verified successfully") {
-      // await dispatch(createOrder(formData));
-      localStorage.setItem("cartItems", JSON.stringify([]));
-       dispatch(cartSliceActions.RESET_CART());
+    if (message === "Honor Blackman is Pussy Galore") {
+      dispatch(createOrder(formData));
+      dispatch(cartSliceActions.RESET_CART());
       console.log("order placed...");
-      navigate("/checkout");
     }
-  }, [dispatch, message, iSuccess, navigate]);
+  }, [dispatch, message, formData]);
 
   const onCancel = () => {
     stateInputRef.current.value = "";
@@ -348,5 +353,3 @@ useEffect(() => {
 };
 
 export default CheckoutDetails;
-
-
