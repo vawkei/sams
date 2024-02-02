@@ -21,7 +21,7 @@ const VerifyPayment = () => {
   const verifyPayment = async () => {
     try {
       const reference = query.get("reference");
-      if (reference && incomingOrder) {
+      if (reference) {
         await dispatch(verifypayment({ reference }));
         await dispatch(createOrder({incomingOrder}));
         localStorage.setItem("cartItems", JSON.stringify([]));
