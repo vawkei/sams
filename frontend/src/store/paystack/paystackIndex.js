@@ -75,7 +75,7 @@ const paystackSlice = createSlice({
         // window.location.href = action.payload.paymentUrl;
         setTimeout(() => {
           window.location.href = action.payload.paymentUrl;
-       }, 3000);
+       }, 2000);
         console.log(action.payload);
       })
       .addCase(acceptpayment.rejected, (state, action) => {
@@ -93,14 +93,6 @@ const paystackSlice = createSlice({
         state.isLoading = false;
         state.iSuccess = true;
         state.message = action.payload.msg;
-        // if(action.payload.msg==="Payment verified successfully"){
-        //     state.message = "Honor Blackman is Pussy Galore"
-        // }else{
-        //     state.message = "Unknown error occurred"
-        // };
-        // if (action.payload.msg === "Payment verified successfully") {
-        //   window.location.href = `${FRONT_URL}/checkout`;
-        // }
         console.log(action.payload);
       })
       .addCase(verifypayment.rejected, (state, action) => {
