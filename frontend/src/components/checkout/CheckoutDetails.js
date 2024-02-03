@@ -156,7 +156,7 @@ const CheckoutDetails = () => {
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
     dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
-    await dispatch(createOrder(incomingOrder));
+    await dispatch(createOrder({formData}));
     localStorage.setItem("cartItems", JSON.stringify([]));
     dispatch(cartSliceActions.RESET_CART());
   
