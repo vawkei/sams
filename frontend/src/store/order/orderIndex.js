@@ -5,7 +5,7 @@ const initialOrderState = {
     order:null,
     orders:[],
     adminOrders:[],
-    incomingOrder:[],
+    incomingOrder:{},
     message:"",
     isSuccess:false,
     isError:false,

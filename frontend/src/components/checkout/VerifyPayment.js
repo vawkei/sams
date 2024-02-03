@@ -1,56 +1,52 @@
 import classes from "./VerifyPayment.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
 
-function useQuery(){
-  return new URLSearchParams(useLocation().search)
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
 }
 
 const VerifyPayment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { incomingOrder } = useSelector((state) => state.order);
-  console.log(incomingOrder);
-
+  // const {incomingOrder} = useSelector((state)=>state.order);
 
   const query = useQuery();
-  useEffect(()=>{
-    const reference = query.get("reference");
-    if(reference){
-      dispatch(verifypayment({reference}));
-      if(incomingOrder.length>0){
-        dispatch(createOrder(incomingOrder))
-        navigate("/checkout")
-      }else{
-        console.log("No incomingData found")
-        throw new Error("No incomingData found")
-      }     
-    }else{
-      console.log("No reference found")
-      throw new Error("No reference found")
-    }
-    
 
-  },[]);
- 
+  const submitHandler = async () => {
+
+    const reference = query.get("reference");
+    
+    try{
+      if (reference) {
+        await dispatch(verifypayment({ reference }));
+        navigate("/checkout");
+      } else {
+        console.log("No reference found");
+        throw new Error("No reference found")
+      }
+    }catch(error){
+      console.log("Error:",error)
+    }    
+  };
+
+  useEffect(() => {
+    submitHandler()
+  }, [query]);
+
   
   return (
-     <div className={classes["account-confirmation"]}>
-       <h2>Payment Verified</h2>
-     </div>
+    <div className={classes["account-confirmation"]}>
+      <h2>Payment Verified</h2>
+    </div>
   );
- };
- 
- export default VerifyPayment;
- 
+};
 
-
-
-
+export default VerifyPayment;
 
 //  const verifyPayment = async () => {
 //   try {

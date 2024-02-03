@@ -9,7 +9,7 @@ const initialPaystackState = {
   isError: false,
   isLoading: false,
   isLoggedIn: false,
-  orders: [],
+  checkoutDatass: {},
   paymentUrl: "",
 };
 
@@ -51,9 +51,9 @@ const paystackSlice = createSlice({
   initialState: initialPaystackState,
   reducers: {
     SAVE_ORDER_DATA(state, action) {
-      const orders = action.payload;
-      console.log(orders);
-      state.orders = action.payload;
+      const checkoutData = action.payload.formData;
+      console.log(checkoutData);
+      state.checkoutDatass = checkoutData;
       localStorage.setItem("cartItems", JSON.stringify([]));
     },
     RESET_PAYMENT_URL(state,action){

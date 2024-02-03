@@ -5,8 +5,8 @@ import classes from "./CheckoutDetails.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
-import { orderSliceActions } from "../../store/order/orderIndex";
-import { acceptpayment } from "../../store/paystack/paystackIndex";
+import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
+import { acceptpayment, paystackSliceAction } from "../../store/paystack/paystackIndex";
 
 const CheckoutDetails = () => {
   const [formValidity, setFormValidity] = useState({
@@ -25,7 +25,7 @@ const CheckoutDetails = () => {
   const stateInputRef = useRef();
   const phoneNumberInputRef = useRef();
 
- 
+  const navigate = useNavigate()
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -156,7 +156,10 @@ const CheckoutDetails = () => {
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
     dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
-
+    await dispatch(createOrder(incomingOrder));
+    localStorage.setItem("cartItems", JSON.stringify([]));
+    dispatch(cartSliceActions.RESET_CART());
+  
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));
       console.log(transactionReference);
