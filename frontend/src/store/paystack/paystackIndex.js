@@ -75,7 +75,7 @@ const paystackSlice = createSlice({
         // window.location.href = action.payload.paymentUrl;
         setTimeout(() => {
           window.location.href = action.payload.paymentUrl;
-       }, 2000);
+       }, 5000);
         console.log(action.payload);
       })
       .addCase(acceptpayment.rejected, (state, action) => {
@@ -93,6 +93,7 @@ const paystackSlice = createSlice({
         state.isLoading = false;
         state.iSuccess = true;
         state.message = action.payload.msg;
+        
         console.log(action.payload);
       })
       .addCase(verifypayment.rejected, (state, action) => {
