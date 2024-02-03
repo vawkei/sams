@@ -18,6 +18,24 @@ const VerifyPayment = () => {
 
 
   const query = useQuery();
+  useEffect(()=>{
+    const reference = query.get("reference");
+    if(reference){
+      dispatch(verifypayment({reference}));
+      if(incomingOrder){
+        dispatch(createOrder(incomingOrder))
+        navigate("/checkout")
+      }else{
+        console.log("No incomingData found")
+        throw new Error("No incomingData found")
+      }     
+    }else{
+      console.log("No reference found")
+      throw new Error("No reference found")
+    }
+    
+
+  },[]);
  
   
   return (
