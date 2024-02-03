@@ -22,7 +22,7 @@ const VerifyPayment = () => {
     const reference = query.get("reference");
     if(reference){
       dispatch(verifypayment({reference}));
-      if(incomingOrder){
+      if(incomingOrder.length>0){
         dispatch(createOrder(incomingOrder))
         navigate("/checkout")
       }else{
