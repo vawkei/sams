@@ -39,7 +39,7 @@ const CheckoutDetails = () => {
   //console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   const {incomingOrder} = useSelector((state)=>state.order)
-  console.log(incomingOrder);
+  //console.log(incomingOrder);
 
   var nairaSymbol = "\u20A6";
 
@@ -59,7 +59,7 @@ const CheckoutDetails = () => {
   // }, [isLoggedIn, user]);
 
   useEffect(() => {
-    if (user && isLoggedIn) {
+     if (user && isLoggedIn) {
       if (firstNameInputRef.current) {
         firstNameInputRef.current.value = user?.name || "";
       }
@@ -78,13 +78,6 @@ const CheckoutDetails = () => {
       if (stateInputRef.current) {
         stateInputRef.current.value = user?.state || "";
       }
-
-      //firstNameInputRef.current.value = user?.name || "";
-      //surnameInputRef.current.value = user?.surname || "";
-      //phoneNumberInputRef.current.value = "";
-      //residentialAddressInputRef.current.value = user?.address || "";
-      //townInputRef.current.value = user?.town || "";
-      //stateInputRef.current.value = user?.state || "";
     }
   }, [isLoggedIn, user]);
 
@@ -155,19 +148,20 @@ const CheckoutDetails = () => {
     };
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
+
+    await dispatch(createOrder(formData));
     dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
-    await dispatch(createOrder({formData}));
     localStorage.setItem("cartItems", JSON.stringify([]));
     dispatch(cartSliceActions.RESET_CART());
   
-    // try {
-    //   const transactionReference = await dispatch(acceptpayment(paymentData));
-    //   console.log(transactionReference);
-    //   console.log(transactionReference.payload.ref);
-    // } catch (error) {
-    //   console.log("Error initializing payment:", error);
-    //   // Handle the error, e.g., show an error message to the user
-    // }
+    try {
+      const transactionReference = await dispatch(acceptpayment(paymentData));
+      console.log(transactionReference);
+      console.log(transactionReference.payload.ref);
+    } catch (error) {
+      console.log("Error initializing payment:", error);
+      // Handle the error, e.g., show an error message to the user
+    }
 
 
     // dispatch(createOrder(formData))

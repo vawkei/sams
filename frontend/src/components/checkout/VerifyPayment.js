@@ -13,32 +13,30 @@ function useQuery() {
 const VerifyPayment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const {incomingOrder} = useSelector((state)=>state.order);
-
+  const { incomingOrder } = useSelector((state) => state.order);
+  console.log(incomingOrder);
   const query = useQuery();
 
   const submitHandler = async () => {
-
     const reference = query.get("reference");
-    
-    try{
+
+    try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
         navigate("/checkout");
       } else {
         console.log("No reference found");
-        throw new Error("No reference found")
+        throw new Error("No reference found");
       }
-    }catch(error){
-      console.log("Error:",error)
-    }    
+    } catch (error) {
+      console.log("Error:", error);
+    }
   };
 
   useEffect(() => {
-    submitHandler()
+    submitHandler();
   }, [query]);
 
-  
   return (
     <div className={classes["account-confirmation"]}>
       <h2>Payment Verified</h2>

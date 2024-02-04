@@ -21,6 +21,7 @@ const createOrder = async (req, res) => {
     orderAmount,
   } = req.body;
 
+
   if (
     !firstName ||
     !surname ||
@@ -30,7 +31,7 @@ const createOrder = async (req, res) => {
     !cartItems ||
     !orderStatus
   ) {
-    return res.status(400).json({ msg: "Please fill out all inputs" });
+    return res.status(400).json({msg: "Please fill out all inputs bitch!" });
   }
 
   //const orderDate=new Date().toDateString();
@@ -39,6 +40,9 @@ const createOrder = async (req, res) => {
   const orderTime = new Date()
   //.toLocaleTimeString();
   const user = await User.findOne({ _id: req.user.userId });
+  if(!user){
+    return res.status(404).json({msg:"user not found"})
+  }
 
   const orderData = {
     firstName,
