@@ -44,19 +44,19 @@ const VerifyPayment = () => {
   }, [query]);
 
   return (
-    // <div className={classes["account-confirmation"]}>
-    //   <h2>Payment Verified</h2>
-    //   <Button onClick={navigateHandler}>View Orders</Button>
-    // </div>
-    <div className={classes["checkout-container"]}>
-      <h2>Charge Successful</h2>
-      <p>Thank you for your purchase</p>
-      <div className={classes.action}>
-        <Button className={classes.btn} onClick={navigateHandler}>
-          View Order Status
-        </Button>
-      </div>
+    <div className={classes["account-confirmation"]}>
+      <h2>Payment Verified</h2>
+      <Button onClick={navigateHandler}>View Orders</Button>
     </div>
+    // <div className={classes["checkout-container"]}>
+    //   <h2>Charge Successful</h2>
+    //   <p>Thank you for your purchase</p>
+    //   <div className={classes.action}>
+    //     <Button className={classes.btn} onClick={navigateHandler}>
+    //       View Order Status
+    //     </Button>
+    //   </div>
+    // </div>
   );
 };
 
