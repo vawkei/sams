@@ -160,14 +160,14 @@ const CheckoutDetails = () => {
     localStorage.setItem("cartItems", JSON.stringify([]));
     dispatch(cartSliceActions.RESET_CART());
   
-    try {
-      const transactionReference = await dispatch(acceptpayment(paymentData));
-      console.log(transactionReference);
-      console.log(transactionReference.payload.ref);
-    } catch (error) {
-      console.log("Error initializing payment:", error);
-      // Handle the error, e.g., show an error message to the user
-    }
+    // try {
+    //   const transactionReference = await dispatch(acceptpayment(paymentData));
+    //   console.log(transactionReference);
+    //   console.log(transactionReference.payload.ref);
+    // } catch (error) {
+    //   console.log("Error initializing payment:", error);
+    //   // Handle the error, e.g., show an error message to the user
+    // }
 
 
     // dispatch(createOrder(formData))
