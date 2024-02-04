@@ -154,55 +154,46 @@ const crypto = require("crypto");
 
 const webhook = (req, res) => {
   try {
-
-     // Check if the content type is "application/json"
-     const contentType = req.headers['content-type'];
-     if (contentType !== 'application/json') {
-       console.error('Invalid content type. Expected "application/json".');
-       return res.status(400).json({ message: 'Invalid content type' });
-     }
-     // Get the raw body as a string
-     const rawBody = req.body.toString();
-     console.log(rawBody);
- 
+     // Assuming express.raw() middleware is used in the route definition
      // Create the hash using the raw body
      const hash = crypto
        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
-       .update(rawBody,'utf-8')
+       .update(req.body, 'utf-8') // Use req.body instead of req.raw
        .digest('hex');
  
      // Log the calculated hash and the received signature
-     console.log("Raw Body:", rawBody)
-     console.log(`Calculated Hash: ${hash}`);
-     console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
+     console.log('Calculated Hash:', hash);
+     console.log('Received Signature:', req.headers['x-paystack-signature']);
  
      if (hash === req.headers['x-paystack-signature']) {
        // Retrieve the request's body:
-       const event = JSON.parse(rawBody);
-       console.log("Received Paystack Webhook Event:", event);
+       const event = JSON.parse(req.body); // Use req.body instead of req.raw
+       console.log('Received Paystack Webhook Event:', event);
  
        // Do something with the event:
-       if (event && event.event === "transfer.success") {
-         // Handle transfer success event
-         console.log("Transfer successful:", event);
-         return res.status(200).json({ message: "Transfer successful" });
+       if (event && event.event === 'charge.success') {
+         // Handle charge success event
+         console.log('Charge successful:', event.data);
+         return res.status(200).json({ message: 'Charge successful' });
        } else {
          // Invalid signature
-         console.error("Invalid Paystack signature");
-         return res.status(400).json({ message: "Invalid Paystack signature" });
+         console.error('Invalid Paystack signature');
+         return res.status(400).json({ message: 'Invalid Paystack signature' });
        }
      } else {
        // Signatures do not match
-       console.error("Signatures do not match");
-       return res.status(400).json({ message: "Signatures do not match" });
+       console.error('Signatures do not match');
+       return res.status(400).json({ message: 'Signatures do not match' });
      }
   } catch (error) {
      // An error occurred during the processing of the webhook
-     console.error("Error processing webhook:", error);
-     return res.status(500).json({ message: "An error occurred while processing the webhook" });
+     console.error('Error processing webhook:', error);
+     return res
+       .status(500)
+       .json({ message: 'An error occurred while processing the webhook' });
   }
  };
- 
+  
  
 
 
