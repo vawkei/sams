@@ -149,10 +149,10 @@ const CheckoutDetails = () => {
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
 
-    // await dispatch(createOrder(formData));
-    // localStorage.setItem("cartItems", JSON.stringify([]));
-    // dispatch(cartSliceActions.RESET_CART());
+    await dispatch(createOrder(formData));
     dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
+    localStorage.setItem("cartItems", JSON.stringify([]));
+    dispatch(cartSliceActions.RESET_CART());
   
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));

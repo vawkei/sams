@@ -78,7 +78,8 @@ const orderSlice = createSlice({
     reducers:{
         SAVE_ORDER_DATA(state,action){
             state.incomingOrder = action.payload.formData;
-            localStorage.setItem("formData",JSON.stringify(state.incomingOrder))
+            console.log(state.incomingOrder)
+            // localStorage.setItem("formData",JSON.stringify(state.incomingOrder))
         },
         RESET_ORDER_STATE(state){
             state.message = "";
