@@ -19,8 +19,8 @@ const VerifyPayment = () => {
   const query = useQuery();
 
 
-  const checkoutHandler = ()=>{
-    navigate("/checkout")
+  const navigateHandler = () => {
+    navigate("/order-history");
   };
 
   const submitHandler = async () => {
@@ -46,7 +46,7 @@ const VerifyPayment = () => {
   return (
     <div className={classes["account-confirmation"]}>
       <h2>Payment Verified</h2>
-      <Button onClick={checkoutHandler}>View Orders</Button>
+      <Button onClick={navigateHandler}>View Orders</Button>
     </div>
   );
 };
