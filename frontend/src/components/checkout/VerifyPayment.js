@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
+import Button from "../ui/button/Button";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -17,13 +18,18 @@ const VerifyPayment = () => {
   console.log(incomingOrder);
   const query = useQuery();
 
+
+  const checkoutHandler = ()=>{
+    navigate("/checkout")
+  };
+
   const submitHandler = async () => {
     const reference = query.get("reference");
 
     try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
-        navigate("/checkout");
+        // navigate("/checkout");
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
@@ -40,6 +46,7 @@ const VerifyPayment = () => {
   return (
     <div className={classes["account-confirmation"]}>
       <h2>Payment Verified</h2>
+      <Button onClick={checkoutHandler}>View Orders</Button>
     </div>
   );
 };

@@ -151,60 +151,12 @@ const crypto = require("crypto");
 
 
 //===============================================2=============================
-// const webhook = (req, res) => {
-//   try {
-//      // Get the raw body as a string
-//      const rawBody = req.body.toString();
-//      console.log(rawBody);
- 
-//      // Create the hash using the raw body
-//      const hash = crypto
-//        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
-//        .update(rawBody)
-//        .digest('hex');
- 
-//      // Log the calculated hash and the received signature
-//      console.log(`Calculated Hash: ${hash}`);
-//      console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
- 
-//      if (hash === req.headers['x-paystack-signature']) {
-//        // Retrieve the request's body:
-//        const event = JSON.parse(rawBody);
-//        console.log("Received Paystack Webhook Event:", event);
- 
-//        // Do something with the event:
-//        if (event && event.event === "transfer.success") {
-//          // Handle transfer success event
-//          console.log("Transfer successful:", event);
-//          return res.status(200).json({ message: "Transfer successful" });
-//        } else {
-//          // Invalid signature
-//          console.error("Invalid Paystack signature");
-//          return res.status(400).json({ message: "Invalid Paystack signature" });
-//        }
-//      } else {
-//        // Signatures do not match
-//        console.error("Signatures do not match");
-//        return res.status(400).json({ message: "Signatures do not match" });
-//      }
-//   } catch (error) {
-//      // An error occurred during the processing of the webhook
-//      console.error("Error processing webhook:", error);
-//      return res.status(500).json({ message: "An error occurred while processing the webhook" });
-//   }
-//  };
- 
- 
+
 const webhook = (req, res) => {
   try {
      // Get the raw body as a string
-     let rawBody = req.body.toString();
- 
-     // Normalize line endings (replace \r\n with \n)
-     rawBody = rawBody.replace(/\r\n/g, '\n');
- 
-     // Trim leading and trailing whitespace
-     rawBody = rawBody.trim();
+     const rawBody = req.body.toString();
+     console.log(rawBody);
  
      // Create the hash using the raw body
      const hash = crypto
@@ -212,12 +164,10 @@ const webhook = (req, res) => {
        .update(rawBody)
        .digest('hex');
  
-     // Log the raw body and the calculated hash
-     console.log(`Raw Body: ${rawBody}`);
+     // Log the calculated hash and the received signature
      console.log(`Calculated Hash: ${hash}`);
      console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
  
-     // Compare the calculated hash with the received signature
      if (hash === req.headers['x-paystack-signature']) {
        // Retrieve the request's body:
        const event = JSON.parse(rawBody);
@@ -244,6 +194,62 @@ const webhook = (req, res) => {
      return res.status(500).json({ message: "An error occurred while processing the webhook" });
   }
  };
+ 
+ 
+
+
+
+//==========================================3==============================
+
+// const webhook = (req, res) => {
+//   try {
+//      // Get the raw body as a string
+//      let rawBody = req.body.toString();
+ 
+//      // Normalize line endings (replace \r\n with \n)
+//      rawBody = rawBody.replace(/\r\n/g, '\n');
+ 
+//      // Trim leading and trailing whitespace
+//      rawBody = rawBody.trim();
+ 
+//      // Create the hash using the raw body
+//      const hash = crypto
+//        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
+//        .update(rawBody)
+//        .digest('hex');
+ 
+//      // Log the raw body and the calculated hash
+//      console.log(`Raw Body: ${rawBody}`);
+//      console.log(`Calculated Hash: ${hash}`);
+//      console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
+ 
+//      // Compare the calculated hash with the received signature
+//      if (hash === req.headers['x-paystack-signature']) {
+//        // Retrieve the request's body:
+//        const event = JSON.parse(rawBody);
+//        console.log("Received Paystack Webhook Event:", event);
+ 
+//        // Do something with the event:
+//        if (event && event.event === "transfer.success") {
+//          // Handle transfer success event
+//          console.log("Transfer successful:", event);
+//          return res.status(200).json({ message: "Transfer successful" });
+//        } else {
+//          // Invalid signature
+//          console.error("Invalid Paystack signature");
+//          return res.status(400).json({ message: "Invalid Paystack signature" });
+//        }
+//      } else {
+//        // Signatures do not match
+//        console.error("Signatures do not match");
+//        return res.status(400).json({ message: "Signatures do not match" });
+//      }
+//   } catch (error) {
+//      // An error occurred during the processing of the webhook
+//      console.error("Error processing webhook:", error);
+//      return res.status(500).json({ message: "An error occurred while processing the webhook" });
+//   }
+//  };
  
  module.exports = { webhook };
  
