@@ -77,9 +77,8 @@ const orderSlice = createSlice({
     initialState:initialOrderState,
     reducers:{
         SAVE_ORDER_DATA(state,action){
-            const incomingOrderData = action.payload.formData;
-            //console.log(incomingOrderData);
-            state.incomingOrder = incomingOrderData;
+            state.incomingOrder = action.payload.formData;
+            localStorage.setItem("formData",JSON.stringify(state.incomingOrder))
         },
         RESET_ORDER_STATE(state){
             state.message = "";

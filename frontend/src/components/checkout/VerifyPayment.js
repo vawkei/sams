@@ -14,13 +14,18 @@ function useQuery() {
 const VerifyPayment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const { incomingOrder } = useSelector((state) => state.order);
   console.log(incomingOrder);
+
+  const formDataString = localStorage.getItem("formData");
+  const formDataObject = JSON.parse(formDataString);
+ console.log(formDataObject);  
+
   const query = useQuery();
 
-
   const navigateHandler = () => {
-    navigate("/order-history");
+    navigate("/checkout");
   };
 
   const submitHandler = async () => {
@@ -29,6 +34,12 @@ const VerifyPayment = () => {
     try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
+        await dispatch(createOrder({formDataObject}))
+        console.log(incomingOrder);
+
+        localStorage.setItem("cartItems", JSON.stringify([]));
+        localStorage.setItem("formData",JSON.stringify([]));
+        dispatch(cartSliceActions.RESET_CART());
         // navigate("/checkout");
       } else {
         console.log("No reference found");
@@ -46,7 +57,7 @@ const VerifyPayment = () => {
   return (
     <div className={classes["account-confirmation"]}>
       <h2>Payment Verified</h2>
-      <Button onClick={navigateHandler}>View Orders</Button>
+      <Button onClick={navigateHandler}>Proceed to checkout</Button>
     </div>
   );
 };

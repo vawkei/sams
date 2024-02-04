@@ -45,6 +45,17 @@ export const verifypayment = createAsyncThunk(
     }
   }
 );
+//webhookresponse
+export const webhookresponse = createAsyncThunk(
+  "paystack/webhook",async(_,thunkAPI)=>{
+    try{
+      return await paystackService.webhookresponse()
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
 
 const paystackSlice = createSlice({
   name: "paystack",
@@ -102,6 +113,21 @@ const paystackSlice = createSlice({
         state.isError = true;
         state.message = action.error.message || "Unknown error occurred";
         console.log(action.payload);
+      })
+      //webhookresponse:
+      .addCase(webhookresponse.pending,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(webhookresponse.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.iSuccess = true;
+        console.log(action.payload.msg)
+      })
+      .addCase(webhookresponse.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.isError = true;
+        state.iSuccess = false;
+        console.log(action.payload.msg)
       });
   },
 });
@@ -109,16 +135,3 @@ const paystackSlice = createSlice({
 export default paystackSlice;
 export const paystackSliceAction = paystackSlice.actions;
 
-// .addCase(verifypayment.fulfilled, (state, action) => {
-//   state.isLoading = false;
-//   state.iSuccess = true;
-
-//   if (action.payload.msg === "Payment verified successfully") {
-//     // Redirect to a success page or handle accordingly
-//     window.location.href = `${FRONT_URL}/success`;
-//   } else {
-//     state.message = "Unknown error occurred";
-//   }
-
-//   console.log(action.payload);
-// })
