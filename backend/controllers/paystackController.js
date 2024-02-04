@@ -154,6 +154,13 @@ const crypto = require("crypto");
 
 const webhook = (req, res) => {
   try {
+
+     // Check if the content type is "application/json"
+     const contentType = req.headers['content-type'];
+     if (contentType !== 'application/json') {
+       console.error('Invalid content type. Expected "application/json".');
+       return res.status(400).json({ message: 'Invalid content type' });
+     }
      // Get the raw body as a string
      const rawBody = req.body.toString();
      console.log(rawBody);
@@ -161,10 +168,11 @@ const webhook = (req, res) => {
      // Create the hash using the raw body
      const hash = crypto
        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
-       .update(rawBody)
+       .update(rawBody,'utf-8')
        .digest('hex');
  
      // Log the calculated hash and the received signature
+     console.log("Raw Body:", rawBody)
      console.log(`Calculated Hash: ${hash}`);
      console.log(`Received Signature: ${req.headers['x-paystack-signature']}`);
  
