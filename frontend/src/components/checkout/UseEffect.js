@@ -5,13 +5,10 @@ import { useSelector } from "react-redux";
 const UseEffect = () => {
   const { user } = useSelector((state) => state.auth);
   console.log(user);
-  const { incomingOrder } = useSelector((state) => state.order);
+  const { incomingOrder } = useSelector((state) => state.form);
+  
   console.log(incomingOrder);
-  // const formData = localStorage.getItem(JSON.parse("formData"));
-  const formDataString = localStorage.getItem("formData");
-const formDataObject = JSON.parse(formDataString);
-
-  console.log(formDataObject)
+  
 
   useEffect(() => {}, []);
 

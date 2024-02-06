@@ -14,12 +14,12 @@ function useQuery() {
 const VerifyPayment = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { incomingOrder } = useSelector((state) => state.order);
+  const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
-  
+
   const query = useQuery();
 
-  const navigateHandler = () => {
+  const navigateToOrdersHandler = () => {
     navigate("/order-history");
   };
 
@@ -29,6 +29,10 @@ const VerifyPayment = () => {
     try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
+        await dispatch(createOrder(incomingOrder));
+
+        localStorage.setItem("cartItems", JSON.stringify([]));
+        dispatch(cartSliceActions.RESET_CART());
         // navigate("/checkout");
       } else {
         console.log("No reference found");
@@ -44,19 +48,12 @@ const VerifyPayment = () => {
   }, [query]);
 
   return (
-    <div className={classes["account-confirmation"]}>
+    <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
-      <Button onClick={navigateHandler}>View Orders</Button>
+      <Button onClick={navigateToOrdersHandler} className={classes.btn}>
+        View Orders
+      </Button>
     </div>
-    // <div className={classes["checkout-container"]}>
-    //   <h2>Charge Successful</h2>
-    //   <p>Thank you for your purchase</p>
-    //   <div className={classes.action}>
-    //     <Button className={classes.btn} onClick={navigateHandler}>
-    //       View Order Status
-    //     </Button>
-    //   </div>
-    // </div>
   );
 };
 

@@ -1,4 +1,4 @@
-.account-confirmation{
+.verification{
     margin-top: 6rem;
     display: flex;
     justify-content: center;
@@ -6,6 +6,6 @@
     flex-direction: column;
 }
 
-.account-confirmation .btn{
+.verification .btn{
     padding: 1rem 2.5rem;
 }

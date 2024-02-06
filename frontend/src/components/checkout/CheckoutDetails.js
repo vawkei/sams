@@ -7,6 +7,7 @@ import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
 import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
 import { acceptpayment, paystackSliceAction } from "../../store/paystack/paystackIndex";
+import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
 
 const CheckoutDetails = () => {
   const [formValidity, setFormValidity] = useState({
@@ -38,8 +39,8 @@ const CheckoutDetails = () => {
   const { message} = useSelector((state) => state.paystack);
   //console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
-  const {incomingOrder} = useSelector((state)=>state.order)
-  //console.log(incomingOrder);
+  const incomingOrder = useSelector((state)=>state.form.incomingOrder)
+  console.log(incomingOrder);
 
   var nairaSymbol = "\u20A6";
 
@@ -149,10 +150,9 @@ const CheckoutDetails = () => {
 
     const paymentData = { amount: cartTotalAmnt, email: user.email };
 
-    await dispatch(createOrder(formData));
-    dispatch(orderSliceActions.SAVE_ORDER_DATA({formData}));
-    localStorage.setItem("cartItems", JSON.stringify([]));
-    dispatch(cartSliceActions.RESET_CART());
+    
+    dispatch(checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({formData}));
+    
   
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));

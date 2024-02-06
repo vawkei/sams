@@ -12,6 +12,13 @@ import couponSlice from "./coupon/couponIndex";
 import orderSlice from "./order/orderIndex";
 import paystackSlice from "./paystack/paystackIndex";
 import filteredUserSlice from "./filterUser";
+import thunk from "redux-thunk";
+import {combineReducers} from "redux" 
+import storage from "redux-persist/lib/storage";
+import {persistReducer} from "redux-persist" 
+import formSlice from "./order/saveOrderToVerify";
+
+
 
 const initialAuthState = {
   isLoggedIn: false,
@@ -428,6 +435,31 @@ const authSlice = createSlice({
   },
 });
 
+
+// const reducers = combineReducers({form:formSlice.reducer});
+
+const formPersistConfig = {
+  key: 'form',
+  storage,
+};
+
+
+
+const persistedReducer = persistReducer(formPersistConfig,formSlice.reducer);
+
+const rootReducer = combineReducers({
+  auth: authSlice.reducer,
+    category: categorySlice.reducer,
+    product: productSlice.reducer,
+    filter: filterSlice.reducer,
+    cart: cartSlice.reducer,
+    coupon: couponSlice.reducer,
+    order: orderSlice.reducer,
+    paystack: paystackSlice.reducer,
+    
+ });
+
+
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
@@ -438,8 +470,11 @@ const store = configureStore({
     coupon: couponSlice.reducer,
     order: orderSlice.reducer,
     paystack: paystackSlice.reducer,
-    filterUser : filteredUserSlice.reducer
+    form:persistedReducer
   },
+  devTools:process.env.NODE_ENV !=="production",
+  middleware:[thunk]
+  
 });
 
 export const authActions = authSlice.actions;
