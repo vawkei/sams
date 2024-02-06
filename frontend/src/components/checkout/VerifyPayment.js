@@ -33,7 +33,7 @@ const VerifyPayment = () => {
 
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
-        // navigate("/checkout");
+        navigate("/checkout");
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
@@ -45,57 +45,17 @@ const VerifyPayment = () => {
 
   useEffect(() => {
     submitHandler();
-  }, [query]);
+  }, []);
 
   return (
     <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
-      <Button onClick={navigateToOrdersHandler} className={classes.btn}>
+      {/* <Button onClick={navigateToOrdersHandler} className={classes.btn}>
         View Orders
-      </Button>
+      </Button> */}
     </div>
   );
 };
 
 export default VerifyPayment;
 
-//  const verifyPayment = async () => {
-//   try {
-//     const reference = query.get("reference");
-//     if (reference) {
-//       await dispatch(verifypayment({ reference }));
-//     } else {
-//       throw new Error("No transaction reference found");
-//     }
-//   } catch (error) {
-//     console.log("Something went wrong:", error);
-//     // Consider adding more robust error handling here
-//   }
-// };
-
-// // Call verifyPayment after a delay
-// useEffect(() => {
-//   const timer = setTimeout(() => {
-//     verifyPayment();
-//   }, 3000);
-
-//   return () => clearTimeout(timer);
-// }, []); // Empty dependency array to run only on mount
-
-// useEffect(() => {
-//  if (incomingOrder) {
-//    const submitOrderAsync = async () => {
-//      try {
-//        await dispatch(createOrder({ incomingOrder }));
-//        localStorage.setItem("cartItems", JSON.stringify([]));
-//        dispatch(cartSliceActions.RESET_CART());
-//        navigate("/checkout");
-//      } catch (error) {
-//        console.error('Failed to submit order:', error);
-//        // Additional error handling logic
-//      }
-//    };
-
-//    submitOrderAsync();
-//  }
-// }, [incomingOrder]);

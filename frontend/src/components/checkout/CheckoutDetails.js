@@ -3,10 +3,7 @@ import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import classes from "./CheckoutDetails.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { cartSliceActions } from "../../store/cart/cartIndex";
-import { useNavigate } from "react-router-dom";
-import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
-import { acceptpayment, paystackSliceAction } from "../../store/paystack/paystackIndex";
+import { acceptpayment } from "../../store/paystack/paystackIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
 
 const CheckoutDetails = () => {
@@ -26,7 +23,7 @@ const CheckoutDetails = () => {
   const stateInputRef = useRef();
   const phoneNumberInputRef = useRef();
 
-  const navigate = useNavigate()
+
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
@@ -163,11 +160,6 @@ const CheckoutDetails = () => {
       // Handle the error, e.g., show an error message to the user
     }
 
-
-    // dispatch(createOrder(formData))
-
-    // props.onPayStackSubmitHandler(formData);
-    // dispatch(cartSliceActions.CLEAR_CART());
   };
 
 
