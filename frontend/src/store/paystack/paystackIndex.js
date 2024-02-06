@@ -9,7 +9,8 @@ const initialPaystackState = {
   isError: false,
   isLoading: false,
   isLoggedIn: false,
-  checkoutDatass: {},
+  //checkoutDatass: {},
+  webhookResponse:"",
   paymentUrl: "",
 };
 
@@ -64,7 +65,7 @@ const paystackSlice = createSlice({
     SAVE_ORDER_DATA(state, action) {
       const checkoutData = action.payload.formData;
       console.log(checkoutData);
-      state.checkoutDatass = checkoutData;
+      //state.checkoutDatass = checkoutData;
       localStorage.setItem("cartItems", JSON.stringify([]));
     },
     RESET_PAYMENT_URL(state,action){
@@ -122,12 +123,15 @@ const paystackSlice = createSlice({
         state.isLoading = false;
         state.iSuccess = true;
         console.log(action.payload.msg)
+        console.log(action.payload)
       })
       .addCase(webhookresponse.rejected,(state,action)=>{
         state.isLoading = false;
         state.isError = true;
         state.iSuccess = false;
-        console.log(action.payload.msg)
+        state.webhookResponse = action.payload.msg;
+        console.log(action.payload.msg);
+        console.log(action.payload);
       });
   },
 });

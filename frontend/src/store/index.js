@@ -436,29 +436,14 @@ const authSlice = createSlice({
 });
 
 
-// const reducers = combineReducers({form:formSlice.reducer});
+
 
 const formPersistConfig = {
   key: 'form',
   storage,
 };
 
-
-
 const persistedReducer = persistReducer(formPersistConfig,formSlice.reducer);
-
-const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-    category: categorySlice.reducer,
-    product: productSlice.reducer,
-    filter: filterSlice.reducer,
-    cart: cartSlice.reducer,
-    coupon: couponSlice.reducer,
-    order: orderSlice.reducer,
-    paystack: paystackSlice.reducer,
-    
- });
-
 
 const store = configureStore({
   reducer: {

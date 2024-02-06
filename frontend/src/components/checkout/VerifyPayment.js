@@ -19,9 +19,9 @@ const VerifyPayment = () => {
 
   const query = useQuery();
 
-  const navigateToOrdersHandler = () => {
-    navigate("/order-history");
-  };
+  // const navigateToOrdersHandler = () => {
+  //   navigate("/order-history");
+  // };
 
   const submitHandler = async () => {
     const reference = query.get("reference");
