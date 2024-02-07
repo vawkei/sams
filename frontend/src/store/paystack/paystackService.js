@@ -24,3 +24,6 @@ const webhookresponse = async()=>{
 
 const paystackService = {acceptpayment,verifypayment,webhookresponse}
 export default paystackService;
+
+
+

@@ -122,6 +122,7 @@ const paystackSlice = createSlice({
       .addCase(webhookresponse.fulfilled,(state,action)=>{
         state.isLoading = false;
         state.iSuccess = true;
+        state.webhookResponse = action.payload.msg;
         console.log(action.payload.msg)
         console.log(action.payload)
       })
@@ -129,7 +130,6 @@ const paystackSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.iSuccess = false;
-        state.webhookResponse = action.payload.msg;
         console.log(action.payload.msg);
         console.log(action.payload);
       });

@@ -1,6 +1,8 @@
 require("dotenv").config();
 require("express-async-errors");
 
+const http = require('http');
+const socketIo = require('socket.io');
 
 const express = require("express");
 const app = express();
@@ -9,8 +11,15 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
+
 const fileUpload = require ("express-fileupload");
 const cloudinary = require("cloudinary").v2;
+
+
+// Initialize Socket.IO
+const httpServer = http.createServer(app);
+const io = socketIo(httpServer);
+
 
 // Import and initialize express-session here
 const session = require("express-session");
@@ -24,12 +33,14 @@ const store = new MongoDBStore({
 
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
+const paystackRoute = require("./routes/paystackRoutes")(io);
 const userRoute = require("./routes/userRoutes");
 const productRoute = require("./routes/productRoutes");
 const categoryRoute = require("./routes/categoryRoutes"); 
 const couponRoute = require("./routes/couponRoutes");
 const orderRoute = require("./routes/orderRoutes");
-const paystackRoute = require("./routes/paystackRoutes");
+// const paystackRoute = require("./routes/paystackRoutes"); b4 the socket
+
 
 app.use(express.urlencoded({extended:false}));
 
@@ -49,6 +60,10 @@ app.use(session({
  store:store,
  cookie: { secure: false } // Set secure to true if you're using HTTPS
 }));
+
+
+
+
 
 app.use("/api/v1/paystack",paystackRoute);
 //note: we put the paystackRoute above the express.json() cuz we dont want the express.json() applied to it, since we will be using a webhook for the paystackRoute.
@@ -78,26 +93,50 @@ app.use(errorMiddleware);
 
 
 const port = process.env.PORT || 5001;
+//========start with this when the app is still basic without a db==========//
+
 // app.listen(port,"localhost",()=>{
 //     console.log("it's on");
 //     console.log(`Server listening on port ${port}`);
 // });
 
-const start =async ()=>{
-    try{
+
+//=============use this when the app is connected to mongodb=============//
+
+// const start =async ()=>{
+//     try{
+//         await mongoose.connect(process.env.MONGO_URI, {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//           });
+//         app.listen(port,'0.0.0.0',()=>{
+//             console.log("it's on");
+//             console.log("connected to DB");
+//             console.log(`Server listening on port ${port}`)
+//         })
+//     }catch(error){
+//         console.log(error)
+//     };
+// };
+
+
+//=======use this when the app is connected to db and a web socket==========//
+const start = async () => {
+    try {
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-          });
-        app.listen(port,'0.0.0.0',()=>{
+        });
+        httpServer.listen(port, '0.0.0.0', () => {
             console.log("it's on");
             console.log("connected to DB");
-            console.log(`Server listening on port ${port}`)
-        })
-    }catch(error){
-        console.log(error)
-    };
+            console.log(`Server listening on port ${port}`);
+        });
+    } catch (error) {
+        console.log(error);
+    }
 };
+
 
 start();
 
