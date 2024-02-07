@@ -101,7 +101,6 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect } from "react";
-import { useEffect } from "react";
 import io from "socket.io-client";
 
 const Checkout = () => {
