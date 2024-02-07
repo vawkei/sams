@@ -191,7 +191,9 @@ const crypto = require("crypto");
       if (event && event.event === "charge.success") {
         console.log('Emitting transactionSuccess event:', event.data);
         // Emit the event to all connected clients
-        io.emit("transactionSuccess", event.data);
+        setTimeout(() => {
+          io.emit("transactionSuccess", event.data);
+        }, 1000);
         // Handle charge success event
         console.log("Charge successful:", event.data);
         return res.status(200).json({ msg: "Charge successful" });

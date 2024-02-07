@@ -62,27 +62,28 @@ const Checkout = () => {
 
     socket.on('connect', () => {
       console.log('Connected to WebSocket server');
+    
+      socket.on('transactionSuccess', (transactionData) => {
+        console.log('Transaction successful:', transactionData);
+        // Update your Redux state or local state here if needed
+      });
+
     });
   
-    socket.on('disconnect', () => {
-      console.log('Disconnected from WebSocket server');
-    });
-
     socket.on('connect_error', (error) => {
       console.error('Connection error:', error);
     });
 
-    // Listen for the transactionSuccess event
-    socket.on('transactionSuccess', (transactionData) => {
-      console.log('Transaction successful:', transactionData);
-      // Update your Redux state or local state here if needed
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
     });
 
     // Clean up the effect
     return () => {
       socket.disconnect();
     };
-  }, [dispatch]);
+  }, []);
 
   const navigateHandler = () => {
     navigate('/order-history');
