@@ -18,7 +18,16 @@ const cloudinary = require("cloudinary").v2;
 
 // Initialize Socket.IO
 const httpServer = http.createServer(app);
-const io = socketIo(httpServer);
+
+const corsOptions = {
+    origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  };
+const io = socketIo(httpServer, {
+    cors: corsOptions
+  });
 
 
 // Import and initialize express-session here
