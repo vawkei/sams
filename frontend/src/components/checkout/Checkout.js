@@ -102,8 +102,13 @@
 import classes from "./Checkout.module.css";
 import { useEffect } from "react";
 import io from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
+
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     // Connect to the Socket.IO server
     const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
