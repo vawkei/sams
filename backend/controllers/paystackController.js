@@ -170,6 +170,7 @@ const crypto = require("crypto");
 
 // const webhook = (req, res) => {
   const webhook = (io) => (req, res) => {
+    console.log("io property:",io)
   try {
     // Assuming express.raw() middleware is used in the route definition
     // Create the hash using the raw body

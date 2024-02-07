@@ -28,9 +28,7 @@ const corsOptions = {
 const io = socketIo(httpServer, {
     cors: corsOptions
   });
-io.on("connection",socket=>{
-    console.log(socket)
-})
+
 
 // Import and initialize express-session here
 const session = require("express-session");
