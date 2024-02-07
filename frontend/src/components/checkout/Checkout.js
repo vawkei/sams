@@ -43,22 +43,88 @@
 
 //This is the code used when working with the web socket
 
+// import classes from "./Checkout.module.css";
+// import { useEffect } from "react";
+// import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import io from "socket.io-client";
+
+// const Checkout = () => {
+//   const navigate = useNavigate();
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     // Connect to the Socket.IO server
+//     const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
+
+//     socket.on("connect", () => {
+//       console.log("Connected to WebSocket server");
+//     });
+
+//     socket.on("transactionSuccess", (transactionData) => {
+//       console.log("Transaction successful:", transactionData);
+//       // Update your Redux state or local state here if needed
+//       // For example, if using Redux: dispatch(setTransactionSuccess(transactionData));
+//     });
+
+//     socket.on("connect_error", (error) => {
+//       console.error("Connection error:", error);
+//     });
+
+//     socket.on("disconnect", () => {
+//       console.log("Disconnected from WebSocket server");
+//     });
+
+//     // Clean up the effect
+//     return () => {
+//       socket.disconnect();
+//     };
+//   }, []);
+
+//   const navigateHandler = () => {
+//     navigate("/order-history");
+//   };
+
+//   return (
+//     <div className={classes["checkout-container"]}>
+//       <h2>Checkout Successful</h2>
+//       <p>Thank you for your purchase</p>
+
+//       {/* <p>{webhookResponse}</p> */}
+
+//       <button onClick={navigateHandler}>Go to Order History</button>
+//     </div>
+//   );
+// };
+
+// export default Checkout;
+
 import classes from "./Checkout.module.css";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import io from "socket.io-client";
 
 const Checkout = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   useEffect(() => {
     // Connect to the Socket.IO server
     const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
+    });
+
+    // New event listener for the binaryEvent
+    socket.on("binaryEvent", (blob) => {
+      // Convert the Blob to a string
+      const reader = new FileReader();
+      reader.onload = function () {
+        const text = reader.result;
+        console.log("Received binary data as string:", text);
+        // Parse the string back to JSON
+        const transactionData = JSON.parse(text);
+        console.log("Parsed transaction data:", transactionData);
+      };
+      reader.readAsText(blob);
     });
 
     socket.on("transactionSuccess", (transactionData) => {
