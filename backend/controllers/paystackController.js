@@ -113,7 +113,57 @@ const payStack = {
 
 const initializePayment = payStack;
 
-//payWithPaystackWebhook===========================================================:
+
+//codeA
+//payWithPaystackWebhook without web socket==============================:
+
+// const crypto = require('crypto')
+// const webhook = (req, res) => {
+//   try {
+//      // Assuming express.raw() middleware is used in the route definition
+//      // Create the hash using the raw body
+//      const hash = crypto
+//        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
+//        .update(req.body, 'utf-8') // Use req.body instead of req.raw
+//        .digest('hex');
+ 
+//      // Log the calculated hash and the received signature
+//      console.log('Calculated Hash:', hash);
+//      console.log('Received Signature:', req.headers['x-paystack-signature']);
+ 
+//      if (hash === req.headers['x-paystack-signature']) {
+//        // Retrieve the request's body:
+//        const event = JSON.parse(req.body); // Use req.body instead of req.raw
+//        console.log('Received Paystack Webhook Event:', event);
+ 
+//        // Do something with the event:
+//        if (event && event.event === 'charge.success') {
+//          // Handle charge success event
+//          console.log('Charge successful:', event.data);
+//          return res.status(200).json({ msg: 'Charge successful' });
+//        } else {
+//          // Invalid signature
+//          console.error('Invalid Paystack signature');
+//          return res.status(400).json({ msg: 'Invalid Paystack signature' });
+//        }
+//      } else {
+//        // Signatures do not match
+//        console.error('Signatures do not match');
+//        return res.status(400).json({ msg: 'Signatures do not match' });
+//      }
+//   } catch (error) {
+//      // An error occurred during the processing of the webhook
+//      console.error('Error processing webhook:', error);
+//      return res
+//        .status(500)
+//        .json({ msg: 'An error occurred while processing the webhook' });
+//   }
+//  };
+  
+
+
+//codeB
+//payWithPaystackWebhook with web socket===========================================:
 
 const crypto = require("crypto");
 
