@@ -47,16 +47,16 @@ export const verifypayment = createAsyncThunk(
   }
 );
 //webhookresponse
-export const webhookresponse = createAsyncThunk(
-  "paystack/webhook",async(_,thunkAPI)=>{
-    try{
-      return await paystackService.webhookresponse()
-    }catch(error){
-      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
-      return thunkAPI.rejectWithValue(message)
-    }
-  }
-)
+// export const webhookresponse = createAsyncThunk(
+//   "paystack/webhook",async(_,thunkAPI)=>{
+//     try{
+//       return await paystackService.webhookresponse()
+//     }catch(error){
+//       const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
+//       return thunkAPI.rejectWithValue(message)
+//     }
+//   }
+// )
 
 const paystackSlice = createSlice({
   name: "paystack",
@@ -116,23 +116,23 @@ const paystackSlice = createSlice({
         console.log(action.payload);
       })
       //webhookresponse:
-      .addCase(webhookresponse.pending,(state)=>{
-        state.isLoading = true;
-      })
-      .addCase(webhookresponse.fulfilled,(state,action)=>{
-        state.isLoading = false;
-        state.iSuccess = true;
-        state.webhookResponse = action.payload.msg;
-        console.log(action.payload.msg)
-        console.log(action.payload)
-      })
-      .addCase(webhookresponse.rejected,(state,action)=>{
-        state.isLoading = false;
-        state.isError = true;
-        state.iSuccess = false;
-        console.log(action.payload.msg);
-        console.log(action.payload);
-      });
+      // .addCase(webhookresponse.pending,(state)=>{
+      //   state.isLoading = true;
+      // })
+      // .addCase(webhookresponse.fulfilled,(state,action)=>{
+      //   state.isLoading = false;
+      //   state.iSuccess = true;
+      //   state.webhookResponse = action.payload.msg;
+      //   console.log(action.payload.msg)
+      //   console.log(action.payload)
+      // })
+      // .addCase(webhookresponse.rejected,(state,action)=>{
+      //   state.isLoading = false;
+      //   state.isError = true;
+      //   state.iSuccess = false;
+      //   console.log(action.payload.msg);
+      //   console.log(action.payload);
+      // });
   },
 });
 

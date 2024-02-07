@@ -52,7 +52,7 @@ import { webhookresponse } from "../../store/paystack/paystackIndex";
 import io from 'socket.io-client';
 
 const Checkout = () => {
-  const { webhookResponse } = useSelector((state) => state.paystack);
+  // const { webhookResponse } = useSelector((state) => state.paystack);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,6 +61,10 @@ const Checkout = () => {
 
     // Connect to the Socket.IO server
     const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
+
+    socket.on('connect_error', (error) => {
+      console.error('Connection error:', error);
+    });
 
     // Listen for the transactionSuccess event
     socket.on('transactionSuccess', (transactionData) => {

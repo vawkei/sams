@@ -189,6 +189,7 @@ const crypto = require("crypto");
 
       // Do something with the event:
       if (event && event.event === "charge.success") {
+        console.log('Emitting transactionSuccess event:', event.data);
         // Emit the event to all connected clients
         io.emit("transactionSuccess", event.data);
         // Handle charge success event

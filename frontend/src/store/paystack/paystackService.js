@@ -17,12 +17,12 @@ const verifypayment = async(reference)=>{
     return response.data;
 };
 
-const webhookresponse = async()=>{
-    const response = await axios.get(API_URL + "webhook");
-    return response.data;
-}
+// const webhookresponse = async()=>{
+//     const response = await axios.get(API_URL + "webhook");
+//     return response.data;
+// }
 
-const paystackService = {acceptpayment,verifypayment,webhookresponse}
+const paystackService = {acceptpayment,verifypayment,}
 export default paystackService;
 
 
