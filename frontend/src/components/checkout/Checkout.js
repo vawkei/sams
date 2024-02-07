@@ -60,6 +60,14 @@ const Checkout = () => {
     // Connect to the Socket.IO server
     const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
 
+    socket.on('connect', () => {
+      console.log('Connected to WebSocket server');
+    });
+  
+    socket.on('disconnect', () => {
+      console.log('Disconnected from WebSocket server');
+    });
+
     socket.on('connect_error', (error) => {
       console.error('Connection error:', error);
     });
