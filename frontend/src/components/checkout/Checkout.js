@@ -55,7 +55,7 @@ const Checkout = () => {
 
   useEffect(() => {
     // Connect to the Socket.IO server
-    const socket = io(process.env.REACT_APP_BACKEND_URL); // Replace with your server URL
+    const socket = io(process.env.REACT_APP_FRONTEND_URL); // Replace with your server URL
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
