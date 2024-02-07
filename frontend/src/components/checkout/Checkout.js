@@ -46,13 +46,11 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { webhookresponse } from "../../store/paystack/paystackIndex";
 import io from 'socket.io-client';
 
 const Checkout = () => {
-  // const { webhookResponse } = useSelector((state) => state.paystack);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
