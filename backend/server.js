@@ -27,7 +27,6 @@ const corsOptions = {
   };
 const io = socketIo(httpServer, {
     cors: corsOptions,
-    path:"/webhook",
     transports:["websocket"]
   });
 

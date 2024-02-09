@@ -57,7 +57,6 @@ const Checkout = () => {
     // Connect to the Socket.IO server
     // const socket = io(process.env.REACT_APP_BACKEND_URL); 
     const socket = io(`${process.env.REACT_APP_BACKEND_URL}`,{
-      path:"/webhook",
       autoConnect:true,
       transports:['websocket']
     });
