@@ -27,7 +27,8 @@ const corsOptions = {
   };
 const io = socketIo(httpServer, {
     cors: corsOptions,
-    transports:["websocket"]
+    transports:["websocket"],
+    autoConnect:true,
   });
 
 
