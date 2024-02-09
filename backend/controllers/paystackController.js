@@ -170,10 +170,8 @@ const crypto = require("crypto");
 
 // const webhook = (req, res) => {
   const webhook = (io) => (req, res) => {
-    console.log("io property:",io)
   try {
-    // Assuming express.raw() middleware is used in the route definition
-    // Create the hash using the raw body
+
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
       .update(req.body, "utf-8") // Use req.body instead of req.raw
