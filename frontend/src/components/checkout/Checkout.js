@@ -58,7 +58,7 @@ const Checkout = () => {
     // const socket = io(process.env.REACT_APP_BACKEND_URL); 
     const socket = io(`${process.env.REACT_APP_BACKEND_URL}`,{
       path:"/webhook",
-      autoConnect:false,
+      autoConnect:true,
       transports:['websocket']
     });
 
