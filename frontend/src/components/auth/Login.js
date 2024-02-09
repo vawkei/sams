@@ -1,4 +1,3 @@
-import Card from "../ui/card/Card";
 import classes from "./Auth.module.css";
 import signImage from "../../assets/veeshopsignin.jpg";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
@@ -9,11 +8,13 @@ import { authActions, login } from "../../store/index";
 
 import { useEffect, useState } from "react";
 import Button from "../ui/button/Button";
+import Card from "../ui/card/Card";
 import { getCartDb, saveCartDb } from "../../store/cart/cartIndex";
 import Spinner from "../ui/spinner/Spinner";
 
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
+import Notifier from "../ui/notifier/Notifier";
 
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -25,11 +26,11 @@ const Login = () => {
 
   const redirect = urlParams.get("redirect");
 
-  const { isLoggedIn, user, isLoading, isSuccess } = useSelector(
+  const { isLoggedIn, user, isLoading, isSuccess, notification } = useSelector(
     (state) => state.auth
   );
 
-  const {cartItems} = useSelector((state)=>state.cart);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const isMobile = useMediaQuery({ maxWidth: 640 });
 
@@ -77,12 +78,7 @@ const Login = () => {
         return navigate("/cart");
         // The return statement in the useEffect hook in ds code is used to provide a cleanup function that runs when the component unmounts or before the effect runs again. However, in ds specific case, the return statement is being used to immediately exit the function once the condition if (redirect === "cart") is met.
       }
-      //dispatch(getCartDb());
-      if (cartItems.length > 0) {
-          navigate("/cart")
-        } else {
-          navigate("/")
-        }
+      dispatch(getCartDb());
     }
     dispatch(authActions.RESET_AUTH());
   }, [isLoggedIn, isSuccess, dispatch, navigate, redirect]);
@@ -107,8 +103,25 @@ const Login = () => {
   //   dispatch(authActions.RESET_AUTH());
   //  }, [isLoggedIn, user, dispatch, navigate, redirect]);
 
+  let notificationClearer;
+  let timeDuration = 5000;
+
+  useEffect(() => {
+    if (notification) {
+      notificationClearer = setTimeout(() => {
+        dispatch(authActions.UPDATE_NOTIFICATION("false"));
+      }, timeDuration);
+    }
+    return () => {
+      clearTimeout(notificationClearer);
+    };
+  }, [dispatch, notification]);
+
   return (
     <div>
+      {notification && (
+        <Notifier title={"LogOut Successful"} message={"You are Now LoggedOut"} />
+      )}
       {isLoading && <Spinner />}
       <h1>Login</h1>
       <section className={classes.auth}>
@@ -119,11 +132,16 @@ const Login = () => {
           <Card className={classes.cardClass}>
             {/* animationsEmail ===================================================*/}
             {isMobile ? (
-              <motion.form 
-              exit={{x:1000,transition:{delay:1.5,type:'spring',stiffness:500}}}
-              //this is to exit the form and nothin else
+              <motion.form
+                exit={{
+                  x: 1000,
+                  transition: { delay: 1.5, type: "spring", stiffness: 500 },
+                }}
+                //this is to exit the form and nothin else
 
-              action="" className={classes.form} onSubmit={submitHandler}>
+                action=""
+                className={classes.form}
+                onSubmit={submitHandler}>
                 <motion.div
                   initial={{ x: -600 }}
                   animate={{

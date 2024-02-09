@@ -17,7 +17,9 @@ const createCategory = async (req, res) => {
     });
     res.status(201).json({ msg: "Category created", categoryName });
   } catch (error) {
-    res.status(500).json(error.errors.name.message);
+    res.status(500).json(error._message);
+    // console.log(error._message)
+   
     //get :"Length should'nt be less than 3 characters" if xters are <3
     //and :"Length should'nt be more than 10 characters" if > 10. with the code: res.status(500).json(error.errors.name.message). cuz i set them in the category model
   }

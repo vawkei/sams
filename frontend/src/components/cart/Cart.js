@@ -13,6 +13,9 @@ const Cart = () => {
   const { cartItems, cartTotalAmount } = useSelector((state) => state.cart);
   const {coupon} = useSelector((state)=>state.coupon);
 
+  const cart = useSelector((state)=>state.cart)
+  console.log(cart)
+
   console.log(cartTotalAmount);
 
   const { isLoggedIn } = useSelector((state) => state.auth);

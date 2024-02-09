@@ -9,7 +9,7 @@ const filteredUserSlice = createSlice({
     initialState:initialNameState,
     reducers:{
         FILTER_BY_SEARCH(state,action){
-            const {users,search} = action.payload;
+            const {users,search,} = action.payload;
             console.log(search);
 
             let tempUser = users?.filter((user)=>{
@@ -17,6 +17,7 @@ const filteredUserSlice = createSlice({
                     user.name.toLowerCase().includes(search.toLowerCase())  ||
                     user.email.toLowerCase().includes(search.toLowerCase()) ||
                     user.town.toLowerCase().includes(search.toLowerCase())  ||
+                    user.surname.toLowerCase().includes(search.toLowerCase())  ||
                     new Date(user.verifiedDate).toDateString().toLowerCase().includes(search.toLowerCase())
                     );
                 

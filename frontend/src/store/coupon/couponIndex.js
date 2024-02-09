@@ -1,3 +1,4 @@
+
 // import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 // import couponService from "./couponService";
 
@@ -157,6 +158,7 @@
 
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import couponService from "./couponService";
+import {toast} from "react-toastify"
 
 const initialCouponState = {
     // coupon: null,
@@ -241,12 +243,15 @@ const couponSlice = createSlice({
             state.isLoading = false;
             state.message = action.payload.msg;
             console.log(action.payload)
+            toast.success(action.payload.msg,{position:"top-center"})
+            
         })
         .addCase(createCoupon.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.message = action.payload.msg
             console.log(action.payload)
+            toast.error(action.payload.msg,{position:"top-center"})
         })
         //getCoupons:
         .addCase(getCoupons.pending,(state)=>{
@@ -288,15 +293,15 @@ const couponSlice = createSlice({
         .addCase(deleteCoupon.fulfilled,(state,action)=>{
             state.isLoading=false;
             state.isSuccess = true;
-            //toast.success(action.payload)
             console.log(action.payload)
+            toast.success(action.payload.msg,{position:"top-center"})
         })
         .addCase(deleteCoupon.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;
-            //toast.error(action.payload);
             console.log(action.payload)
+            toast.error(action.payload,{position:"top-center"});
         })
     }
 })

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import cartService from "./cartService";
 import { getCartQuantityById } from "../../utils/Utils";
+import { toast } from "react-toastify";
 
 const FRONT_URL = process.env.REACT_APP_FRONTEND_URL;
 const applyDiscount = (totalAmount, discountPercent) => {
@@ -20,16 +21,17 @@ const initialCartState = {
     : 0,
   //cartTotalAmount: 0,
   cartTotalAmount: localStorage.getItem("cartTotalAmount")
-  ? JSON.parse(localStorage.getItem("cartTotalAmount"))
-  : 0,
- // initialCartTotalAmount: 0,
+    ? JSON.parse(localStorage.getItem("cartTotalAmount"))
+    : 0,
+  // initialCartTotalAmount: 0,
   initialCartTotalAmount: localStorage.getItem("initialCartTotalAmount")
-  ? JSON.parse(localStorage.getItem("initialCartTotalAmount"))
-  : 0,
+    ? JSON.parse(localStorage.getItem("initialCartTotalAmount"))
+    : 0,
   message: "",
   isSuccess: false,
   isError: false,
   isLoading: false,
+  notification: false,
 };
 
 //saveCartDb:
@@ -74,23 +76,29 @@ const cartSlice = createSlice({
       const productIndex = state.cartItems.findIndex((item) => {
         return item._id === action.payload._id;
       });
-    
 
       if (productIndex >= 0) {
         if (cartqty === action.payload.quantity) {
           state.cartItems[productIndex].productCartQty += 0;
           console.log("Maximum Limit reached");
+          toast.success("Maximum Limit reached",{position:"top-left"});
         } else {
           state.cartItems[productIndex].productCartQty += 1;
           console.log("Product increased by 1");
+          toast.success(`${action.payload.name} increased by 1`, {position:"top-center" });
         }
       } else {
         const tempData = { ...action.payload, productCartQty: 1 };
         state.cartItems.push(tempData); //this is where cartItems get inputed. And it has a new property called productCartQty,which has a value of 1.
         console.log(`${action.payload.name} added to cart`);
+        toast.success(`${action.payload.name} added to cart`, {
+          position: "top-left",
+        });
       }
+
       //save to localStorage:
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      localStorage.setItem("cartTotalQty", JSON.stringify(state.cartTotalQty));
     },
     DECREASE_CART(state, action) {
       const productIndex = state.cartItems.findIndex((item) => {
@@ -101,14 +109,21 @@ const cartSlice = createSlice({
       if (state.cartItems[productIndex].productCartQty > 1) {
         state.cartItems[productIndex].productCartQty -= 1;
         console.log(`${action.payload.name} decreased by 1`);
+        toast.success(`${action.payload.name} decreased by 1`, {
+          position: "top-center",
+        });
       } else {
         const newCartItems = state.cartItems.filter((item) => {
           return item._id !== action.payload._id;
         });
         state.cartItems = newCartItems;
         console.log(`${action.payload.name} removed from cart`);
+        toast.success(`${action.payload.name} removed from cart`, {
+          position: "top-left",
+        });
       }
       //save to localStorage:
+      localStorage.setItem("cartTotalQty", JSON.stringify(state.cartTotalQty));
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     REMOVE_ITEM(state, action) {
@@ -121,9 +136,10 @@ const cartSlice = createSlice({
     },
     RESET_CART(state) {
       state.cartItems = [];
-      state.cartTotalAmount = 0
-      state.cartTotalQty = 0
+      state.cartTotalAmount = 0;
+      state.cartTotalQty = 0;
       console.log("Cart cleared");
+      toast.success("Cart cleared",{position:"top-left"})
       //save to localStorage:
       localStorage.setItem("cartItems", JSON.stringify([]));
       localStorage.setItem("cartTotalAmount", JSON.stringify(0));
@@ -131,7 +147,7 @@ const cartSlice = createSlice({
       localStorage.setItem("cartTotalQty", JSON.stringify(0));
       localStorage.removeItem("cartItems");
 
-      console.log("local storage emptied")
+      console.log("local storage emptied");
     },
     CART_TOTAL_QUANTITY(state) {
       let array = [];
@@ -164,18 +180,23 @@ const cartSlice = createSlice({
         JSON.stringify(state.initialCartTotalAmount)
       );
 
-
       //const coupon = action.payload;
       console.log(action.payload);
       if (action.payload && action.payload.coupon !== null) {
-        const withDiscount = applyDiscount(totalAmount, action.payload.discount);
+        const withDiscount = applyDiscount(
+          totalAmount,
+          action.payload.discount
+        );
         state.cartTotalAmount = withDiscount;
-        console.log(withDiscount)
-      }else{
-        state.cartTotalAmount= totalAmount
-      } 
+        console.log(withDiscount);
+      } else {
+        state.cartTotalAmount = totalAmount;
+      }
       //save to localStorage:
-      localStorage.setItem("cartTotalAmount", JSON.stringify(state.cartTotalAmount));
+      localStorage.setItem(
+        "cartTotalAmount",
+        JSON.stringify(state.cartTotalAmount)
+      );
     },
   },
 
@@ -206,16 +227,15 @@ const cartSlice = createSlice({
         state.isSuccess = true;
         state.message = action.payload;
 
+      //  localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+        localStorage.setItem("cartItems", JSON.stringify(action.payload.userCart));
 
-        localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-
-        
-        // if (state.cartItems.length > 0) {
-        //   window.location.href = `${FRONT_URL}/cart`;
-        // } else {
-        //   window.location.href = `${FRONT_URL}`;
-        // }handled this in the Login.js useEffect
-
+        if (action.payload.userCart.length > 0) {
+          window.location.href = `${FRONT_URL}/cart`;
+        } else {
+          window.location.href = `${FRONT_URL}`;
+        }
+        //handled this in the Login.js useEffect
 
         //whenever getCartDb is called,we will first set our localstorage with the cartItems got frm the db. Then it will check if there is an item in our cart which is coming from our db. if there isan item, it takes us to the cart page. Or if none, then it takes us to home page
       })

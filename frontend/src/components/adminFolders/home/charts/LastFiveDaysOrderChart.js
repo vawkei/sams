@@ -44,11 +44,11 @@ const LastFiveDaysOrderChart = (props) => {
   const ijarun  =props.ijarun;
 
     const data = {
-      labels:[day1,day2,day3,day4,day5],
+      labels:[day5,day4,day3,day2,day1],
       datasets:[
         {
           label:"Last 5 days Total Orders",
-          data:[day_1,day_2,day_3,day_4,day_5],
+          data:[day_5,day_4,day_3,day_2,day_1],
           borderColor:"rgba(53,162,235)",
           backgroundColor:"rgba(53,162,235,0.4)",
           pointBorderColor: "red",
@@ -57,7 +57,7 @@ const LastFiveDaysOrderChart = (props) => {
         },
         {
           label:"Last 5 days Total Order Amount",
-          data:[oni,anor,ijeta,ijerin,ijarun],
+          data:[ijarun,ijerin,ijeta,anor,oni],
           borderColor:"rgba(53,162,235)",
           backgroundColor:"rgba(53,162,235,0.4)",
           pointBorderColor: "red",

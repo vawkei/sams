@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import categoryService from "./categoryService";
+import {toast} from "react-toastify"
 
 const initialCategoryState = {
     category:null,
@@ -74,14 +75,14 @@ const categorySlice = createSlice({
         .addCase(createCategory.fulfilled,(state,action)=>{
             state.isLoading = false;
             state.message = action.payload.msg;
-            //toast.success(action.payload.msg)
             console.log(action.payload)
+            toast.success(action.payload.msg,{position:"top-center"})
         })
         .addCase(createCategory.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
-            //toast.error(action.payload);
             console.log(action.payload)
+            toast.error(action.payload,{position:"top-center"});
         })
         //getCategories:
         .addCase(getCategories.pending,(state)=>{
@@ -123,15 +124,15 @@ const categorySlice = createSlice({
         .addCase(deleteCategory.fulfilled,(state,action)=>{
             state.isLoading=false;
             state.isSuccess = true;
-            //toast.success(action.payload)
-            console.log(action.payload)
+            console.log(action.payload);
+            toast.success(action.payload.msg,{position:"top-center"})
         })
         .addCase(deleteCategory.rejected,(state,action)=>{
             state.isLoading=false;
             state.isError=true;
             state.isSuccess=false;
-            //toast.error(action.payload);
-            console.log(action.payload)
+            console.log(action.payload);
+            toast.error(action.payload,{position:"top-center"});
         })
     }
 });

@@ -32,7 +32,7 @@ const CreateCategory = () => {
       return;
     }
     //console.log(name)
-    const formData = { name };
+    const formData = { name:name.charAt(0).toUpperCase() + name.slice(1) };
     await dispatch(createCategory(formData));
     setName("");
     dispatch(getCategories());

@@ -1,5 +1,5 @@
 import "./OrderDetails.css";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { getSingleOrder } from "../../../store/order/orderIndex";
 import { useDispatch,useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -14,9 +14,14 @@ const OrderDetails = () => {
 
     var nairaSymbol = "\u20A6"; 
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const {order,isLoading} = useSelector((state)=>state.order);
-    console.log(order)
+    console.log(order);
+
+    const backToOrdersHandler = () => {
+        navigate("/admin/orders");
+      };
     
     useEffect(()=>{
         dispatch(getSingleOrder(id))
@@ -26,7 +31,7 @@ const OrderDetails = () => {
         <div className="container">
             {isLoading && <Loader />}
             <h2>Admin Order Details</h2>
-            <Button>&larr; Back to orders</Button>
+            <Button onClick={backToOrdersHandler}>&larr; Back to orders</Button>
             <div className="intro">
                 <h2>To: {order?.firstName} {order?.surname}</h2>
                 <p><b>orderID: {order?._id}</b></p>
@@ -45,7 +50,6 @@ const OrderDetails = () => {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,9 +69,6 @@ const OrderDetails = () => {
                                 <td>{nairaSymbol} {price}</td>
                                 <td>{productCartQty}</td>
                                 <td>{nairaSymbol} {price * productCartQty}</td>
-                                <td className="action">
-                                    <Button className="btn">Action</Button>
-                                </td>
                             </tr>
                         )
                     })}

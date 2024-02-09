@@ -3,6 +3,9 @@
     z-index: 200;
     position: relative;
 }
+.top p{
+    cursor: pointer;
+}
 .content{
     display: flex;
     width: 100%;

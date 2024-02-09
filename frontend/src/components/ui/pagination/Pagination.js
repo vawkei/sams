@@ -10,7 +10,7 @@ const Pagination = (props) => {
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   //maximum number value to show in the pagination:
-  const [maxPageNumberLimit, setMaxPagNumberLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPagNumberLimit] = useState(10);
 
   const array = [];
   for (

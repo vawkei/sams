@@ -1,14 +1,16 @@
 import "./Orders.css";
 import { getAdminOrders } from "../../../store/order/orderIndex";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Pagination from "../../ui/pagination/Pagination";
 
 const Orders = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.adminOrders);
   console.log(orders);
+  const filteredProducts = orders;
 
   const isLoading = useSelector((state) => state.order.isLoading);
 
@@ -20,6 +22,15 @@ const Orders = () => {
     dispatch(getAdminOrders());
   }, [dispatch]);
 
+  //Pagination stuff:
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+
+  const indexLastItem = currentPage * itemsPerPage; //=6
+  const indexFirstItem = indexLastItem - itemsPerPage; //=0
+
+  const currentItems = filteredProducts.slice(indexFirstItem, indexLastItem);
+  console.log(currentItems);
   return (
     <div className="table">
       <h2>Total Orders</h2>
@@ -46,7 +57,8 @@ const Orders = () => {
                 </tr>
               </thead>
               <tbody className="table-tbody">
-                {orders.map((order, index) => {
+                {/* {orders.map((order, index) => { */}
+                {currentItems.map((order, index) => {
                   const {
                     orderDate,
                     cartTotalQty,
@@ -96,6 +108,13 @@ const Orders = () => {
           )}
         </>
       )}
+       <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        // products={products}
+        filteredProducts={filteredProducts}
+      />
     </div>
   );
 };

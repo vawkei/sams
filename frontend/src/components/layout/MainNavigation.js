@@ -50,7 +50,7 @@ const MainNavigation = () => {
   const logOutHandler = async () => {
     await dispatch(logout());
     dispatch(authActions.RESET_AUTH());
-    dispatch(cartSliceActions.RESET_CART());
+    // dispatch(cartSliceActions.RESET_CART());
     navigate("/login");
   };
 

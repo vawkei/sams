@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import classes from "./ProfileHome.module.css";
 import Card from "../ui/card/Card";
 import Spinner from "../ui/spinner/Spinner";
@@ -9,36 +9,55 @@ import { getOrders } from "../../store/order/orderIndex";
 
 const ProfileHome = () => {
   const dispatch = useDispatch();
-  var nairaSymbol = "\u20A6"; 
+  var nairaSymbol = "\u20A6";
 
   const { user, isLoading } = useSelector((state) => state.auth);
   console.log(user);
   const { orders } = useSelector((state) => state.order);
   console.log(orders);
 
+  const [showRefreshMessage, setShowRefreshMessage] = useState(true);
+
   //Getting out the Time of the last order:==========================================
   const LastOrder = orders.slice(0, 1);
   console.log(LastOrder);
-  
-  const LastOrderTime = LastOrder.map((b)=>{
-    let a =  b.orderTime;
-    let x =  new Date(a).toLocaleString()
-    return x
-  })
-  console.log(LastOrderTime)
 
-//Getting the total amount the user has spent:=========================================
-const orderAmount = orders.reduce((a,b)=>{
-  return a + b.orderAmount
-},0);
-console.log(orderAmount)
+  const LastOrderTime = LastOrder.map((b) => {
+    let a = b.orderTime;
+    let x = new Date(a).toLocaleString();
+    return x;
+  });
+  console.log(LastOrderTime);
+
+  //Getting the total amount the user has spent:=========================================
+  const orderAmount = orders.reduce((a, b) => {
+    return a + b.orderAmount;
+  }, 0);
+  console.log(orderAmount);
+
+  let timeClearer;
 
   useEffect(() => {
     if (user === null) {
       dispatch(getSingleUser());
       dispatch(getOrders());
     }
-  }, [dispatch, user,orders]);
+
+    timeClearer = setTimeout(() => {
+      setShowRefreshMessage(false);
+    }, 3000);
+
+    return () => clearTimeout(timeClearer);
+  }, [
+    dispatch,
+    user,
+    orders,
+    orderAmount,
+    LastOrder,
+    LastOrderTime,
+    timeClearer,
+    showRefreshMessage,
+  ]);
 
   //   useEffect(()=>{
   //     if( isLoggedIn && user){
@@ -56,6 +75,7 @@ console.log(orderAmount)
     <div className={classes.container}>
       {isLoading && <Spinner />}
       <ProfileHeader />
+      {showRefreshMessage && <p>Please refresh page to see details in full</p>}
       <h2>
         {user?.name} {user?.surname}
       </h2>
@@ -72,8 +92,15 @@ console.log(orderAmount)
           <p>{user?.address}</p>
           <p>{user?.town}</p>
           <p>{user?.state}</p>
-          <p><b>Total Amount Spent: </b>{nairaSymbol}{orderAmount.toFixed(2)}</p>
-          <p><b>Time Of Last Order: </b>{LastOrderTime}</p>
+          <p>
+            <b>Total Amount Spent: </b>
+            {nairaSymbol}
+            {orderAmount.toFixed(2)}
+          </p>
+          <p>
+            <b>Time Of Last Order: </b>
+            {LastOrderTime}
+          </p>
         </div>
       </Card>
     </div>

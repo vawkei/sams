@@ -29,6 +29,7 @@ const initialAuthState = {
   users:[],
   message: "",
   showRegForm: true,
+  notification:false
 };
 
 //register:
@@ -220,7 +221,11 @@ const authSlice = createSlice({
       state.isError = false;
       state.message = " ";
     },
+    UPDATE_NOTIFICATION(state){
+      state.notification = false
+    }
   },
+  
   extraReducers: (builder) => {
     builder
       //1:register:=========================================================
@@ -269,6 +274,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isLoggedIn = true;
         state.isSuccess = true;
+        state.notification = true;    
         state.message = action.payload;
         //state.user = action.payload
         state.user = action.payload.user;
@@ -291,6 +297,7 @@ const authSlice = createSlice({
         state.isError = false;
         state.user = null;
         state.message = action.payload;
+        state.notification = true;
         state.isSuccess = true;
         console.log(action.payload);
       })
@@ -450,6 +457,7 @@ const store = configureStore({
     auth: authSlice.reducer,
     category: categorySlice.reducer,
     product: productSlice.reducer,
+    filterUser: filteredUserSlice.reducer,
     filter: filterSlice.reducer,
     cart: cartSlice.reducer,
     coupon: couponSlice.reducer,

@@ -14,12 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartSliceActions, saveCartDb } from "../../../store/cart/cartIndex";
 import StarsRating from "react-star-rate";
 import Spinner from "../../ui/spinner/Spinner";
+import Notifier from "../../ui/notifier/Notifier";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [showEditForm, setShowEditForm] = useState(false);
   const [productReview, setProductReview] = useState("");
   const [star, setStar] = useState(0);
+  const [notificationTitle, setNotificationTitle] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -31,12 +34,16 @@ const ProductDetail = () => {
   };
 
   const { product, message, isLoading } = useSelector((state) => state.product);
-  console.log(product);
+  //console.log(product);
+  
   const { user } = useSelector((state) => state.auth);
-  // console.log(user);
+  //console.log(user);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   //console.log(cartItems);
+
+  const cart = useSelector((state)=>state.cart);
+  console.log(cart);
 
   const currentUserCart = cartItems.find((item) => item._id === id);
   //console.log(currentUserCart);
@@ -46,7 +53,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
-  }, []);
+  }, [user]);
 
   const deleteReviewHandler = async (productID) => {
     await dispatch(deleteProductReview(productID));
@@ -89,12 +96,14 @@ const ProductDetail = () => {
     dispatch(productActions.RESET_PRODUCT_STATE());
   }, [navigate, message, id]);
 
+  //aadToCartHandler:
   const addToCartHandler = async (product) => {
     dispatch(cartSliceActions.ADD_TO_CART(product));
     await dispatch(
       saveCartDb({ cartItems: JSON.parse(localStorage.getItem("cartItems")) })
     );
   };
+  //decreaseCartHandler:
   const decreaseCartHandler = async (product) => {
     dispatch(cartSliceActions.DECREASE_CART(product));
     await dispatch(
@@ -112,9 +121,7 @@ const ProductDetail = () => {
       <div className={classes.top}>
         <h2>Product Detail</h2>
 
-        <p
-          style={{ }}
-          onClick={backToProducts}>
+        <p onClick={backToProducts}>
           &larr; Back to Products
         </p>
       </div>
@@ -267,3 +274,29 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+
+// let lisalipps = user.cartItems;
+// let x = lisalipps.map((item) => item.productCartQty);
+// console.log(x[0]);
+
+// console.log(user.cartItems)
+
+// user.cartItems.map((item) => {
+//   let y = item.productCartQty;
+//   console.log(y)
+//   if (item.productCartQty < 1) {
+//     setNotificationTitle("Item Added");
+//     setNotificationMessage(`${product.name} added to cart`);
+//   } else {
+//     setNotificationTitle("Item Increased");
+//     setNotificationMessage(`${product.name} increased by 1`);
+//   }
+// });
+
+// if(user.cartItems.productCartQty < 1){
+//   setNotificationTitle("Item Added");
+//   setNotificationMessage(`${product.name} added to cart`);
+// }else{
+//   setNotificationTitle("Item Added");
+//   setNotificationMessage(`${product.name} increased by 1`);
+// }

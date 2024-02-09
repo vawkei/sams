@@ -5,14 +5,15 @@ import { useEffect, useState } from "react";
 import Search from "../../ui/search/Search";
 import { getAdminOrders } from "../../../store/order/orderIndex";
 import { filteredUserSliceAction } from "../../../store/filterUser";
+import Loader from "../../ui/loader/Loader"
 
 const AllUsers = () => {
   const dispatch = useDispatch();
 
   const [search, setSearch] = useState("");
 
-  const { users } = useSelector((state) => state.auth);
-  //console.log(users);
+  const { users,isLoading } = useSelector((state) => state.auth);
+  console.log(users);
   const { adminOrders } = useSelector((state) => state.order);
   //console.log(adminOrders);
   const { filteredUser } = useSelector((state) => state.filterUser);
@@ -49,6 +50,7 @@ const AllUsers = () => {
 
   return (
     <div className={classes["user-container"]}>
+      {isLoading && <Loader />}
       <h2>All Users</h2>
       <div className={classes.search}>
         <Search
@@ -97,8 +99,7 @@ const AllUsers = () => {
                 <td>{new Date(user?.verifiedDate).toDateString()}</td>
                 <td>{user?.town}</td>
                 <td>
-                  {nairaSymbol}
-                  {matchingAmount
+                  {nairaSymbol} {matchingAmount
                     ? matchingAmount.totalAmount
                     : "Dude hasn't made a puchase"}
                 </td>

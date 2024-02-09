@@ -22,4 +22,5 @@
 .category-list table tbody td {
   padding: 1rem;
   border: 1px solid black;
+  text-align: left;
 }
