@@ -192,8 +192,7 @@ const crypto = require("crypto");
         console.log('Emitting transactionSuccess event:', event.data);
         
         // Emit the event to all connected clients
-        //io.emit("transactionSuccess", event.data);
-        io.emit("transactionSuccess", "lisa lipps is the sexiest babe of all time, i repaet of all time. rest in peace jesse jane.");
+        io.emit("transactionSuccess", event.data);
         console.log("transactionSuccess event emitted successfully");
         
         // Handle charge success event
