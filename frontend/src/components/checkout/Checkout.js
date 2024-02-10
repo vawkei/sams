@@ -59,7 +59,7 @@ const Checkout = () => {
     // Connect to the Socket.IO server
     // const socket = io(process.env.REACT_APP_BACKEND_URL); 
     const socket = io(`${process.env.REACT_APP_BACKEND_URL}/webhook`,{
-
+      path:"/webhook"
     });
 
     socket.on("connect", () => {
