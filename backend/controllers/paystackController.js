@@ -174,7 +174,7 @@ const crypto = require("crypto");
 
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-      .update(req.body, "utf-8") // Use req.body instead of req.raw
+      .update(JSON.stringify(req.body)) // Stringify the object to create a hash
       .digest("hex");
 
     // Log the calculated hash and the received signature
@@ -183,7 +183,7 @@ const crypto = require("crypto");
 
     if (hash === req.headers["x-paystack-signature"]) {
       // Retrieve the request's body:
-      const event = JSON.parse(req.body); // Use req.body instead of req.raw
+      const event = req.body; // req.body is now a JavaScript object
       console.log("Received Paystack Webhook Event:", event);
 
       // Do something with the event:
