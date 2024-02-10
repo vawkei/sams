@@ -169,7 +169,7 @@ const crypto = require("crypto");
 
 
 // const webhook = (req, res) => {
-  const webhook = (io) => (req, res) => {
+  const webhook = (webhookNamespace) =>async (req, res) => {
   try {
 
     const hash = crypto
@@ -192,17 +192,17 @@ const crypto = require("crypto");
         console.log('Emitting transactionSuccess event:', event.data);
         
         // Emit the event to all connected clients
-        io.emit("transactionSuccess", event.data);
+        webhookNamespace.emit("transactionSuccess", event.data);
         console.log("transactionSuccess event emitted successfully");
         
         // Handle charge success event
         console.log("Charge successful:", event.data);
         
         return res.status(200).json({ msg: "Charge successful" });
-      } else {
-        // Invalid signature
-        console.error("Invalid Paystack signature");
-        return res.status(400).json({ msg: "Invalid Paystack signature" });
+      }  else {
+        // Invalid event type or other conditions
+        console.error("Invalid Paystack event or conditions");
+        return res.status(400).json({ msg: "Invalid Paystack event or conditions" });
       }
     } else {
       // Signatures do not match
