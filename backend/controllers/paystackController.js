@@ -192,6 +192,7 @@ const crypto = require("crypto");
         console.log('Emitting transactionSuccess event:', event.data);
         
         // Emit the event to all connected clients
+        console.log(webhookNamespace.emit("transactionSuccess", event.data))
         webhookNamespace.emit("transactionSuccess", event.data);
         console.log("transactionSuccess event emitted successfully");
         
