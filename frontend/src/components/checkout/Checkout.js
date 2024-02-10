@@ -67,15 +67,19 @@ const Checkout = () => {
       console.log("Connected to WebSocket server");
     });
 
+    console.log("Before transactionSuccess event listener");
+
     socket.on("transactionSuccess", (transactionData) => {
       console.log("Transaction successful:", transactionData);
       console.log("Received transactionSuccess event:", transactionData);
       setTransactionData(transactionData);
     });
 
-    // socket.on("connect_error", (error) => {
-    //   console.error("Connection error:", error);
-    // });
+    console.log("After transactionSuccess event listener")
+
+    socket.on("connect_error", (error) => {
+      console.error("Connection error:", error);
+    });
 
     socket.on("disconnect", () => {
       console.log("Disconnected from WebSocket server");
