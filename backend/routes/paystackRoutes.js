@@ -54,6 +54,17 @@ module.exports = (io) => {
     express.json(), // Use express.json() to parse JSON payloads
     webhook(io)
   );
+  router.post(
+    "/webhook",
+    express.json(), // Use express.json() to parse JSON payloads
+    webhook(io)
+  );
+
+  // router.post(
+  //   "/webhook",
+  //   express.raw({ type: "application/json" }),
+  //   webhook
+  // );
 
   return router;
 };
