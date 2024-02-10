@@ -193,7 +193,13 @@ const crypto = require("crypto");
         
         // Emit the event to all connected clients
         console.log(webhookNamespace.emit("transactionSuccess", event.data))
-        webhookNamespace.emit("transactionSuccess", event.data);
+        webhookNamespace.emit("transactionSuccess", event.data, (error) => {
+          if (error) {
+            console.error("Error emitting transactionSuccess event:", error);
+          } else {
+            console.log("transactionSuccess event emitted successfully");
+          }
+        });
         console.log("transactionSuccess event emitted successfully");
         
         // Handle charge success event
