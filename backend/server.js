@@ -65,7 +65,7 @@ app.use(
 
 webhookNamespace.on("connection", (socket) => {
   console.log("Client connected to /webhook namespace");
-  socket.on("someEvent", (data) => {
+  socket.on("transactionSuccess", (data) => {
     console.log('Received "someEvent" in /webhook namespace:', data);
   });
 });
