@@ -63,20 +63,20 @@ const Checkout = () => {
       // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
     });
 
+
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
+  
+      // Set up event listener after the connection is established
+      socket.on("transactionSuccess", (transactionData) => {
+        console.log("Transaction successful:", transactionData);
+        console.log("Received transactionSuccess event:", transactionData);
+        setTransactionData(transactionData);
+      });
     });
+  
 
-    console.log("Before transactionSuccess event listener");
-
-    socket.on("transactionSuccess", (transactionData) => {
-      console.log("Transaction successful:", transactionData);
-      console.log("Received transactionSuccess event:", transactionData);
-      setTransactionData(transactionData);
-    });
-
-    console.log("After transactionSuccess event listener")
-
+    
     socket.on("connect_error", (error) => {
       console.error("Connection error:", error);
     });
