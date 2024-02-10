@@ -200,7 +200,6 @@ const crypto = require("crypto");
             console.log("transactionSuccess event emitted successfully");
           }
         });
-        console.log("transactionSuccess event emitted successfully");
         
         // Handle charge success event
         console.log("Charge successful:", event.data);
