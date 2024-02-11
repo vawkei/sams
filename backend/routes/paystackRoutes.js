@@ -70,7 +70,7 @@ const {
   webhook,
 } = require("../controllers/paystackController");
 
-module.exports = (webhookNamespace) => {
+module.exports = () => {
   router.post(
     "/acceptpayment",
     express.json(),
@@ -86,8 +86,14 @@ module.exports = (webhookNamespace) => {
   router.post(
     "/webhook",
     express.json(), // Use express.json() to parse JSON payloads
-    webhook(webhookNamespace)
+    webhook
   );
+
+  // router.post(
+  //   "/webhook",
+  //   express.json(), // Use express.json() to parse JSON payloads
+  //   webhook(webhookNamespace)
+  // );
 
   return router;
 };
