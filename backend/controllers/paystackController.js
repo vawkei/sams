@@ -113,7 +113,6 @@ const payStack = {
 
 const initializePayment = payStack;
 
-
 //codeA
 //payWithPaystackWebhook without web socket==============================:
 
@@ -126,16 +125,16 @@ const initializePayment = payStack;
 //        .createHmac('sha512', process.env.PAYSTACK_TEST_SECRET_KEY)
 //        .update(req.body, 'utf-8') // Use req.body instead of req.raw
 //        .digest('hex');
- 
+
 //      // Log the calculated hash and the received signature
 //      console.log('Calculated Hash:', hash);
 //      console.log('Received Signature:', req.headers['x-paystack-signature']);
- 
+
 //      if (hash === req.headers['x-paystack-signature']) {
 //        // Retrieve the request's body:
 //        const event = JSON.parse(req.body); // Use req.body instead of req.raw
 //        console.log('Received Paystack Webhook Event:', event);
- 
+
 //        // Do something with the event:
 //        if (event && event.event === 'charge.success') {
 //          // Handle charge success event
@@ -159,19 +158,15 @@ const initializePayment = payStack;
 //        .json({ msg: 'An error occurred while processing the webhook' });
 //   }
 //  };
-  
-
 
 //codeB
 //payWithPaystackWebhook with web socket===========================================:
 
 const crypto = require("crypto");
 
-
 // const webhook = (req, res) => {
-  const webhook = (webhookNamespace) =>async (req, res) => {
+const webhook = async (req, res) => {
   try {
-
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
       .update(JSON.stringify(req.body)) // Stringify the object to create a hash
@@ -188,27 +183,36 @@ const crypto = require("crypto");
 
       // Do something with the event:
       if (event && event.event === "charge.success") {
-        
-        console.log('Emitting transactionSuccess event:', event.data);
-        
+        console.log("Emitting transactionSuccess event:", event.data);
+
         // Emit the event to all connected clients
-        console.log(webhookNamespace.emit("transactionSuccess", event.data))
-        webhookNamespace.emit("transactionSuccess", event.data, (error) => {
-          if (error) {
-            console.error("Error emitting transactionSuccess event:", error);
-          } else {
-            console.log("transactionSuccess event emitted successfully");
-          }
-        });
-        
+        req.app
+          .get("webhookNamespace")
+          .emit("transactionSuccess", event.data, (error) => {
+            if (error) {
+              console.error("Error emitting transactionSuccess event:", error);
+            } else {
+              console.log("transactionSuccess event emitted successfully");
+            }
+          });
+        // webhookNamespace.emit("transactionSuccess", event.data, (error) => {
+        //   if (error) {
+        //     console.error("Error emitting transactionSuccess event:", error);
+        //   } else {
+        //     console.log("transactionSuccess event emitted successfully");
+        //   }
+        // });
+
         // Handle charge success event
         console.log("Charge successful:", event.data);
-        
+
         return res.status(200).json({ msg: "Charge successful" });
-      }  else {
+      } else {
         // Invalid event type or other conditions
         console.error("Invalid Paystack event or conditions");
-        return res.status(400).json({ msg: "Invalid Paystack event or conditions" });
+        return res
+          .status(400)
+          .json({ msg: "Invalid Paystack event or conditions" });
       }
     } else {
       // Signatures do not match
