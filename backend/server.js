@@ -1,30 +1,34 @@
 require("dotenv").config();
 require("express-async-errors");
 
-// const socketIo = require("socket.io");
+const http = require("http");
+const socketIo = require("socket.io");
 
 const express = require("express");
 const app = express();
+
 const cors = require("cors");
-
-const http = require("http");
-const httpServer = http.createServer(app);
-
-const io = require("socket.io")(httpServer, {
-  cors: {
-    origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true,
-  },
-});
-
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 
+// Initialize Socket.IO
+const httpServer = http.createServer(app);
+
+const corsOptions = {
+  origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+  methods: ["GET", "POST"],
+  allowedHeaders: ["my-custom-header"],
+  credentials: true,
+};
+const io = socketIo(httpServer, {
+  cors: corsOptions,
+  path:"/webhook",
+  // transports:["websocket"],
+  // autoConnect:false,
+});
 
 // Import and initialize express-session here
 const session = require("express-session");
@@ -57,12 +61,13 @@ app.use(
   })
 );
 
+
+
 webhookNamespace.on("connection", (socket) => {
   console.log("Client connected to /webhook namespace");
   socket.on("transactionSuccess", (data) => {
     console.log('Received "someEvent" in /webhook namespace:', data);
   });
-
 });
 
 app.use(cookieParser());
