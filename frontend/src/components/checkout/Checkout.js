@@ -109,3 +109,11 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+
+// Checkout.js:82 Connection error: Error: xhr poll error
+//     at n.value (transport.js:38:37)
+//     at n.<anonymous> (polling.js:218:18)
+//     at Lj.emit (index.mjs:136:20)
+//     at n.value (polling.js:320:14)
+//     at polling.js:294:30
