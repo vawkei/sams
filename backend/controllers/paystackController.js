@@ -195,13 +195,6 @@ const webhook = async (req, res) => {
               console.log("transactionSuccess event emitted successfully");
             }
           });
-        // webhookNamespace.emit("transactionSuccess", event.data, (error) => {
-        //   if (error) {
-        //     console.error("Error emitting transactionSuccess event:", error);
-        //   } else {
-        //     console.log("transactionSuccess event emitted successfully");
-        //   }
-        // });
 
         // Handle charge success event
         console.log("Charge successful:", event.data);
