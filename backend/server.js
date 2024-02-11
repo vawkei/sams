@@ -42,9 +42,12 @@ const store = new MongoDBStore({
 
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
-const webhookNamespace = io.of("/webhook");
+//const webhookNamespace = io.of("/webhook");
 
-const paystackRoute = require("./routes/paystackRoutes")(webhookNamespace);
+const webhookNamespace = io.of('/webhook');
+app.set('webhookNamespace', webhookNamespace);
+
+const paystackRoute = require("./routes/paystackRoutes");
 const userRoute = require("./routes/userRoutes");
 const productRoute = require("./routes/productRoutes");
 const categoryRoute = require("./routes/categoryRoutes");
@@ -61,14 +64,13 @@ app.use(
   })
 );
 
-
-
 webhookNamespace.on("connection", (socket) => {
   console.log("Client connected to /webhook namespace");
   socket.on("transactionSuccess", (data) => {
     console.log('Received "someEvent" in /webhook namespace:', data);
   });
 });
+
 
 app.use(cookieParser());
 
