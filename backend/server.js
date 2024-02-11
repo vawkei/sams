@@ -62,7 +62,7 @@ webhookNamespace.on("connection", (socket) => {
   socket.on("transactionSuccess", (data) => {
     console.log('Received "someEvent" in /webhook namespace:', data);
   });
-  socket.emit("transactionSuccess","Lisa lipps for life. she is the hottest ever. rest in peace jesse jane.")
+
 });
 
 app.use(cookieParser());
