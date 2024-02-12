@@ -17,7 +17,12 @@ const formSlice = createSlice({
       console.log("babe:", incomingOrderData);
     },
     PAY_WITH_PAYSTACK_BOOLEAN(state,action){
-        state.payWithPaystack = action.payload
+        const boolean = action.payload
+        console.log(boolean);
+        state.payWithPaystack = boolean
+    },
+    RESET_DATA(state){
+      state.payWithPaystack = true;
     }
  },
 });
