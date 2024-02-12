@@ -128,9 +128,9 @@ const PayOnDelivery = () => {
       dispatch(
         checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
       );
-      dispatch(
-        checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
-      )
+      // dispatch(
+      //   checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
+      // )
 
       await dispatch(createOrder(formData));
       localStorage.setItem("cartItems", JSON.stringify([]));
