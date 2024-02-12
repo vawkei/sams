@@ -105,15 +105,16 @@ const Checkout = () => {
 
   const navigateHandler = () => {
     navigate("/order-history");
+    dispatch(orderSliceActions.RESET_ORDER_STATE());
   };
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      dispatch(orderSliceActions.RESET_ORDER_STATE());
-    }, 2000);
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     dispatch(orderSliceActions.RESET_ORDER_STATE());
+  //   }, 2000);
   
-    return () => clearTimeout(timeoutId);
-  }, [dispatch]);
+  //   return () => clearTimeout(timeoutId);
+  // }, [dispatch]);
   
 
   return (
