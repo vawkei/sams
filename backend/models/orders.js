@@ -64,6 +64,10 @@ const orderSchema = mongoose.Schema({
     email:{
         type:String,
         required:[true,"enter email"]
+    },
+    paymentMethod:{
+        type:String,
+        required:[true,"payment method?"]
     }
 },{timestamps:true});
 

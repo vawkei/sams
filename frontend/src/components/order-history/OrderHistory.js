@@ -11,6 +11,7 @@ const OrderHistory = (props) => {
     navigate("/");
   };
 
+  console.log(props.orders)
   return (
     <div className={classes.table}>
       <Button className={classes.btn} onClick={navigateHomeHandler}>&larr; Back home</Button>
@@ -50,6 +51,7 @@ const OrderHistory = (props) => {
                     <th>orderId</th>
                     <th>name</th>
                     {/* <th>Reference</th> */}
+                    <th>Payment Method</th>
                     <th>Order Amount</th>
                     <th>Order Status</th>
                   </tr>
@@ -72,6 +74,7 @@ const OrderHistory = (props) => {
                         <td>{order._id}</td>
                         <td>{order.firstName}</td>
                         {/* <td>{order.transactionRef}</td> */}
+                        <td>{order.paymentMethod}</td>
                         <td>
                           {nairaSymbol}
                           {order.orderAmount}

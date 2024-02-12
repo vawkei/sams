@@ -1,12 +1,14 @@
 import { useState, useRef, Fragment, useEffect } from "react";
 import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
-import classes from "./CheckoutDetails.module.css";
+import classes from "./PayWithPaystack.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { acceptpayment } from "../../store/paystack/paystackIndex";
+import { createOrder } from "../../store/order/orderIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
+import { cartSliceActions } from "../../store/cart/cartIndex";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutDetails = () => {
+const PayOnDelivery = () => {
   const [formValidity, setFormValidity] = useState({
     firstName: true,
     surname: true,
@@ -23,41 +25,22 @@ const CheckoutDetails = () => {
   const stateInputRef = useRef();
   const phoneNumberInputRef = useRef();
 
-
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.cartItems);
-
-  const cartTotalQty = useSelector((state) => state.cart.cartTotalQty);
-  const cartTotalAmnt = useSelector((state) => state.cart.cartTotalAmount);
-  // console.log(cartTotalAmnt)
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
-  //console.log(user);
-
-  const { message} = useSelector((state) => state.paystack);
-  //console.log(message);
-  const { coupon } = useSelector((state) => state.coupon);
-  const incomingOrder = useSelector((state)=>state.form.incomingOrder)
-  console.log(incomingOrder);
-
   var nairaSymbol = "\u20A6";
 
+  //const [showP, setShowP] = useState(true);
 
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartTotalQty = useSelector((state) => state.cart.cartTotalQty);
+  const cartTotalAmnt = useSelector((state) => state.cart.cartTotalAmount);
+  const { coupon } = useSelector((state) => state.coupon);
+  const {user,isLoggedIn} = useSelector((state)=>state.auth);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-
-  // useEffect(() => {
-  //   if (user && isLoggedIn) {
-  //     firstNameInputRef.current.value = user?.name || "";
-  //     surnameInputRef.current.value = user?.surname || "";
-  //     phoneNumberInputRef.current.value = "";
-  //     residentialAddressInputRef.current.value = user?.address || "";
-  //     townInputRef.current.value = user?.town || "";
-  //     stateInputRef.current.value = user?.state || "";
-  //   }
-  // }, [isLoggedIn, user]);
 
   useEffect(() => {
-     if (user && isLoggedIn) {
+    if (user && isLoggedIn) {
       if (firstNameInputRef.current) {
         firstNameInputRef.current.value = user?.name || "";
       }
@@ -79,9 +62,8 @@ const CheckoutDetails = () => {
     }
   }, [isLoggedIn, user]);
 
-  let formData;
 
-  const confirmHandler = async (e) => {
+  const confirmHandler =async (e) => {
     e.preventDefault();
 
     //input data retrieval:
@@ -101,8 +83,6 @@ const CheckoutDetails = () => {
     const enteredStateIsValid = enteredState.trim() !== "";
     const enteredPhoneNumberIsValid = enteredPhoneNumber.trim().length === 11;
 
-    // updating the formValidity state:
-    // Note that all the properties here will be set to true if the user input tallies with the validation.And formValidity has been set to true initially, so its gonna be true meets true, else if any of the user input isnt valid, like phone number isnt 11 digits, then it will be false, which will render it invalid
     setFormValidity({
       firstName: enteredFirstNameIsValid,
       surname: enteredSurnameIsValid,
@@ -112,7 +92,6 @@ const CheckoutDetails = () => {
       phoneNumber: enteredPhoneNumberIsValid,
     });
 
-    //ensuring the form is valid and properly filled:
     let formIsValid =
       enteredFirstNameIsValid &&
       enteredSurnameIsValid &&
@@ -121,57 +100,53 @@ const CheckoutDetails = () => {
       enteredStateIsValid &&
       enteredPhoneNumberIsValid;
 
-    if (!formIsValid) {
-      console.log("Fill in the inputs baby!!!");
-      return;
-    }
+      if (!formIsValid) {
+        console.log("Fill in the inputs baby!!!");
+        return;
+      };
 
-    console.log("God Please Bless my Handwork");
+      console.log("God Please Bless my Handwork");
 
-    formData = {
-      firstName: enteredFirstName,
-      surname: enteredSurname,
-      residentialAddress: enteredResidentialAddress,
-      town: enteredTown,
-      state: enteredState,
-      phoneNumber: enteredPhoneNumber,
-      cartItems: cartItems,
-      orderAmount: cartTotalAmnt,
-      cartTotalQty: cartTotalQty,
-      orderDate: new Date().toDateString(),
-      orderTime: new Date().toLocaleTimeString(),
-      coupon: coupon ? coupon : null,
-      orderStatus: "Order Placed",
-      email: user.email,
-    };
+     const formData = {
+        firstName: enteredFirstName,
+        surname: enteredSurname,
+        residentialAddress: enteredResidentialAddress,
+        town: enteredTown,
+        state: enteredState,
+        phoneNumber: enteredPhoneNumber,
+        cartItems: cartItems,
+        orderAmount: cartTotalAmnt,
+        cartTotalQty: cartTotalQty,
+        orderDate: new Date().toDateString(),
+        orderTime: new Date().toLocaleTimeString(),
+        coupon: coupon ? coupon : null,
+        orderStatus: "Order Placed",
+        paymentMethod:"Pay on Delivery",
+        email: user.email,
+      };
+      
+      dispatch(
+        checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
+      );
+      dispatch(
+        checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
+      )
 
-    const paymentData = { amount: cartTotalAmnt, email: user.email };
-
-    
-    dispatch(checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({formData}));
-    
-  
-    try {
-      const transactionReference = await dispatch(acceptpayment(paymentData));
-      console.log(transactionReference);
-      console.log(transactionReference.payload.ref);
-    } catch (error) {
-      console.log("Error initializing payment:", error);
-      // Handle the error, e.g., show an error message to the user
-    }
-
+      await dispatch(createOrder(formData));
+      localStorage.setItem("cartItems", JSON.stringify([]));
+      dispatch(cartSliceActions.RESET_CART());
+      navigate("/checkout");
   };
+  const onCancel = () => {};
 
-
-
-  const onCancel = () => {
-    stateInputRef.current.value = "";
-    firstNameInputRef.current.value = "";
-    surnameInputRef.current.value = "";
-    residentialAddressInputRef.current.value = "";
-    townInputRef.current.value = "";
-    phoneNumberInputRef.current.value = "";
-  };
+  //   let time = 2000;
+  //   let clearIntervalP;
+  //   useEffect(() => {
+  //     clearIntervalP = setInterval(() => {
+  //       setShowP((prev) => !prev);
+  //     }, time);
+  //     return () => clearInterval(clearIntervalP);
+  //   }, [showP]);
 
   return (
     <div className={classes.container}>
@@ -180,7 +155,13 @@ const CheckoutDetails = () => {
       ) : (
         <Fragment>
           <div className={classes["checkout-details"]}>
-            <h2>Checkout Details</h2>
+            {/* {showP && (
+              <h2 style={{ backgroundColor: "green" }}>Pay on Delivery</h2>
+            )} */}
+
+            <h2 style={{ backgroundColor: "green" }}>Pay on Delivery</h2>
+
+            <h4>Checkout Details</h4>
             <p>Please check if the details are correct before proceeding</p>
             <Card>
               <form action="" onSubmit={confirmHandler}>
@@ -337,4 +318,4 @@ const CheckoutDetails = () => {
   );
 };
 
-export default CheckoutDetails;
+export default PayOnDelivery;
