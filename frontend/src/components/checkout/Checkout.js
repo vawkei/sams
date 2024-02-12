@@ -45,13 +45,15 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate, } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
 import io from "socket.io-client";
+import { orderSliceActions } from "../../store/order/orderIndex";
 
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const payWithPaystack = useSelector((state)=>state.form.payWithPaystack)
   
   const [transactionData, setTransactionData] = useState(null);
@@ -104,6 +106,15 @@ const Checkout = () => {
   const navigateHandler = () => {
     navigate("/order-history");
   };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(orderSliceActions.RESET_ORDER_STATE());
+    }, 2000);
+  
+    return () => clearTimeout(timeoutId);
+  }, [dispatch]);
+  
 
   return (
     <div className={classes["checkout-container"]}>
