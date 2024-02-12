@@ -1,30 +1,17 @@
-import { Fragment,useEffect } from "react";
+import { Fragment } from "react";
 import Button from "../ui/button/Button";
 import classes from "./OrderHistory.module.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { orderSliceActions } from "../../store/order/orderIndex";
 
 const OrderHistory = (props) => {
   var nairaSymbol = "\u20A6";
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const navigateHomeHandler = () => {
     navigate("/");
   };
 
-  console.log(props.orders);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      dispatch(orderSliceActions.RESET_ORDER_STATE());
-    }, 2000);
-  
-    return () => clearTimeout(timeoutId);
-  }, [dispatch]);
-  
-
+  console.log(props.orders)
   return (
     <div className={classes.table}>
       <Button className={classes.btn} onClick={navigateHomeHandler}>&larr; Back home</Button>

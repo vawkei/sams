@@ -135,7 +135,7 @@ const PayOnDelivery = () => {
       await dispatch(createOrder(formData));
       localStorage.setItem("cartItems", JSON.stringify([]));
       dispatch(cartSliceActions.RESET_CART());
-      navigate("/checkout");
+      navigate("/checkout-ondelivery");
   };
   const onCancel = () => {};
 
