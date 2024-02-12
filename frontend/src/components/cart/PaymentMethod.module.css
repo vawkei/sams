@@ -1,0 +1,14 @@
+.payment-method-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;   
+}
+
+.btn{
+    padding: 0.5rem 1.5rem;
+}
+
+.payment-method-container p{
+    margin-top: 1.5rem;
+}

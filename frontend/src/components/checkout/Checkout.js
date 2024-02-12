@@ -45,28 +45,32 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import io from "socket.io-client";
+
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const payWithPaystack = useSelector((state)=>state.form.payWithPaystack)
   
-
   const [transactionData, setTransactionData] = useState(null);
 
+  
+  
+  
   useEffect(() => {
-    // Connect to the Socket.IO server
-    // const socket = io(process.env.REACT_APP_BACKEND_URL); 
-    const socket = io(`${process.env.REACT_APP_BACKEND_URL}/webhook`,{
-      path:"/webhook"
+    if(payWithPaystack){
+        // Connect to the Socket.IO server
+    // const socket = io(process.env.REACT_APP_BACKEND_URL);
+    const socket = io(`${process.env.REACT_APP_BACKEND_URL}/webhook`, {
+      path: "/webhook",
       // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
     });
-
-
+    
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
-  
+
       // Set up event listener after the connection is established
       socket.on("transactionSuccess", (transactionData) => {
         console.log("Transaction successful:", transactionData);
@@ -74,9 +78,7 @@ const Checkout = () => {
         setTransactionData(transactionData);
       });
     });
-  
 
-    
     socket.on("connect_error", (error) => {
       console.error("Connection error:", error);
     });
@@ -89,7 +91,15 @@ const Checkout = () => {
     return () => {
       socket.disconnect();
     };
-  }, []);
+    }else{
+      <>
+        <p>Hello world</p>
+      </>
+    }
+    
+  }, [payWithPaystack]);
+
+
 
   const navigateHandler = () => {
     navigate("/order-history");
@@ -97,19 +107,31 @@ const Checkout = () => {
 
   return (
     <div className={classes["checkout-container"]}>
-      <h2>Checkout Successful</h2>
-      <p>Thank you for your purchase</p>
-      <p>Transaction Data: {JSON.stringify(transactionData)}</p>
+      {/* paidWithPaystack */}
+      {payWithPaystack && (
+        <>
+          <h2>Checkout Successful</h2>
+          <p>Thank you for your purchase</p>
+          <p>Transaction Data: {JSON.stringify(transactionData)}</p>
 
-      {/* <p>{webhookResponse}</p> */}
-
-      <button onClick={navigateHandler}>Go to Order History</button>
+          {/* <p>{webhookResponse}</p> */}
+          <button onClick={navigateHandler}>Go to Order History</button>
+        </>
+      )}
+      {/* PayOnDelivery */}
+      {!payWithPaystack && (
+        <>
+          <h2>Checkout Successful</h2>
+          <p>Thank you for your purchase</p>
+          <p>You will get your items shortly</p>
+          <button onClick={navigateHandler}>Go to Order History</button>
+        </>
+      )}
     </div>
   );
 };
 
 export default Checkout;
-
 
 // Checkout.js:82 Connection error: Error: xhr poll error
 //     at n.value (transport.js:38:37)

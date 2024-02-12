@@ -1,5 +1,5 @@
 import Layout from "./components/layout/Layout";
-import {Routes,Route, useLocation} from "react-router-dom"
+import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { AdminOnlyRoute } from "./components/adminFolders/adminOnly/AdminOnlyRoute";
 import AdminPage from "./pages/AdminPage";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ShopPage from "./pages/ShopPage";
 import ProductDetail from "./components/shop/product-detail/ProductDetail";
 import CartPage from "./pages/CartPage";
-import CheckoutDetailsPage from "./pages/CheckoutDetailsPage";
+import PayWithPaystack from "./pages/PayWithPaystackPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
@@ -25,15 +25,17 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ProfileHome from "./components/profile/ProfileHome";
 import ProfileForm from "./components/profile/ProfileForm";
-import {AnimatePresence} from "framer-motion"
+import { AnimatePresence } from "framer-motion";
 import VerifyPayment from "./components/checkout/VerifyPayment";
+import PaymentMethod from "./components/cart/PaymentMethod";
 import UseEffect from "./components/checkout/UseEffect";
+import PayOnDeliveryPage from "./pages/PayOnDeliveryPage";
+//import PayWithPaystack from "./components/checkout/PayWithPaystack";
 
 function App() {
   axios.defaults.withCredentials = true;
 
-  const { user,isLoggedIn} = useSelector((state) => state.auth);
-
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   const location = useLocation();
 
@@ -51,10 +53,10 @@ function App() {
 
   return (
     <Layout>
-      <AnimatePresence >
-      <ToastContainer />
+      <AnimatePresence>
+        <ToastContainer />
         <Routes location={location} key={location.key}>
-          <Route path="/" element={<HomePage />}/>
+          <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -62,25 +64,36 @@ function App() {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/profile" element={<ProfileHome />} />
           <Route path="/profile/edit-profile" element={<ProfileForm />} />
-          <Route path="/admin/*" element={
-            <AdminOnlyRoute>
+          <Route
+            path="/admin/*"
+            element={
+              <AdminOnlyRoute>
                 <AdminPage />
-            </AdminOnlyRoute>
-          } />
+              </AdminOnlyRoute>
+            }
+          />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/checkout-details" element={<CheckoutDetailsPage />} />
+          <Route path="/payment-method" element={<PaymentMethod />} />
+          <Route
+            path="/pay-with-paystack"
+            element={<PayWithPaystack />}
+          />
+          <Route
+            path="/pay-on-delivery"
+            element={<PayOnDeliveryPage />}
+          />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/order-history" element={<OrderHistoryPage />} />
           <Route path="/order-history/:id" element={<OrderDetails />} />
           <Route path="/order-review/:id" element={<OrderReview />} />
           <Route path="/verify-payment" element={<VerifyPayment />} />
           <Route path="/use-effect" element={<UseEffect />} />
+          
           <Route path="*" element={<NotFoundPage />} />
-
         </Routes>
-        </AnimatePresence>
+      </AnimatePresence>
     </Layout>
   );
 }

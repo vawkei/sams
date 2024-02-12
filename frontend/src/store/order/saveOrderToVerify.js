@@ -4,6 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialFormState = {
   incomingOrder:{},
+  payWithPaystack:true
 }
 
 const formSlice = createSlice({
@@ -15,6 +16,9 @@ const formSlice = createSlice({
       state.incomingOrder = incomingOrderData;
       console.log("babe:", incomingOrderData);
     },
+    PAY_WITH_PAYSTACK_BOOLEAN(state,action){
+        state.payWithPaystack = action.payload
+    }
  },
 });
 

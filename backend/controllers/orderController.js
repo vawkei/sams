@@ -19,6 +19,7 @@ const createOrder = async (req, res) => {
     orderStatus,
     cartTotalQty,
     orderAmount,
+    paymentMethod,
   } = req.body;
 
 
@@ -29,7 +30,8 @@ const createOrder = async (req, res) => {
     !town ||
     !state ||
     !cartItems ||
-    !orderStatus
+    !orderStatus ||
+    !paymentMethod
   ) {
     return res.status(400).json({msg: "Please fill out all inputs bitch!" });
   }
@@ -58,6 +60,7 @@ const createOrder = async (req, res) => {
     cartTotalQty,
     coupon,
     email: user.email,
+    paymentMethod,
     createdBy: user._id,
   };
   try {

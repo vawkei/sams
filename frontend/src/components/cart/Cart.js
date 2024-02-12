@@ -68,7 +68,8 @@ const Cart = () => {
 
   const onCheckoutHandler = () => {
     if (isLoggedIn) {
-      navigate("/checkout-details");
+      //navigate("/checkout-details");
+      navigate("/payment-method");
     } else {
       navigate("/login?redirect=cart");
       // navigate("/login?redirect=cart")

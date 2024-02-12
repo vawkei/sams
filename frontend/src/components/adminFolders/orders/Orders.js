@@ -52,6 +52,7 @@ const Orders = () => {
                   <th>OrderID</th>
                   {/* <th>Reference</th> */}
                   <th>cartTotalQty</th>
+                  <th>Payment Method</th>
                   <th>Order Amount</th>
                   <th>Order Status</th>
                 </tr>
@@ -67,6 +68,7 @@ const Orders = () => {
                     firstName,
                     surname,
                     orderStatus,
+                    paymentMethod,
                     orderAmount,
                     _id,
                   } = order;
@@ -83,6 +85,7 @@ const Orders = () => {
                       </td>
                       <td>{_id}</td>
                       <td>{cartTotalQty}</td>
+                      <td>{paymentMethod}</td>
                       <td>{orderAmount}</td>
                       <td className="stats">
                         <p
