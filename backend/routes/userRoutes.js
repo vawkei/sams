@@ -17,7 +17,8 @@ const {
   clearCart,
   saveCartDb,
   getCartDb,
-  getAllUsers
+  getAllUsers,
+  sendContactMail
 } = require("../controllers/userController");
 
 const {authenticateUser, adminOnly} =require("../middlewares/authenticate-user");
@@ -45,6 +46,9 @@ router.get("/loginstatus/getstatus",getLoginStatus);
 router.post("/uploadUserPhoto", uploadUserPhoto);
 
 router.patch("/updateUserPhoto",authenticateUser, updateUserPhoto);
+
+//sendContactMail:
+router.post("/sendContactMail",authenticateUser, sendContactMail);
 
 //user Cart:
 router.patch("/clearCart",authenticateUser,clearCart);

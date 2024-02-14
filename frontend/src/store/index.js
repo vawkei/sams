@@ -17,6 +17,7 @@ import {combineReducers} from "redux"
 import storage from "redux-persist/lib/storage";
 import {persistReducer} from "redux-persist" 
 import formSlice from "./order/saveOrderToVerify";
+import {toast} from "react-toastify"
 
 
 
@@ -210,6 +211,18 @@ export const updateUserPhoto = createAsyncThunk(
     }
   }
 );
+//sendContactMail:
+export const sendContactMail = createAsyncThunk(
+  "auth/sendContactMail", async(formData,thunkApi)=>{
+    try{
+      return await authService.sendContactMail(formData)
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+);
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -223,6 +236,9 @@ const authSlice = createSlice({
     },
     UPDATE_NOTIFICATION(state){
       state.notification = false
+    },
+    RESET_MESSAGE(state){
+      state.message = ""
     }
   },
   
@@ -315,11 +331,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess= true;
         state.message = action.payload.msg;
+        toast.success(action.payload.msg,{position:"top-left"})
         console.log(action.payload)
       })
       .addCase(forgotPassword.rejected,(state,action)=>{
         state.isLoading = false;
         state.isError = true;
+        toast.error(action.payload.msg,{position:"top-left"})
         console.log(action.payload)
       })
       //7resetPassword:===================================================
@@ -330,11 +348,13 @@ const authSlice = createSlice({
           state.isLoading = false;
           state.isSuccess = true;
           console.log(action.payload)
+          toast.success(action.payload.msg,{position:"top-left"})
         })
         .addCase(resetPassword.rejected,(state,action)=>{
           state.isLoading =false;
           state.isError = true;
           console.log(action.payload)
+          toast.error(action.payload.msg,{position:"top-left"})
         })
         //getAllUsers======================================================
         .addCase(getAllUsers.pending,(state)=>{
@@ -382,11 +402,13 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.message = action.payload.msg;
         console.log(action.payload);
+        toast.success(action.payload.msg,{position:"top-left"})
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        toast.error(action.payload.msg,{position:"top-left"})
       })
       //10:getLoginStatus:
       .addCase(getLoginStatus.pending, (state) => {
@@ -398,6 +420,7 @@ const authSlice = createSlice({
         state.isLoggedIn = action.payload;
         state.message = action.payload;
         console.log(action.payload);
+        
       })
       .addCase(getLoginStatus.rejected, (state, action) => {
         state.isError = true;
@@ -432,12 +455,32 @@ const authSlice = createSlice({
         state.isSuccess = true;
         state.message = action.payload;
         console.log(action.payload);
+        toast.success("Photo updated",{position:"top-left"})
       })
       .addCase(updateUserPhoto.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         console.log(action.payload);
+        toast.error("Failed to update",{position:"top-left"})
+      })
+      //sendContactMail:
+      .addCase(sendContactMail.pending,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(sendContactMail.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message =  action.payload.msg;
+        console.log(action.payload.msg);
+        toast.success(action.payload.msg,{position:"top-left"})
+      })
+      .addCase(sendContactMail.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.isError = true;
+        console.log(action.payload)
+        toast.error(action.payload,{position:"top-left"})
       });
   },
 });

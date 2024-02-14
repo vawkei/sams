@@ -22,7 +22,6 @@ const createOrder = async (req, res) => {
     paymentMethod,
   } = req.body;
 
-
   if (
     !firstName ||
     !surname ||
@@ -33,17 +32,23 @@ const createOrder = async (req, res) => {
     !orderStatus ||
     !paymentMethod
   ) {
-    return res.status(400).json({msg: "Please fill out all inputs bitch!" });
+    return res.status(400).json({ msg: "Please fill out all inputs bitch!" });
   }
 
   //const orderDate=new Date().toDateString();
-  const orderDate = new Date() 
+  const orderDate = new Date();
   // If you want to display the local time, you can use toLocaleString():
-  const orderTime = new Date()
+  const orderTime = new Date();
   //.toLocaleTimeString();
   const user = await User.findOne({ _id: req.user.userId });
-  if(!user){
-    return res.status(404).json({msg:"user not found"})
+  if (!user) {
+    return res.status(404).json({ msg: "user not found" });
+  }
+  if ( firstName !== user.name ) {
+    return res.status(404).json({ msg: "invalid credentials" });
+  };
+  if(residentialAddress !== user.address){
+    return res.status(404).json({msg: "invalid credentials"})
   }
 
   const orderData = {
@@ -89,19 +94,17 @@ const getAdminOrders = async (req, res) => {
   //console.log(userId);
 
   try {
-    
-      const allOrders = await Order.find({}).sort("-createdAt");
+    const allOrders = await Order.find({}).sort("-createdAt");
 
-      if (!allOrders) {
-        return res.status(404).json({ msg: "No order found" });
-      }
+    if (!allOrders) {
+      return res.status(404).json({ msg: "No order found" });
+    }
 
-      return res.status(200).json({
-        msg: "These are all the others",
-        allOrders:allOrders,
-        nbhits: allOrders.length,
-      });
-    
+    return res.status(200).json({
+      msg: "These are all the others",
+      allOrders: allOrders,
+      nbhits: allOrders.length,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
@@ -210,4 +213,10 @@ const updateOrderStatus = async (req, res) => {
   // res.status(201).json({msg:"Status updated",updatedOrder:order.orderStatus})
 };
 
-module.exports = { createOrder, getAdminOrders, getOrders, getSingleOrder, updateOrderStatus };
+module.exports = {
+  createOrder,
+  getAdminOrders,
+  getOrders,
+  getSingleOrder,
+  updateOrderStatus,
+};

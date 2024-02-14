@@ -64,6 +64,12 @@ const updateUserPhoto = async (userData) => {
   return response.data;
 };
 
+// sendContactMail:
+const sendContactMail = async (formData) => {
+  const response = await axios.post(API_URL + "sendContactMail", formData);
+  return response.data
+};
+
 const authService = {
   register,
   verifyEmail,
@@ -76,6 +82,7 @@ const authService = {
   updateUser,
   getLoginStatus,
   updateUserPhoto,
+  sendContactMail
 };
 
 export default authService;

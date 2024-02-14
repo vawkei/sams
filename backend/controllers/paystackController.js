@@ -223,25 +223,3 @@ const webhook = async (req, res) => {
 
 module.exports = { initializePayment, webhook };
 
-// {
-//   status: true,
-//   message: 'Authorization URL created',
-//   data: {
-//     authorization_url: 'https://checkout.paystack.com/xty488alpg8fxb9',
-//     access_code: 'xty488alpg8fxb9',
-//     reference: 'cvwkbpk49o'
-//   }
-// }
-
-// {
-//   status: true,
-//   message: 'Verification successful',
-//   data: {
-//     id: 3511487442,
-//     domain: 'test',
-//     status: 'abandoned',
-//     reference: 'cvwkbpk49o',
-//     gateway_response: 'The transaction was not completed',
-//     // ... other details
-//   }
-// }

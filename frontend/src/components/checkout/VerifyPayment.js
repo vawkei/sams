@@ -5,7 +5,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
-import Button from "../ui/button/Button";
+// import {toast} from "react-toastify"
+//import Button from "../ui/button/Button";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);

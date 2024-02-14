@@ -31,6 +31,7 @@ import PaymentMethod from "./components/cart/PaymentMethod";
 import UseEffect from "./components/checkout/UseEffect";
 import PayOnDeliveryPage from "./pages/PayOnDeliveryPage";
 import PayOnDeliveryCheckout from "./components/checkout/PayOnDeliveryCheckout";
+import ContactPage from "./pages/ContactPage";
 //import PayWithPaystack from "./components/checkout/PayWithPaystack";
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
             element={<PayOnDeliveryPage />}
           />
           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/checkout-ondelivery" element={<PayOnDeliveryCheckout/>}/>
           <Route path="/order-history" element={<OrderHistoryPage />} />
           <Route path="/order-history/:id" element={<OrderDetails />} />
