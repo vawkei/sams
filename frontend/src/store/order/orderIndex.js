@@ -1,5 +1,6 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import orderService from "./orderService";
+import { toast } from "react-toastify";
 
 const initialOrderState = {
     order:null,
@@ -98,13 +99,16 @@ const orderSlice = createSlice({
         .addCase(createOrder.fulfilled,(state,action)=>{
             state.isLoading = false;
             state.isSuccess = true;
-            console.log(action.payload)
+            state.message=action.payload.msg;
+            console.log(action.payload);
+            toast.success(action.payload.msg,{position:"top-left"})
         })
         .addCase(createOrder.rejected,(state,action)=>{
             state.isLoading = false;
             state.isSuccess=false;
             state.isError = true;
             console.log(action.payload)
+            toast.error(action.payload,{position:"top-left"})
         })
         // getAdminOrders:
         .addCase(getAdminOrders.pending,(state)=>{

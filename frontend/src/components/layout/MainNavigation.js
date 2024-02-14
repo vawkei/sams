@@ -161,6 +161,11 @@ const MainNavigation = () => {
               </NavLink>
             )}
             {isLoggedIn && (
+              <NavLink className={navDataHandler} to={"/contact"}>
+                Send a Mail
+              </NavLink>
+            )}
+            {isLoggedIn && (
               <NavLink className={navDataHandler} to={"/order-history"}>
                 My Orders
               </NavLink>

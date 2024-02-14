@@ -7,6 +7,8 @@ const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
 const sendVerificationEmail = require("../utils/sendVerificationEmail");
 const sendPasswordResetEmail = require("../utils/sendPasswordReset.Email");
+//const sendPasswordResetEmail = require("../utils/sendPasswordResetEmail");
+const sendContactEmail = require("../utils/sendContactEmail");
 
 //1. register====================================================================:
 const register = async (req, res) => {
@@ -148,8 +150,8 @@ const logout = (req, res) => {
       path: "/",
       httpOnly: true,
       expires: new Date(0),
-      secure:true,
-      sameSite:"none"
+      secure: true,
+      sameSite: "none",
     });
     res.status(200).json({ msg: "User logged out successfully" });
   } catch (error) {
@@ -247,7 +249,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-//6. getSingleUser:
+//6. getSingleUser====================================================================:
 const getSingleUser = async (req, res) => {
   const id = req.user.userId;
   //console.log(id)
@@ -267,7 +269,7 @@ const getSingleUser = async (req, res) => {
   }
 };
 
-//7. updateUser:
+//7. updateUser========================================================================:
 const updateUser = async (req, res) => {
   const userId = req.user.userId;
   //console.log(userId);
@@ -301,7 +303,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-//8. getLoginStatus:
+//8. getLoginStatus===================================================================:
 const getLoginStatus = (req, res) => {
   const token = req.cookies.token;
   if (!token) {
@@ -345,7 +347,7 @@ const uploadUserPhoto = async (req, res) => {
   }
 };
 
-//10. updateUserPhoto:
+//10. updateUserPhoto=================================================================:
 
 const updateUserPhoto = async (req, res) => {
   const userId = req.user.userId;
@@ -374,7 +376,7 @@ const clearCart = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
+//getCartDb========================================================================:
 const getCartDb = async (req, res) => {
   const { userId } = req.user;
   //console.log(userId);
@@ -388,7 +390,7 @@ const getCartDb = async (req, res) => {
   }
 };
 
-//12. saveCartDb:
+//12. saveCartDb=====================================================================:
 const saveCartDb = async (req, res) => {
   const id = req.user.userId;
   // console.log(id)
@@ -410,6 +412,47 @@ const saveCartDb = async (req, res) => {
   }
 };
 
+// sendContactMail===================================================================
+const sendContactMail = async (req, res) => {
+  const { name, subject, message } = req.body;
+  console.log({ name: name, subject: subject, message: message });
+
+  if (!name || !subject || !message) {
+    return res.status(400).json({ msg: "inputs shouldn't be empty" });
+  }
+
+  try {
+    const user = await User.findOne({ _id: req.user.userId });
+
+    if(user.name !== name){
+      return res.status(404).json({msg:"Please use your first name"})
+    };
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ msg: "You are unauthorized to send a mail" });
+    }
+
+    const userEmail = user.email;
+    console.log(userEmail)
+
+    console.log("Before sending email");
+
+    await sendContactEmail({
+      name: name,
+      subject: subject,
+      senderEmailAddress: userEmail,
+      message: message,
+    });
+    console.log("After sending email");
+
+    res.status(200).json({ msg: "email sent successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: error.message || "Internal Server Error" });
+  }
+};
+
 module.exports = {
   register,
   verifyEmail,
@@ -426,4 +469,5 @@ module.exports = {
   clearCart,
   getCartDb,
   saveCartDb,
+  sendContactMail,
 };

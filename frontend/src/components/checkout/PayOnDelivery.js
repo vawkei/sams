@@ -29,15 +29,15 @@ const PayOnDelivery = () => {
 
   //const [showP, setShowP] = useState(true);
 
+  const message = useSelector((state) => state.order.message);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const cartTotalQty = useSelector((state) => state.cart.cartTotalQty);
   const cartTotalAmnt = useSelector((state) => state.cart.cartTotalAmount);
   const { coupon } = useSelector((state) => state.coupon);
-  const {user,isLoggedIn} = useSelector((state)=>state.auth);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (user && isLoggedIn) {
@@ -62,8 +62,7 @@ const PayOnDelivery = () => {
     }
   }, [isLoggedIn, user]);
 
-
-  const confirmHandler =async (e) => {
+  const confirmHandler = async (e) => {
     e.preventDefault();
 
     //input data retrieval:
@@ -100,43 +99,48 @@ const PayOnDelivery = () => {
       enteredStateIsValid &&
       enteredPhoneNumberIsValid;
 
-      if (!formIsValid) {
-        console.log("Fill in the inputs baby!!!");
-        return;
-      };
+    if (!formIsValid) {
+      console.log("Fill in the inputs baby!!!");
+      return;
+    }
 
-      console.log("God Please Bless my Handwork");
+    console.log("God Please Bless my Handwork");
 
-     const formData = {
-        firstName: enteredFirstName,
-        surname: enteredSurname,
-        residentialAddress: enteredResidentialAddress,
-        town: enteredTown,
-        state: enteredState,
-        phoneNumber: enteredPhoneNumber,
-        cartItems: cartItems,
-        orderAmount: cartTotalAmnt,
-        cartTotalQty: cartTotalQty,
-        orderDate: new Date().toDateString(),
-        orderTime: new Date().toLocaleTimeString(),
-        coupon: coupon ? coupon : null,
-        orderStatus: "Order Placed",
-        paymentMethod:"Pay on Delivery",
-        email: user.email,
-      };
-      
-      dispatch(
-        checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
-      );
-      // dispatch(
-      //   checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
-      // )
+    const formData = {
+      firstName: enteredFirstName,
+      surname: enteredSurname,
+      residentialAddress: enteredResidentialAddress,
+      town: enteredTown,
+      state: enteredState,
+      phoneNumber: enteredPhoneNumber,
+      cartItems: cartItems,
+      orderAmount: cartTotalAmnt,
+      cartTotalQty: cartTotalQty,
+      orderDate: new Date().toDateString(),
+      orderTime: new Date().toLocaleTimeString(),
+      coupon: coupon ? coupon : null,
+      orderStatus: "Order Placed",
+      paymentMethod: "Pay on Delivery",
+      email: user.email,
+    };
 
-      await dispatch(createOrder(formData));
+    dispatch(
+      checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
+    );
+    // dispatch(
+    //   checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
+    // )
+
+    await dispatch(createOrder(formData));
+  };
+
+  useEffect(() => {
+    if (message === "Order created") {
       localStorage.setItem("cartItems", JSON.stringify([]));
       dispatch(cartSliceActions.RESET_CART());
       navigate("/checkout-ondelivery");
-  };
+    }
+  }, [message,navigate]);
   const onCancel = () => {};
 
   //   let time = 2000;

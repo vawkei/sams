@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 const Mailgen = require("mailgen");
 
-const sendEmail = async (subject, send_to, template, reply_to, cc) => {
+const sendEmail = async (subject, send_to, template, reply_to, cc, from) => {
   // create email transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -28,8 +28,7 @@ const sendEmail = async (subject, send_to, template, reply_to, cc) => {
 
   //options for sending email:
   const options = {
-    // from: process.env.EMAIL_USER,
-    from: '"Sams"<sams@gmail.com>',
+    from:'"Sams"<sams@gmail.com>',
     to: send_to,
     reply_to: reply_to,
     subject: subject,
