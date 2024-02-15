@@ -57,10 +57,13 @@ const Checkout = () => {
   useEffect(() => {
     // Connect to the Socket.IO server
     // const socket = io(process.env.REACT_APP_BACKEND_URL);
-    const socket = io(`${process.env.REACT_APP_BACKEND_URL}/webhook`, {
-      path: "/webhook",
-      // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
-    });
+    const socket = io(
+      `${process.env.REACT_APP_BACKEND_URL}/api/v1/paystack/webhook`,
+      {
+        path: "/webhook",
+        // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
+      }
+    );
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
