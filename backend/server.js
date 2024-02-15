@@ -44,7 +44,7 @@ const errorMiddleware = require("./middlewares/error-handler-middleware");
 
 //const webhookNamespace = io.of("/webhook");
 
-const webhookNamespace = io.of("/api/v1/paystack/webhook");
+const webhookNamespace = io.of("api/v1/paystack/webhook");
 app.set('webhookNamespace', webhookNamespace);
 
 const paystackRoute = require("./routes/paystackRoutes");
