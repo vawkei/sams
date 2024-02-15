@@ -25,7 +25,7 @@ const corsOptions = {
 };
 const io = socketIo(httpServer, {
   cors: corsOptions,
-  path:"/webhook",
+  path:"/api/v1/paystack/webhook",
   // transports:["websocket"],
   // autoConnect:false,
 });
@@ -44,7 +44,7 @@ const errorMiddleware = require("./middlewares/error-handler-middleware");
 
 //const webhookNamespace = io.of("/webhook");
 
-const webhookNamespace = io.of('/webhook');
+const webhookNamespace = io.of("/api/v1/paystack/webhook");
 app.set('webhookNamespace', webhookNamespace);
 
 const paystackRoute = require("./routes/paystackRoutes");
