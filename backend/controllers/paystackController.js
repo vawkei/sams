@@ -186,29 +186,42 @@ const webhook = async (req, res) => {
       // Do something with the event:
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
-        
-        const order =await Orders.findOne({}).sort({ createdAt: 1 });
-        if (!order) {
-          return res.status(404).json({ msg: "Order not found" });
+
+        try {
+          const order = await Orders.findOne({
+            createdBy: req.user.userId,
+          }).sort({ createdAt: 1 });
+          if (!order) {
+            return res.status(404).json({ msg: "Order not found" });
+          }
+
+          order.paystackWebhook = event.data;
+          await order.save();
+
+          // Emit the event to all connected clients
+          req.app
+            .get("webhookNamespace")
+            .emit("transactionSuccess", event.data, (error) => {
+              if (error) {
+                console.error(
+                  "Error emitting transactionSuccess event:",
+                  error
+                );
+              } else {
+                console.log("transactionSuccess event emitted successfully");
+              }
+            });
+
+          // Handle charge success event
+          console.log("Charge successful:", event.data);
+
+          return res.status(200).json({ msg: "Charge successful" });
+        } catch (databaseError) {
+          console.error("Error updating order in the database:", databaseError);
+          return res
+            .status(500)
+            .json({ msg: "Error updating order in the database" });
         }
-        order.paystackWebhook = event.data;
-        await order.save()
-
-        // Emit the event to all connected clients
-        req.app
-          .get("webhookNamespace")
-          .emit("transactionSuccess", event.data, (error) => {
-            if (error) {
-              console.error("Error emitting transactionSuccess event:", error);
-            } else {
-              console.log("transactionSuccess event emitted successfully");
-            }
-          });
-
-        // Handle charge success event
-        console.log("Charge successful:", event.data);
-
-        return res.status(200).json({ msg: "Charge successful" });
       } else {
         // Invalid event type or other conditions
         console.error("Invalid Paystack event or conditions");
@@ -231,4 +244,3 @@ const webhook = async (req, res) => {
 };
 
 module.exports = { initializePayment, webhook };
-
