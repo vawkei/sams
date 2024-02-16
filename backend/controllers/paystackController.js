@@ -2,6 +2,8 @@ const https = require("https");
 
 const axios = require("axios");
 
+const Order = require("../models/orders");
+
 const callbackUrl = "https://your-backend-url.com/paystack-callback"; // Replace with your actual backend URL. this is for card payment
 
 const payStack = {
@@ -184,6 +186,10 @@ const webhook = async (req, res) => {
       // Do something with the event:
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
+        
+        const order = Order.findOne({_id:req.user.userId});
+        order.paystackWebhook = event.data;
+        await order.save()
 
         // Emit the event to all connected clients
         req.app

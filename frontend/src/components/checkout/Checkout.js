@@ -58,7 +58,7 @@ const Checkout = () => {
     
     // const socket = io(process.env.REACT_APP_BACKEND_URL);
     const socket = io(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/paystack/webhook`,
+      `${process.env.REACT_APP_BACKEND_URL}`,
       {
         path: "/api/v1/paystack/webhook",
         // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace

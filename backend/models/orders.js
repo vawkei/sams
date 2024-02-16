@@ -68,6 +68,9 @@ const orderSchema = mongoose.Schema({
     paymentMethod:{
         type:String,
         required:[true,"payment method?"]
+    },
+    paystackWebhook:{
+        type:[Object],
     }
 },{timestamps:true});
 
