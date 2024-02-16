@@ -86,7 +86,8 @@ function App() {
             path="/pay-on-delivery"
             element={<PayOnDeliveryPage />}
           />
-          <Route path="/checkout:id" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          {/* <Route path="/checkout/:id" element={<CheckoutPage />} /> */}
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/checkout-ondelivery" element={<PayOnDeliveryCheckout/>}/>
           <Route path="/order-history" element={<OrderHistoryPage />} />

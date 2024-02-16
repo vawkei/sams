@@ -1,5 +1,4 @@
 //=============================codeA starts here====================================
-
 //This is the code used when working without/before the use of web socket.
 // import classes from "./Checkout.module.css";
 // import Button from "../ui/button/Button";
@@ -45,43 +44,44 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getOrders } from "../../store/order/orderIndex";
 import io from "socket.io-client";
-import { getSingleOrder } from "../../store/order/orderIndex";
-
 
 const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const id = useParams()
+  const orders = useSelector((state) => state.order.orders);
+  console.log(orders);
 
   const [transactionData, setTransactionData] = useState(null);
-  const order = useSelector((state) => state.order.order);
 
   useEffect(() => {
-    const fetchData = async () => {
-      // Use async/await to dispatch the action
-      await dispatch(getSingleOrder(id));
-  
-      const timeIsht = setTimeout(() => {
-        console.log(order);
-      }, 5000);
-  
-      return () => clearTimeout(timeIsht);
+    const getorders = async () => {
+      await dispatch(getOrders());
+
+      
+    const clearer = setTimeout(() => {
+      console.log(orders)
+    }, 5000);
+    
+    return () => clearTimeout(clearer);
     };
-  
-    fetchData();
-  }, [dispatch, id, order]);
-  
+
+    getorders()
+    
+  }, [dispatch]);
 
   useEffect(() => {
     // const socket = io(process.env.REACT_APP_BACKEND_URL);
-    const socket = io(`${process.env.REACT_APP_BACKEND_URL}`, {
-      path: "/api/v1/paystack/webhook",
-      // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
-    });
+    const socket = io(
+      `${process.env.REACT_APP_BACKEND_URL}/api/v1/paystack/webhook`,
+      {
+        path: "/api/v1/paystack/webhook",
+        // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
+      }
+    );
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
