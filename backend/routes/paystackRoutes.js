@@ -3,6 +3,7 @@
 
 const express = require("express");
 const router = express.Router();
+const { authenticateUser } = require("../middlewares/authenticate-user");
 
 const {initializePayment,webhook} = require("../controllers/paystackController");
 
@@ -21,6 +22,7 @@ router.post("/charge",express.json(), initializePayment.initiateCardPayment);
 router.post(
   "/webhook",
   express.json(),
+  authenticateUser,
   webhook
 );
 
