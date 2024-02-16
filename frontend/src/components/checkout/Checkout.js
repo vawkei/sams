@@ -53,22 +53,21 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const [transactionData, setTransactionData] = useState(null);
-  const order = useSelector((state)=>state.order.order)
-  
-  useEffect(()=>{
-    console.log(order)
-  },[order]);
+  const order = useSelector((state) => state.order.order);
 
   useEffect(() => {
-    
+   const timeIsht =  setTimeout(() => {
+      console.log(order);
+    }, 5000);
+    return()=>clearTimeout(timeIsht)
+  }, [order]);
+
+  useEffect(() => {
     // const socket = io(process.env.REACT_APP_BACKEND_URL);
-    const socket = io(
-      `${process.env.REACT_APP_BACKEND_URL}`,
-      {
-        path: "/api/v1/paystack/webhook",
-        // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
-      }
-    );
+    const socket = io(`${process.env.REACT_APP_BACKEND_URL}`, {
+      path: "/api/v1/paystack/webhook",
+      // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
+    });
 
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
