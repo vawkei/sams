@@ -187,7 +187,10 @@ const webhook = async (req, res) => {
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
         
-        const order = Order.findOne({_id:req.user.userId});
+        const order =await Order.findOne({_id});
+        if (!order) {
+          return res.status(404).json({ msg: "Order not found" });
+        }
         order.paystackWebhook = event.data;
         await order.save()
 
