@@ -187,7 +187,7 @@ const webhook = async (req, res) => {
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
         
-        const order =await Orders.findOne({createdBy:req.user.userId}).sort({ createdAt: 1 });
+        const order =await Orders.findOne({}).sort({ createdAt: 1 });
         if (!order) {
           return res.status(404).json({ msg: "Order not found" });
         }
