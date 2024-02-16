@@ -67,7 +67,7 @@ const orderSchema = mongoose.Schema({
     },
     paymentMethod:{
         type:String,
-        required:[true,"payment method?"]
+        // required:[true,"payment method?"]
     },
     paystackWebhook:{
         type:[Object],
