@@ -45,22 +45,36 @@
 
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate,useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
+import { getSingleOrder } from "../../store/order/orderIndex";
+
 
 const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const id = useParams()
 
   const [transactionData, setTransactionData] = useState(null);
   const order = useSelector((state) => state.order.order);
 
   useEffect(() => {
-   const timeIsht =  setTimeout(() => {
-      console.log(order);
-    }, 5000);
-    return()=>clearTimeout(timeIsht)
-  }, [order]);
+    const fetchData = async () => {
+      // Use async/await to dispatch the action
+      await dispatch(getSingleOrder(id));
+  
+      const timeIsht = setTimeout(() => {
+        console.log(order);
+      }, 5000);
+  
+      return () => clearTimeout(timeIsht);
+    };
+  
+    fetchData();
+  }, [dispatch, id, order]);
+  
 
   useEffect(() => {
     // const socket = io(process.env.REACT_APP_BACKEND_URL);
