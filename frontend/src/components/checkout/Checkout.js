@@ -53,6 +53,11 @@ const Checkout = () => {
   const navigate = useNavigate();
 
   const [transactionData, setTransactionData] = useState(null);
+  const order = useSelector((state)=>state.order.order)
+  
+  useEffect(()=>{
+    console.log(order)
+  },[order]);
 
   useEffect(() => {
     
