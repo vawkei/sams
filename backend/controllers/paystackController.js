@@ -189,7 +189,7 @@ const webhook = async (req, res) => {
 
         try {
           //const order = await Orders.findOne({}).sort({ createdAt: -1 });
-          const order = await Orders.findOne({});
+          const order = await Orders.find({});
           if (!order) {
             return res.status(404).json({ msg: "Order not found" });
           }
