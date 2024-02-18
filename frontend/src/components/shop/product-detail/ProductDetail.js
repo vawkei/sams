@@ -31,10 +31,10 @@ const ProductDetail = () => {
   };
 
   const { product, message, isLoading } = useSelector((state) => state.product);
-  //console.log(product);
+  console.log(product);
 
   const { user } = useSelector((state) => state.auth);
-  //console.log(user);
+  console.log(user);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   //console.log(cartItems);
