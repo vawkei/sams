@@ -14,7 +14,7 @@ import Spinner from "../ui/spinner/Spinner";
 
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
-import Notifier from "../ui/notifier/Notifier";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -59,6 +59,7 @@ const Login = () => {
       !enteredPassword
     ) {
       console.log("Please fill out the inputs");
+      toast.error("Please fill out the inputs",{position:"top-left"})
       return;
     }
 
@@ -103,25 +104,10 @@ const Login = () => {
   //   dispatch(authActions.RESET_AUTH());
   //  }, [isLoggedIn, user, dispatch, navigate, redirect]);
 
-  let notificationClearer;
-  let timeDuration = 5000;
-
-  useEffect(() => {
-    if (notification) {
-      notificationClearer = setTimeout(() => {
-        dispatch(authActions.UPDATE_NOTIFICATION("false"));
-      }, timeDuration);
-    }
-    return () => {
-      clearTimeout(notificationClearer);
-    };
-  }, [dispatch, notification]);
 
   return (
     <div>
-      {notification && (
-        <Notifier title={"LogOut Successful"} message={"You are Now LoggedOut"} />
-      )}
+
       {isLoading && <Spinner />}
       <h1>Login</h1>
       <section className={classes.auth}>

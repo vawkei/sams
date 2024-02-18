@@ -366,12 +366,12 @@ const updateUserPhoto = async (req, res) => {
 const clearCart = async (req, res) => {
   const { cartItems } = req.body;
 
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user.userId);
 
   try {
     user.cartItems = [];
     user.save();
-    res.status(200).json({ message: "Cart cleared" });
+    res.status(200).json({ message: "User's cart cleared in DB" });
   } catch (error) {
     res.status(500).json(error);
   }

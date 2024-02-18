@@ -66,6 +66,22 @@ export const getCartDb = createAsyncThunk(
   }
 );
 
+//clearCartDB:
+export const clearCartDB = createAsyncThunk(
+  "cart/clearCart",
+  async (cartItems, thunkApi) => {
+    try {
+      return await cartService.clearCartDB(cartItems);
+    } catch (error) {
+      const message =
+        (error.response && error.response.data && error.response.data.msg) ||
+        error.msg ||
+        error.toString();
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: "cart",
   initialState: initialCartState,
@@ -243,7 +259,20 @@ const cartSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         console.log(action.payload);
-      });
+      })
+      .addCase(clearCartDB.pending,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(clearCartDB.fulfilled,(state,action)=>{
+        state.isSuccess=true;
+        console.log(action.payload)
+        // toast.success(action.payload)
+      })
+      .addCase(clearCartDB.rejected,(state,action)=>{
+        state.isError = true;
+        console.log(action.payload)
+      })
+      ;
   },
 });
 

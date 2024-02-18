@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { resetPassword } from "../../store";
 import Spinner from "../ui/spinner/Spinner";
+import { toast } from "react-toastify";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -25,6 +26,7 @@ const ResetPassword = () => {
 
     if (!password) {
       console.log("Please insert your new password");
+      toast.error("Please insert your new password",{position:"top-left"})
       return;
     }
 

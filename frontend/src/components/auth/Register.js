@@ -12,6 +12,7 @@ import Loader from "../ui/loader/Loader";
 
 import { motion } from "framer-motion";
 import { useMediaQuery } from "react-responsive";
+import { toast } from "react-toastify";
 
 const containerVariant = {
   hidden: {
@@ -80,15 +81,19 @@ const Register = () => {
       !confirmEnteredPassword
     ) {
       console.log("Please fill out the inputs");
+      toast.error("Please fill out the inputs",{position:"top-left"})
       return;
     }
 
     if (enteredPassword < 6) {
       console.log("Password characters should be more than six");
+      toast.error("Password characters should be more than six",{position:"top-left"});
+      return
     }
 
     if (enteredPassword !== confirmEnteredPassword) {
       console.log("Please check your passwords");
+      toast.error("Please check your passwords",{position:"top-left"});
       return;
     }
 
