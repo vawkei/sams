@@ -8,21 +8,22 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import ScrollToTop from "./components/ScrollToTop";
 //import { persistor } from "./store/order/saveOrderToVerify";
 
-let persistor = persistStore(store)
+let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-    <BrowserRouter>
-        <App />
-    </BrowserRouter>
+      <BrowserRouter>
+        <ScrollToTop />
+          <App />
+      </BrowserRouter>
     </PersistGate>
   </Provider>
 );
-
 
 //=====================================================================
 // const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -33,7 +34,6 @@ root.render(
 //     </BrowserRouter>
 //   </Provider>
 // );
-
 
 //================================================
 // root.render(

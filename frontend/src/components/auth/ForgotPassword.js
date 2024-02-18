@@ -4,6 +4,7 @@ import Card from "../ui/card/Card";
 import {useDispatch} from "react-redux";
 import { useState } from "react";
 import { forgotPassword } from "../../store";
+import { toast } from "react-toastify";
 
 const ForgotPassword = () => {
 
@@ -16,6 +17,7 @@ const ForgotPassword = () => {
 
     if(!email || email===""){
       console.log("Please insert your email")
+      toast.error("Please insert your email",{position:"top-left"});
       return
     };
 

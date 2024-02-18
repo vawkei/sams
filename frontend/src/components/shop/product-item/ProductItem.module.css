@@ -100,7 +100,15 @@
         border: yellow solid 0.1rem;
         object-fit: cover;
     }
-    .content h4{
-        margin-top: -2rem;
+    .content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 0.5rem;
+        padding: 1.5rem 0;
     }
+    /* .content h4{
+        margin-top: -2rem;
+    } */
 }

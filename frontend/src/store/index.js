@@ -296,6 +296,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isError = false;
         console.log(action.payload);
+        toast.success(action.payload,{position:"top-left"})
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -303,6 +304,7 @@ const authSlice = createSlice({
         state.message = action.payload;
         state.user = null;
         console.log(action.payload);
+        toast.error(action.payload,{position:"top-left"})
       })
       //4:logout:=========================================================
       .addCase(logout.pending, (state) => {
@@ -316,12 +318,14 @@ const authSlice = createSlice({
         state.notification = true;
         state.isSuccess = true;
         console.log(action.payload);
+        toast.success(action.payload,{position:"top-left"})
       })
       .addCase(logout.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
         console.log(action.payload);
+        toast.error(action.payload,{position:"top-left"})
       })
       //6: forgotPassword:================================================
       .addCase(forgotPassword.pending,(state)=>{

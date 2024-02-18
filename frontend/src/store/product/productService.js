@@ -18,7 +18,7 @@ const getProducts = async () => {
 
 //getSingleProduct:
 const getSingleProduct = async (id) => {
-  const response = await axios.get(API_URL + id);
+  const response = await axios.get(API_URL + id, id);
   return response.data;
 };
 

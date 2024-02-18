@@ -16,5 +16,11 @@ const getCartDb = async()=>{
     return response.data
 };
 
-const cartService = {saveCartDb,getCartDb};
+//clearCartDb:
+const clearCartDB = async(cartItems)=>{
+    const response = await axios.post(API_URL + "clearCart",cartItems)
+    return response.data
+};
+
+const cartService = {saveCartDb,getCartDb,clearCartDB};
 export default cartService;

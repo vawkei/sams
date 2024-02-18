@@ -14,15 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartSliceActions, saveCartDb } from "../../../store/cart/cartIndex";
 import StarsRating from "react-star-rate";
 import Spinner from "../../ui/spinner/Spinner";
-import Notifier from "../../ui/notifier/Notifier";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [showEditForm, setShowEditForm] = useState(false);
   const [productReview, setProductReview] = useState("");
   const [star, setStar] = useState(0);
-  const [notificationTitle, setNotificationTitle] = useState(false);
-  const [notificationMessage, setNotificationMessage] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -35,14 +32,14 @@ const ProductDetail = () => {
 
   const { product, message, isLoading } = useSelector((state) => state.product);
   //console.log(product);
-  
+
   const { user } = useSelector((state) => state.auth);
   //console.log(user);
 
   const cartItems = useSelector((state) => state.cart.cartItems);
   //console.log(cartItems);
 
-  const cart = useSelector((state)=>state.cart);
+  const cart = useSelector((state) => state.cart);
   console.log(cart);
 
   const currentUserCart = cartItems.find((item) => item._id === id);
@@ -53,7 +50,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getSingleProduct(id));
-  }, [user]);
+  }, [dispatch, id]);
 
   const deleteReviewHandler = async (productID) => {
     await dispatch(deleteProductReview(productID));
@@ -116,160 +113,178 @@ const ProductDetail = () => {
   //console.log(item);
 
   return (
-    <div className={classes["product-detail-container"]}>
-      {isLoading && <Spinner />}
-      <div className={classes.top}>
-        <h2>Product Detail</h2>
+    <>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+        {product?._id === id ?(
+          <>
+              <div className={classes["product-detail-container"]}>
+            <div className={classes.top}>
+              <h2>Product Detail</h2>
 
-        <p onClick={backToProducts}>
-          &larr; Back to Products
-        </p>
-      </div>
+              <p onClick={backToProducts}>&larr; Back to Products</p>
+            </div>
+            <div className={classes["content"]}>
+              {/* ====left-hand side starts here ================================================*/}
+              <div className={classes["main-image"]}>
+                <div className={classes["image-div"]}>
+                  <img src={product?.image} alt="meal" />
+                </div>
 
-      <div className={classes["content"]}>
-        {/* ====left-hand side starts here ================================================*/}
-        <div className={classes["main-image"]}>
-          <div className={classes["image-div"]}>
-            <img src={product?.image} alt="meal" />
-          </div>
-
-          <Card className={classes["product-reviews"]}>
-            {product?.ratings.length < 1 ? (
-              <p>
-                <b>There are no reviews for this product</b>
-              </p>
-            ) : (
-              <>
-                <h2>
-                  <b>Product Review</b>
-                </h2>
-                {product?.ratings.map((rating) => {
-                  return (
-                    //============= reviews========================================
-                    <div className={classes.rating} key={rating._id}>
-                      <div className={classes.star}>
-                        <StarsRating value={rating.star} />
-                      </div>
-                      <p>{rating.productReview}</p>
-                      <p>{rating.reviewDate}</p>
-                      <h3>
-                        <b>{rating.name}</b>
-                      </h3>
-                      <div className={classes.actionOne}>
-                        <Button
-                          className={classes.btn}
-                          onClick={() => deleteReviewHandler(product._id)}>
-                          Delete review
-                        </Button>
-                        <Button
-                          className={classes.btn}
-                          onClick={showEditFormHandler}>
-                          Edit review
-                        </Button>
-                      </div>
-                      {/*=====editForm starts here==================================== */}
-                      {showEditForm && (
-                        <form
-                          action=""
-                          onSubmit={(e) => editReviewHandler(e, product._id)}>
-                          <Card className={classes.editCardClass}>
-                            <div className={classes["edit-content"]}>
-                              <h3>{product?.name}</h3>
-                              <p>Rating:</p>
-                              <div className={classes.ratingContainer}>
-                                <StarsRating
-                                  value={star}
-                                  onChange={(star) => setStar(star)}
-                                />
-                              </div>
-                              <p>
-                                <b>Leave a review</b>
-                              </p>
-                              <textarea
-                                name=""
-                                id=""
-                                rows="5"
-                                value={productReview}
-                                onChange={(e) =>
-                                  setProductReview(e.target.value)
-                                }></textarea>
-                              <div className={classes["edit-action"]}>
-                                <Button onClick={showEditFormHandlerFalse}>
-                                  Cancel
-                                </Button>{" "}
-                                <Button>Submit</Button>
-                              </div>
+                <Card className={classes["product-reviews"]}>
+                  {product?.ratings.length < 1 ? (
+                    <p>
+                      <b>There are no reviews for this product</b>
+                    </p>
+                  ) : (
+                    <>
+                      <h2>
+                        <b>Product Review</b>
+                      </h2>
+                      {product?.ratings.map((rating) => {
+                        return (
+                          //============= reviews========================================
+                          <div className={classes.rating} key={rating._id}>
+                            <div className={classes.star}>
+                              <StarsRating value={rating.star} />
                             </div>
-                          </Card>
-                        </form>
-                      )}
-                      {/*== morftide ends here ===========================*/}
-                    </div>
-                  );
-                })}
-              </>
-            )}
-          </Card>
+                            <p>{rating.productReview}</p>
+                            <p>{rating.reviewDate}</p>
+                            <h3>
+                              <b>{rating.name}</b>
+                            </h3>
+                            <div className={classes.actionOne}>
+                              <Button
+                                className={classes.btn}
+                                onClick={() =>
+                                  deleteReviewHandler(product._id)
+                                }>
+                                Delete review
+                              </Button>
+                              <Button
+                                className={classes.btn}
+                                onClick={showEditFormHandler}>
+                                Edit review
+                              </Button>
+                            </div>
+                            {/*=====editForm starts here==================================== */}
+                            {showEditForm && (
+                              <form
+                                action=""
+                                onSubmit={(e) =>
+                                  editReviewHandler(e, product._id)
+                                }>
+                                <Card className={classes.editCardClass}>
+                                  <div className={classes["edit-content"]}>
+                                    <h3>{product?.name}</h3>
+                                    <p>Rating:</p>
+                                    <div className={classes.ratingContainer}>
+                                      <StarsRating
+                                        value={star}
+                                        onChange={(star) => setStar(star)}
+                                      />
+                                    </div>
+                                    <p>
+                                      <b>Leave a review</b>
+                                    </p>
+                                    <textarea
+                                      name=""
+                                      id=""
+                                      rows="5"
+                                      value={productReview}
+                                      onChange={(e) =>
+                                        setProductReview(e.target.value)
+                                      }></textarea>
+                                    <div className={classes["edit-action"]}>
+                                      <Button
+                                        onClick={showEditFormHandlerFalse}>
+                                        Cancel
+                                      </Button>{" "}
+                                      <Button>Submit</Button>
+                                    </div>
+                                  </div>
+                                </Card>
+                              </form>
+                            )}
+                            {/*== morftide ends here ===========================*/}
+                          </div>
+                        );
+                      })}
+                    </>
+                  )}
+                </Card>
 
-          {/* ====left-handside ends here================================================*/}
-        </div>
-        {/* ====right-handside starts here=================================== */}
-        <Card className={classes.details}>
-          <h2>{product?.name}</h2>
-          <ul className={classes.ul}>
-            <li>
-              <b>Price:</b>{" "}
-              <span style={{ color: "red" }}>
-                <b>
-                  {" "}
-                  {nairaSymbol} {product?.price}
-                </b>
-              </span>
-            </li>
-            <li>
-              <b>Category:</b> {product?.category}
-            </li>
-            <li>
-              <b>Sku:</b> {product?._id}
-            </li>
-            <li>
-              <b>Quantity in Stock:</b> {product?.quantity}
-            </li>
-            <li>
-              <b>Views:</b> {product?.productViews.viewCount}
-            </li>
-            <li>
-              <b>Sold:</b> {product?.sold}
-            </li>
-          </ul>
+                {/* ====left-handside ends here================================================*/}
+              </div>
+              {/* ====right-handside starts here=================================== */}
+              <Card className={classes.details}>
+                <h2>{product?.name}</h2>
+                <ul className={classes.ul}>
+                  <li>
+                    <b>Price:</b>{" "}
+                    <span style={{ color: "red" }}>
+                      <b>
+                        {" "}
+                        {nairaSymbol} {product?.price}
+                      </b>
+                    </span>
+                  </li>
+                  <li>
+                    <b>Category:</b> {product?.category}
+                  </li>
+                  <li>
+                    <b>Sku:</b> {product?._id}
+                  </li>
+                  <li>
+                    <b>Quantity in Stock:</b> {product?.quantity}
+                  </li>
+                  <li>
+                    <b>Views:</b> {product?.productViews.viewCount}
+                  </li>
+                  <li>
+                    <b>Sold:</b> {product?.sold}
+                  </li>
+                </ul>
 
-          {isItemAdded < 0 ? null : (
-            <div className={classes.action}>
-              <Button onClick={() => decreaseCartHandler(product)}>-</Button>{" "}
-              {currentUserCart.productCartQty}
-              <Button onClick={() => addToCartHandler(product)}>+</Button>
+                {isItemAdded < 0 ? null : (
+                  <div className={classes.action}>
+                    <Button onClick={() => decreaseCartHandler(product)}>
+                      -
+                    </Button>{" "}
+                    {currentUserCart.productCartQty}
+                    <Button onClick={() => addToCartHandler(product)}>+</Button>
+                  </div>
+                )}
+                {product?.quantity === 0 ? (
+                  <Button className={classes.btnRed} disable>
+                    Out of Stock
+                  </Button>
+                ) : (
+                  <div className={classes.action}>
+                    <Button
+                      className={classes.btn}
+                      onClick={() => addToCartHandler(product)}>
+                      Add to Cart
+                    </Button>
+                  </div>
+                )}
+
+                <Card>
+                  <h3>{product?.description}</h3>
+                </Card>
+              </Card>
             </div>
-          )}
-          {product?.quantity === 0 ? (
-            <Button className={classes.btnRed} disable>
-              Out of Stock
-            </Button>
-          ) : (
-            <div className={classes.action}>
-              <Button
-                className={classes.btn}
-                onClick={() => addToCartHandler(product)}>
-                Add to Cart
-              </Button>
-            </div>
-          )}
-
-          <Card>
-            <h3>{product?.description}</h3>
-          </Card>
-        </Card>
-      </div>
-    </div>
+          </div>
+          </>
+        ) : (
+          <Spinner />
+        )}
+          
+        </>
+      )}
+    </>
   );
 };
 
