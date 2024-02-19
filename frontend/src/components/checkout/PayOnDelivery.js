@@ -259,7 +259,7 @@ const PayOnDelivery = () => {
                   <Button onClick={onCancel} className={classes.btn}>
                     Cancel
                   </Button>
-                  <Button className={classes.btn} onClick={confirmHandler}>
+                  <Button className={classes.btn} onClick={confirmHandlerDelivery}>
                     Proceed
                   </Button>
                 </div>
