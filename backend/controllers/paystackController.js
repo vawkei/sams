@@ -243,4 +243,39 @@ const webhook = async (req, res) => {
   }
 };
 
-module.exports = { initializePayment, webhook };
+//refundOrder
+const refundOrder = async (req, res) => {
+  const { paystackTransactionId } = req.body;
+
+  try {
+    // Fetch the order details from MongoDB
+    const order = await Orders.findOne({ paystackTransactionId });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found' });
+    }
+
+    // Perform refund via Paystack API
+    const paystackRefundResponse = await axios.post(
+      'https://api.paystack.co/refund',
+      { transaction: paystackTransactionId, amount: order.amount * 100 }, // Paystack expects the amount in kobo
+      {
+        headers: {
+          Authorization: 'Bearer YOUR_PAYSTACK_SECRET_KEY',
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    if (paystackRefundResponse.data.data.status === 'success') {
+      res.json({ success: true, message: 'Refund successful' });
+    } else {
+      res.status(400).json({ success: false, message: 'Refund failed' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+}
+
+
+module.exports = { initializePayment, webhook, refundOrder };

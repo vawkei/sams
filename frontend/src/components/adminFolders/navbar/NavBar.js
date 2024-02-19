@@ -9,6 +9,7 @@ import { BiCategory } from "react-icons/bi";
 // import { BiSolidCoupon } from "react-icons/bi"
 import { RiCoupon2Line } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa6";
+import { RiRefund2Line } from "react-icons/ri";
 
 
 
@@ -62,6 +63,11 @@ const NavBar = () => {
           <li>
             <NavLink className={navDataHandler} to={"category"}>
             <BiCategory size={40} />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={navDataHandler} to={"refund"}>
+            <RiRefund2Line size={40} />
             </NavLink>
           </li>
         </ul>
