@@ -20,7 +20,7 @@ const Checkout = () => {
     };
     const clearer = setTimeout(async() => {
      await getorders()
-    }, 5000);
+    }, 3000);
     
     return () => clearTimeout(clearer);
     
@@ -71,7 +71,6 @@ const Checkout = () => {
       <h2>Checkout Successful</h2>
       <p>Thank you for your purchase</p>
       <p>Transaction Data: {JSON.stringify(transactionData)}</p>
-
       {/* <p>{webhookResponse}</p> */}
       <Button onClick={navigateHandler}>Go to Order History</Button>
     </div>
