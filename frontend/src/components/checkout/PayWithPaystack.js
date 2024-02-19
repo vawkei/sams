@@ -271,7 +271,7 @@ const PayWithPaystack = () => {
                   <Button onClick={onCancel} className={classes.btn}>
                     Cancel
                   </Button>
-                  <Button className={classes.btn} onClick={confirmHandler}>
+                  <Button className={classes.btn} onClick={confirmHandlerPaystack}>
                     Proceed
                   </Button>
                 </div>
