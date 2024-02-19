@@ -192,7 +192,9 @@ const webhook = async (req, res) => {
           if (!order) {
             return res.status(404).json({ msg: "Order not found" });
           }
-
+          if(!order.paymentMethod === "Pay on Delivery"){
+            return
+          }
           order.paystackWebhook = event.data;
           await order.save();
 

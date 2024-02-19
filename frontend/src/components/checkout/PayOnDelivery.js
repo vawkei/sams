@@ -62,7 +62,7 @@ const PayOnDelivery = () => {
     }
   }, [isLoggedIn, user]);
 
-  const confirmHandler = async (e) => {
+  const confirmHandlerDelivery = async (e) => {
     e.preventDefault();
 
     //input data retrieval:
@@ -127,9 +127,7 @@ const PayOnDelivery = () => {
     dispatch(
       checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
     );
-    // dispatch(
-    //   checkoutDetailsFormActions.PAY_WITH_PAYSTACK_BOOLEAN(false)
-    // )
+  
 
     await dispatch(createOrder(formData));
   };
@@ -168,7 +166,7 @@ const PayOnDelivery = () => {
             <h4>Checkout Details</h4>
             <p>Please check if the details are correct before proceeding</p>
             <Card>
-              <form action="" onSubmit={confirmHandler}>
+              <form action="" onSubmit={confirmHandlerDelivery}>
                 <div
                   className={`${classes.control} ${
                     !formValidity.firstName ? classes.invalid : ""

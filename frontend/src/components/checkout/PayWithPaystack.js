@@ -76,7 +76,7 @@ const PayWithPaystack = () => {
 
   let formData;
 
-  const confirmHandler = async (e) => {
+  const confirmHandlerPaystack = async (e) => {
     e.preventDefault();
 
     //input data retrieval:
@@ -178,7 +178,7 @@ const PayWithPaystack = () => {
 
             <p>Please check if the details are correct before proceeding</p>
             <Card>
-              <form action="" onSubmit={confirmHandler}>
+              <form action="" onSubmit={confirmHandlerPaystack}>
                 <div
                   className={`${classes.control} ${
                     !formValidity.firstName ? classes.invalid : ""
