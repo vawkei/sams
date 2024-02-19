@@ -34,7 +34,12 @@ const VerifyPayment = () => {
 
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
-        navigate("/checkout");
+
+        const clearer = setTimeout(()=>{
+          navigate("/checkout");
+        },8000)
+        return ()=>clearTimeout(clearer)
+
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
