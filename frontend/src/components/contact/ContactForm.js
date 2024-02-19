@@ -167,7 +167,7 @@ const ContactForm = () => {
               <p>Speak to our friendly team</p>
               <br />
               <p>
-                <b>sales@theresas.com</b>
+                <b>sales@sams.com</b>
               </p>
             </Card>
           </div>
