@@ -17,16 +17,13 @@ const Checkout = () => {
   useEffect(() => {
     const getorders = async () => {
       await dispatch(getOrders());
-
-      
-    const clearer = setTimeout(() => {
-      console.log(orders)
+    };
+    const clearer = setTimeout(async() => {
+     await getorders()
     }, 5000);
     
     return () => clearTimeout(clearer);
-    };
-
-    getorders()
+    
     
   }, [dispatch]);
 
