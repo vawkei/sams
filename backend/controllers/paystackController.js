@@ -245,35 +245,39 @@ const webhook = async (req, res) => {
 
 //refundOrder
 const refundOrder = async (req, res) => {
-  const { paystackTransactionId } = req.body;
+  const { paystackTransactionId,amount } = req.body;
+
+  console.log(paystackTransactionId,amount)
+
+  if(!paystackTransactionId || !amount){
+    return res.status(400).json({msg:"Inputs cant be empty"})
+  };
+  if(paystackTransactionId.length !== 10){
+    return res.status(400).json({msg:"Ole Barawu!!!"})
+  }
 
   try {
-    // Fetch the order details from MongoDB
-    const order = await Orders.findOne({ paystackTransactionId });
-
-    if (!order) {
-      return res.status(404).json({ success: false, message: 'Order not found' });
-    }
-
-    // Perform refund via Paystack API
+    // a scenerio in which a client gets debited without us getting his order.
     const paystackRefundResponse = await axios.post(
       'https://api.paystack.co/refund',
-      { transaction: paystackTransactionId, amount: order.amount * 100 }, // Paystack expects the amount in kobo
+      { transaction: paystackTransactionId, amount: amount * 100 }, // Paystack expects the amount in kobo
       {
         headers: {
-          Authorization: 'Bearer YOUR_PAYSTACK_SECRET_KEY',
+          Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`,
           'Content-Type': 'application/json',
         },
       }
     );
+    console.log("Paystack Refund Response:", paystackRefundResponse);
 
-    if (paystackRefundResponse.data.data.status === 'success') {
-      res.json({ success: true, message: 'Refund successful' });
+    if (paystackRefundResponse.status === 200) {
+      res.json({ success: true, msg: 'Refund has been queued for processing' });
     } else {
-      res.status(400).json({ success: false, message: 'Refund failed' });
+      res.status(400).json({ success: false, msg: 'Refund failed' });
     }
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Internal Server Error' });
+    res.status(500).json({ success: false, msg: error });
+    console.log(error);
   }
 }
 
