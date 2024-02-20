@@ -20,7 +20,7 @@ const Checkout = () => {
     };
     const clearer = setTimeout(async() => {
      await getorders()
-    }, 5000);
+    }, 1000);
     // }, 3000);
     
     return () => clearTimeout(clearer);
