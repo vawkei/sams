@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import paystackService from "./paystackService";
+import { toast } from "react-toastify";
 
 const FRONT_URL = process.env.REACT_APP_FRONTEND_URL;
 
@@ -46,6 +47,19 @@ export const verifypayment = createAsyncThunk(
     }
   }
 );
+
+//refundOrder:
+export const refundOrder = createAsyncThunk(
+  "refundOrder/",async(formData,thunkAPI)=>{
+    try{
+      return await paystackService.refundOrder(formData)
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 //webhookresponse
 // export const webhookresponse = createAsyncThunk(
 //   "paystack/webhook",async(_,thunkAPI)=>{
@@ -114,6 +128,24 @@ const paystackSlice = createSlice({
         state.isError = true;
         state.message = action.error.message || "Unknown error occurred";
         console.log(action.payload);
+      })
+      //refundOrder:
+      .addCase(refundOrder.pending,(state)=>{
+        state.isLoading = true
+      })
+      .addCase(refundOrder.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.iSuccess = true;
+        state.message = action.payload.msg;
+        console.log(action.payload)
+        toast.success(action.payload.msg,{position:"top-left"})
+      })
+      .addCase(refundOrder.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.iSuccess = false;
+        state.message = action.payload.msg
+        console.log(action.payload)
+        toast.error(action.payload,{position:"top-left"})
       })
       //webhookresponse:
       // .addCase(webhookresponse.pending,(state)=>{

@@ -17,12 +17,18 @@ const verifypayment = async(reference)=>{
     return response.data;
 };
 
+//refundOrder:
+const refundOrder = async(formData)=>{
+    const response = await axios.post(API_URL + "refundOrder", formData);
+    return response.data;
+};
+
 // const webhookresponse = async()=>{
 //     const response = await axios.get(API_URL + "webhook");
 //     return response.data;
 // }
 
-const paystackService = {acceptpayment,verifypayment,}
+const paystackService = {acceptpayment,verifypayment,refundOrder}
 export default paystackService;
 
 
