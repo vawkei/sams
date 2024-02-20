@@ -197,6 +197,7 @@ const webhook = async (req, res) => {
           }
           order.paystackWebhook = event.data;
           await order.save();
+              console.log("paystackWebhook saved to database")
 
           // Emit the event to all connected clients
           req.app
