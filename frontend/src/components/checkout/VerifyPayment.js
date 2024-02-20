@@ -37,7 +37,7 @@ const VerifyPayment = () => {
 
         const clearer = setTimeout(()=>{
           navigate("/checkout");
-        },5000)
+        },8000)
         return ()=>clearTimeout(clearer)
 
       } else {
