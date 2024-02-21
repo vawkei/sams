@@ -19,7 +19,7 @@ const VerifyPayment = () => {
   const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
 
-  const orders = useSelector((state) => state.order.orders);
+  const {orders,message} = useSelector((state) => state.order);
   console.log(orders);
 
   const query = useQuery();
@@ -54,7 +54,13 @@ const VerifyPayment = () => {
 
   useEffect(() => {
     submitHandler();
-  }, []);
+  }, [orders]);
+
+  useEffect(()=>{
+    if(message==="Order created"){
+      console.log(orders)
+    }
+  },[orders]);
 
   const navigateToOrdersHandler = () => {
     navigate("/checkout");
@@ -64,7 +70,7 @@ const VerifyPayment = () => {
     <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
       <Button onClick={navigateToOrdersHandler} className={classes.btn}>
-        View Orders
+        Check Out
       </Button>
     </div>
   );
