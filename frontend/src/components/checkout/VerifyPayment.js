@@ -18,6 +18,9 @@ const VerifyPayment = () => {
   const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
 
+  const orders = useSelector((state) => state.order.orders);
+  console.log(orders);
+
   const query = useQuery();
 
   // const navigateToOrdersHandler = () => {
@@ -51,7 +54,7 @@ const VerifyPayment = () => {
 
   useEffect(() => {
     submitHandler();
-  }, []);
+  }, [orders]);
 
   return (
     <div className={classes["verification"]}>
