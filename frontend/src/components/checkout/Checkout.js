@@ -18,12 +18,11 @@ const Checkout = () => {
     const getorders = async () => {
       await dispatch(getOrders());
     };
-    // const clearer = setTimeout(async() => {
-    //  await getorders()
-    // }, 5000);
-    getorders()
+    const clearer = setTimeout(async() => {
+     await getorders()
+    }, 5000);
     
-    //return () => clearTimeout(clearer);
+    return () => clearTimeout(clearer);
     
     
   }, [dispatch]);
