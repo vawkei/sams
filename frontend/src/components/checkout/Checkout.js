@@ -88,7 +88,7 @@
 
 
 
-
+//from my previous commit========================================================
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -113,10 +113,6 @@ const Checkout = () => {
 
     return () => clearTimeout(clearer);
   
-
-
-
-
   }, [dispatch]);
 
   useEffect(() => {
