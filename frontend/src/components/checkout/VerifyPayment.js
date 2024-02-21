@@ -29,8 +29,11 @@ const VerifyPayment = () => {
 
     try {
       if (reference) {
-        await dispatch(verifypayment({ reference }));
+        // await dispatch(verifypayment({ reference }));
+        // await dispatch(createOrder(incomingOrder));
         await dispatch(createOrder(incomingOrder));
+        await dispatch(verifypayment({ reference }));
+        
 
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
