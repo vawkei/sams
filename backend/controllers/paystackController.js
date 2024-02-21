@@ -212,8 +212,13 @@ const webhook = async (req, res) => {
         // Handle refund processed event
         console.log("Refund processed:", event.data);
         return res.status(400).json({ msg: 'Error handling refund processed event' });
+      } else if (event && event.event === "refund.pending") {
+        // Handle refund pending event
+        console.log("Refund pending:", event.data);
+        return res.status(400).json({ msg: 'Error handling refund pending event' });
       } else {
         console.error("Unexpected Paystack event type:", event.event);
+        return res.status(400).json({ msg: 'Unexpected Paystack event type' });
       }
     } else {
       console.error("Signatures do not match");
@@ -224,6 +229,7 @@ const webhook = async (req, res) => {
     return res.status(500).json({ msg: "An error occurred while processing the webhook" });
   }
 };
+
 
 
 
