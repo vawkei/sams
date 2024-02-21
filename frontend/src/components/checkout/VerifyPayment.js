@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
-import Button from "../ui/button/Button";
 // import {toast} from "react-toastify"
 //import Button from "../ui/button/Button";
 
@@ -18,9 +17,6 @@ const VerifyPayment = () => {
   const navigate = useNavigate();
   const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
-
-  const {orders,message} = useSelector((state) => state.order);
-  console.log({orders:orders,message:message});
 
   const query = useQuery();
 
@@ -39,10 +35,11 @@ const VerifyPayment = () => {
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
 
-        // const clearer = setTimeout(()=>{
-        //   navigate("/checkout");
-        // },8000)
-        // return ()=>clearTimeout(clearer)
+        const clearer = setTimeout(()=>{
+          navigate("/checkout");
+        },1000)
+        return ()=>clearTimeout(clearer)
+
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
@@ -54,26 +51,17 @@ const VerifyPayment = () => {
 
   useEffect(() => {
     submitHandler();
-  }, [orders]);
-
-  useEffect(()=>{
-    if(message==="Order created"){
-      console.log(orders)
-    }
-  },[orders,message]);
-
-  const navigateToOrdersHandler = () => {
-    navigate("/checkout");
-  };
+  }, []);
 
   return (
     <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
-      <Button onClick={navigateToOrdersHandler} className={classes.btn}>
-        Check Out
-      </Button>
+      {/* <Button onClick={navigateToOrdersHandler} className={classes.btn}>
+        View Orders
+      </Button> */}
     </div>
   );
 };
 
 export default VerifyPayment;
+
