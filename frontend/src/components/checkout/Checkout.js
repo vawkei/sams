@@ -9,8 +9,8 @@ import io from "socket.io-client";
 const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const orders = useSelector((state) => state.order.orders);
-  // console.log(orders);
+  const orders = useSelector((state) => state.order.orders);
+  console.log(orders);
 
   const [transactionData, setTransactionData] = useState(null);
 
