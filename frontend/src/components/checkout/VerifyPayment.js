@@ -38,11 +38,10 @@ const VerifyPayment = () => {
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
 
-        const clearer = setTimeout(()=>{
-          navigate("/checkout");
-        },8000)
-        return ()=>clearTimeout(clearer)
-
+        // const clearer = setTimeout(()=>{
+        //   navigate("/checkout");
+        // },8000)
+        // return ()=>clearTimeout(clearer)
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
@@ -54,17 +53,20 @@ const VerifyPayment = () => {
 
   useEffect(() => {
     submitHandler();
-  }, [orders]);
+  }, []);
+
+  const navigateToOrdersHandler = () => {
+    navigate("/checkout");
+  };
 
   return (
     <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
-      {/* <Button onClick={navigateToOrdersHandler} className={classes.btn}>
+      <Button onClick={navigateToOrdersHandler} className={classes.btn}>
         View Orders
-      </Button> */}
+      </Button>
     </div>
   );
 };
 
 export default VerifyPayment;
-
