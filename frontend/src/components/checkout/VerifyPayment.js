@@ -20,7 +20,7 @@ const VerifyPayment = () => {
   console.log(incomingOrder);
 
   const {orders,message} = useSelector((state) => state.order);
-  console.log(orders);
+  console.log({orders:orders,message:message});
 
   const query = useQuery();
 
@@ -60,7 +60,7 @@ const VerifyPayment = () => {
     if(message==="Order created"){
       console.log(orders)
     }
-  },[orders]);
+  },[orders,message]);
 
   const navigateToOrdersHandler = () => {
     navigate("/checkout");
