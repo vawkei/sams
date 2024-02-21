@@ -68,8 +68,7 @@
 
 
 
-components/checkout/VerifyPayment.js
-@@ -1,40 +1,45 @@
+
 import classes from "./VerifyPayment.module.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
