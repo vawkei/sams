@@ -7,6 +7,7 @@ import { createOrder } from "../../store/order/orderIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../../store";
 
 const PayOnDelivery = () => {
   const [formValidity, setFormValidity] = useState({
@@ -133,12 +134,19 @@ const PayOnDelivery = () => {
   };
 
   useEffect(() => {
-    if (message === "Order created") {
-      localStorage.setItem("cartItems", JSON.stringify([]));
-      dispatch(cartSliceActions.RESET_CART());
-      navigate("/checkout-ondelivery");
-    }
-  }, [message,navigate]);
+    const handleOrderCreated = async () => {
+      if (message === "Order created") {
+        localStorage.setItem("cartItems", JSON.stringify([]));
+        dispatch(cartSliceActions.RESET_CART());
+  
+        await dispatch(clearCart());
+        navigate("/checkout-ondelivery");
+      }
+    };
+  
+    handleOrderCreated();
+  }, [message, navigate, dispatch]);
+  
   const onCancel = () => {};
 
   //   let time = 2000;

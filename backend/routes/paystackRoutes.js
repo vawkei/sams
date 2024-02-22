@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 const {authenticateUser,adminOnly} = require("../middlewares/authenticate-user");
-const {initializePayment,webhook} = require("../controllers/paystackController");
+const {initializePayment,webhook, refundOrder} = require("../controllers/paystackController");
 
 //paystack routes
 router.post("/acceptpayment", express.json(), initializePayment.acceptPayment);
@@ -14,7 +14,7 @@ router.post("/verifypayment",express.json(), initializePayment.verifyPayment);
 
 router.post("/charge",express.json(), initializePayment.initiateCardPayment);
 
-// router.post("/refundOrder",express.json(),authenticateUser,adminOnly, refundOrder)
+router.post("/refundOrder",express.json(),authenticateUser,adminOnly, refundOrder)
 
 // router.post(
 //   "/webhook",,

@@ -51,7 +51,7 @@ router.patch("/updateUserPhoto",authenticateUser, updateUserPhoto);
 router.post("/sendContactMail",authenticateUser, sendContactMail);
 
 //user Cart:
-// router.patch("/clearCart",authenticateUser,clearCart);
+ router.patch("/clearCart",authenticateUser,clearCart);
 router.get("/getCartDb",authenticateUser,getCartDb);
 router.patch("/saveCartDb",authenticateUser,saveCartDb)
 
