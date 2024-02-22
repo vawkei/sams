@@ -50,7 +50,7 @@ export const verifypayment = createAsyncThunk(
 
 //refundOrder:
 export const refundOrder = createAsyncThunk(
-  "refundOrder/",async(formData,thunkAPI)=>{
+  "/refundOrder",async(formData,thunkAPI)=>{
     try{
       return await paystackService.refundOrder(formData)
     }catch(error){
