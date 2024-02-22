@@ -238,8 +238,14 @@ const resetPassword = async (req, res) => {
 //5. getAllUsers===============================================================:
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const U = await User.find().select("-password");
+    
+    const users = U.filter((x)=>{
+      return x.isVerified
+    })
+    
     console.log(users);
+    
     if (!users) {
       return res.status(404).json({ msg: "No users found" });
     }
@@ -363,19 +369,7 @@ const updateUserPhoto = async (req, res) => {
   }
 };
 
-const clearCart = async (req, res) => {
-  const { cartItems } = req.body;
-
-  const user = await User.findById(req.user.userId);
-
-  try {
-    user.cartItems = [];
-    user.save();
-    res.status(200).json({ message: "User's cart cleared in DB" });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-};
+//11.
 //getCartDb========================================================================:
 const getCartDb = async (req, res) => {
   const { userId } = req.user;
@@ -412,7 +406,8 @@ const saveCartDb = async (req, res) => {
   }
 };
 
-// sendContactMail===================================================================
+//13
+//sendContactMail===================================================================
 const sendContactMail = async (req, res) => {
   const { name, subject, message } = req.body;
   console.log({ name: name, subject: subject, message: message });
@@ -452,6 +447,25 @@ const sendContactMail = async (req, res) => {
     res.status(500).json({ msg: error.message || "Internal Server Error" });
   }
 };
+
+//14.
+//clearCart==================================================================:
+const clearCart = async (req, res) => {
+  //const { cartItems } = req.body;
+
+
+  try {
+
+    const user = await User.findById(req.user.userId);
+
+    user.cartItems = [];
+    await user.save();
+    res.status(200).json({ message: "User's cart cleared in DB" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 
 module.exports = {
   register,

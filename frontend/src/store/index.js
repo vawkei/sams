@@ -223,6 +223,17 @@ export const sendContactMail = createAsyncThunk(
   }
 );
 
+//clearCart"
+export const clearCart = createAsyncThunk(
+  "auth/clearCart",async(_,thunkApi)=>{
+    try{
+      return await authService.clearCart()
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString()
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+);
 
 const authSlice = createSlice({
   name: "auth",
@@ -414,7 +425,7 @@ const authSlice = createSlice({
         state.message = action.payload;
         toast.error(action.payload.msg,{position:"top-left"})
       })
-      //10:getLoginStatus:
+      //10:getLoginStatus:==================================================
       .addCase(getLoginStatus.pending, (state) => {
         state.isLoading = true;
       })
@@ -449,7 +460,7 @@ const authSlice = createSlice({
       //     state.message=action.payload;
       //     console.log(action.payload)
       // })
-      //.8:updateUserPhoto:
+      //.8:updateUserPhoto:====================================================
       .addCase(updateUserPhoto.pending, (state, action) => {
         state.isLoading = true;
       })
@@ -468,7 +479,7 @@ const authSlice = createSlice({
         console.log(action.payload);
         toast.error("Failed to update",{position:"top-left"})
       })
-      //sendContactMail:
+      //sendContactMail:=====================================================
       .addCase(sendContactMail.pending,(state)=>{
         state.isLoading = true;
       })
@@ -485,6 +496,21 @@ const authSlice = createSlice({
         state.isError = true;
         console.log(action.payload)
         toast.error(action.payload,{position:"top-left"})
+      })
+      //clearCart:=======================================================
+      .addCase(clearCart.pending,(state)=>{
+        state.isLoading = true
+      })
+      .addCase(clearCart.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.message = action.payload;
+        console.log(action.payload)
+      })
+      .addCase(clearCart.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        console.log(action.payload)
       });
   },
 });

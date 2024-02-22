@@ -15,10 +15,13 @@ import { filterSliceAction } from "../../../store/product/FilterProduct";
 const AllProducts = () => {
   const [search, setSearch] = useState("");
   console.log(search);
-  const [showDeleteNotifier, setShowDeleteNotifier] = useState(false);
 
-  const showDeleteNotifierTrue = (id) => {
-    setShowDeleteNotifier(id);
+  const [showDeleteNotifier, setShowDeleteNotifier] = useState(false);
+  const [currentProductToDelete, setCurrentProductToDelete] = useState(null);
+
+  const showDeleteNotifierTrue = (id, name) => {
+    setCurrentProductToDelete({ id, name });
+    setShowDeleteNotifier(true);
   };
   const showDeleteNotifierFalse = () => {
     setShowDeleteNotifier(null);
@@ -33,10 +36,8 @@ const AllProducts = () => {
   const { products, isLoading } = useSelector((state) => state.product);
   //console.log(products);
 
-  const {filteredProducts} = useSelector((state)=>state.filter)
+  const { filteredProducts } = useSelector((state) => state.filter);
   //console.log(filteredProducts)
-
-  
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,9 +52,9 @@ const AllProducts = () => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  useEffect(()=>{
-    dispatch(filterSliceAction.FILTER_BY_SEARCH({products,search}))
-  },[products,search])
+  useEffect(() => {
+    dispatch(filterSliceAction.FILTER_BY_SEARCH({ products, search }));
+  }, [products, search]);
 
   const shortenText = (text, n) => {
     if (text.length > 15) {
@@ -101,11 +102,11 @@ const AllProducts = () => {
               </thead>
               <tbody>
                 {/* {products.map((product, index) => { */}
-                {currentItems.map((product,index) => {
+                {currentItems.map((product, index) => {
                   return (
                     <tr key={product._id}>
                       <td>{index + 1}</td>
-                      <td>{shortenText(product.name,15)}</td>
+                      <td>{shortenText(product.name, 15)}</td>
                       <td>{product.category}</td>
                       <td>
                         {nairaSymbol} {product.price.toFixed(2)}
@@ -125,14 +126,17 @@ const AllProducts = () => {
                         <div>
                           <RiDeleteBin2Line
                             color="red"
-                            onClick={showDeleteNotifierTrue}
+                            // onClick={showDeleteNotifierTrue}
+                            onClick={() =>
+                              showDeleteNotifierTrue(product._id, product.name)
+                            }
                           />
                         </div>
                       </td>
                       {showDeleteNotifier && (
                         <DeleteNotifier
                           heading={"Delete Product"}
-                          body={`You are about to DELETE ${product.name}`}
+                          body={`You are about to DELETE ${currentProductToDelete.name}`}
                           onConfirm={() => deleteProductHandler(product._id)}
                           cancel={showDeleteNotifierFalse}
                         />

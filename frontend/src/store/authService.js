@@ -70,6 +70,12 @@ const sendContactMail = async (formData) => {
   return response.data
 };
 
+//clearCart;
+const clearCart = async () =>{
+  const response = await axios.patch(API_URL + "clearCart")
+  return response.data;
+};
+
 const authService = {
   register,
   verifyEmail,
@@ -82,7 +88,8 @@ const authService = {
   updateUser,
   getLoginStatus,
   updateUserPhoto,
-  sendContactMail
+  sendContactMail,
+  clearCart
 };
 
 export default authService;
