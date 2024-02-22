@@ -243,76 +243,86 @@ const initializePayment = payStack;
 // };
 
 
+
+
+
+
+
+
+
+
+
+
 //codeC
 //payWithPaystackWebhook with web socket commit 703a2a8 ==========================:
-// const crypto = require("crypto");
-//   const webhook = async (req, res) => {
-//     try {
-//       const hash = crypto
-//         .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
+const crypto = require("crypto");
+  const webhook = async (req, res) => {
+    try {
+      const hash = crypto
+        .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
         
-//         .update(JSON.stringify(req.body)) // Stringify the object to create a hash
-//         .digest("hex");
+        .update(JSON.stringify(req.body)) // Stringify the object to create a hash
+        .digest("hex");
   
-//       // Log the calculated hash and the received signature
-//       console.log("Calculated Hash:", hash);
-//       console.log("Received Signature:", req.headers["x-paystack-signature"]);
-//       if (hash === req.headers["x-paystack-signature"]) {
-//         // Retrieve the request's body:
-//         const event = req.body; // req.body is now a JavaScript object
-//         console.log("Received Paystack Webhook Event:", event);
-//         // Do something with the event:
-//         if (event && event.event === "charge.success") {
-//           console.log("Emitting transactionSuccess event:", event.data);
-//           try {
-//             const order = await Orders.findOne({}).sort({ createdAt: -1 });
-//             if (!order) {
-//               return res.status(404).json({ msg: "Order not found" });
-//             }
-//             order.paystackWebhook = event.data;
-//             await order.save();
-//             // Emit the event to all connected clients
-//             req.app
-//               .get("webhookNamespace")
-//               .emit("transactionSuccess", event.data, (error) => {
-//                 if (error) {
-//                   console.error(
-//                     "Error emitting transactionSuccess event:",
-//                     error
-//                   );
-//                 } else {
-//                   console.log("transactionSuccess event emitted successfully");
-//                 }
-//               });
-//             // Handle charge success event
-//             console.log("Charge successful...");
-//             return res.status(200).json({ msg: "Charge successful" });
-//           } catch (databaseError) {
-//             console.error("Error updating order in the database:", databaseError);
-//             return res
-//               .status(500)
-//               .json({ msg: "Error updating order in the database" });
-//           }
-//         } else {
-//           // Invalid event type or other conditions
-//           console.error("Invalid Paystack event or conditions");
-//           return res
-//             .status(400)
-//             .json({ msg: "Invalid Paystack event or conditions" });
-//         }
-//       } else {
-//         // Signatures do not match
-//         console.error("Signatures do not match");
-//         return res.status(400).json({ msg: "Signatures do not match" });
-//       }
-//     } catch (error) {
-//       // An error occurred during the processing of the webhook
-//       console.error("Error processing webhook:", error);
-//       return res
-//         .status(500)
-//         .json({ msg: "An error occurred while processing the webhook" });
-//     }
-//   };
+      // Log the calculated hash and the received signature
+      console.log("Calculated Hash:", hash);
+      console.log("Received Signature:", req.headers["x-paystack-signature"]);
+      if (hash === req.headers["x-paystack-signature"]) {
+        // Retrieve the request's body:
+        const event = req.body; // req.body is now a JavaScript object
+        console.log("Received Paystack Webhook Event:", event);
+        // Do something with the event:
+        if (event && event.event === "charge.success") {
+          console.log("Emitting transactionSuccess event:", event.data);
+          try {
+            const order = await Orders.findOne({}).sort({ createdAt: -1 });
+            if (!order) {
+              return res.status(404).json({ msg: "Order not found" });
+            }
+            order.paystackWebhook = event.data;
+            await order.save();
+            // Emit the event to all connected clients
+            req.app
+              .get("webhookNamespace")
+              .emit("transactionSuccess", event.data, (error) => {
+                if (error) {
+                  console.error(
+                    "Error emitting transactionSuccess event:",
+                    error
+                  );
+                } else {
+                  console.log("transactionSuccess event emitted successfully");
+                }
+              });
+            // Handle charge success event
+            console.log("Charge successful:", event.data);
+            return res.status(200).json({ msg: "Charge successful" });
+          } catch (databaseError) {
+            console.error("Error updating order in the database:", databaseError);
+            return res
+              .status(500)
+              .json({ msg: "Error updating order in the database" });
+          }
+        } else {
+          // Invalid event type or other conditions
+          console.error("Invalid Paystack event or conditions");
+          return res
+            .status(400)
+            .json({ msg: "Invalid Paystack event or conditions" });
+        }
+      } else {
+        // Signatures do not match
+        console.error("Signatures do not match");
+        return res.status(400).json({ msg: "Signatures do not match" });
+      }
+    } catch (error) {
+      // An error occurred during the processing of the webhook
+      console.error("Error processing webhook:", error);
+      return res
+        .status(500)
+        .json({ msg: "An error occurred while processing the webhook" });
+    }
+  };
 
 
 
@@ -325,109 +335,109 @@ const initializePayment = payStack;
 
 //codeD:
 //payWithPaystackWebhook with web socket handling charge.success and refunds======:
-const crypto = require("crypto");
-const webhook = async (req, res) => {
-  try {
-    const hash = crypto
-      .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-      .update(JSON.stringify(req.body))
-      .digest("hex");
-
-    console.log("Calculated Hash:", hash);
-    console.log("Received Signature:", req.headers["x-paystack-signature"]);
-
-    if (hash === req.headers["x-paystack-signature"]) {
-      const event = req.body;
-      console.log("Received Paystack Webhook Event:", event);
-
-      if (event && event.event === "charge.success") {
-        console.log("Emitting transactionSuccess event:", event.data);
-
-        try {
-          const order = await Orders.findOne({}).sort({ createdAt: -1 });
-          if (!order) {
-            return res.status(404).json({ msg: "Order not found" });
-          }
-          if (order.paymentMethod === "Pay on Delivery") {
-            return;
-          }
-          order.paystackWebhook = event.data;
-          await order.save();
-          console.log("paystackWebhook saved to database");
-
-          req.app.get("webhookNamespace").emit("transactionSuccess", event.data, (error) => {
-            if (error) {
-              console.error("Error emitting transactionSuccess event:", error);
-            } else {
-              console.log("transactionSuccess event emitted successfully");
-            }
-          });
-
-          console.log("Charge successful:", event.data);
-          return res.status(200).json({ msg: "Charge successful" });
-        } catch (databaseError) {
-          console.error("Error updating order in the database:", databaseError);
-          return res.status(500).json({ msg: "Error updating order in the database" });
-        }
-      } else if (event && event.event === "refund.processed") {
-        // Handle refund processed event
-        console.log("Refund processed:", event.data);
-        return res.status(400).json({ msg: 'Error handling refund processed event' });
-      } else if (event && event.event === "refund.pending") {
-        // Handle refund pending event
-        console.log("Refund pending:", event.data);
-        return res.status(400).json({ msg: 'Error handling refund pending event' });
-      } else {
-        console.error("Unexpected Paystack event type:", event.event);
-        return res.status(400).json({ msg: 'Unexpected Paystack event type' });
-      }
-    } else {
-      console.error("Signatures do not match");
-      return res.status(400).json({ msg: "Signatures do not match" });
-    }
-  } catch (error) {
-    console.error("Error processing webhook:", error);
-    return res.status(500).json({ msg: "An error occurred while processing the webhook" });
-  }
-};
-
-//refundOrder
-// const refundOrder = async (req, res) => {
-//   const { paystackTransactionId,amount } = req.body;
-
-//   console.log(paystackTransactionId,amount)
-
-//   if(!paystackTransactionId || !amount){
-//     return res.status(400).json({msg:"Inputs cant be empty"})
-//   };
-//   if(paystackTransactionId.length !== 10){
-//     return res.status(400).json({msg:"Ole Barawu!!!"})
-//   }
-
+// const crypto = require("crypto");
+// const webhook = async (req, res) => {
 //   try {
-//     // a scenerio in which a client gets debited without us getting his order.
-//     const paystackRefundResponse = await axios.post(
-//       'https://api.paystack.co/refund',
-//       { transaction: paystackTransactionId, amount: amount * 100 }, // Paystack expects the amount in kobo
-//       {
-//         headers: {
-//           Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`,
-//           'Content-Type': 'application/json',
-//         },
-//       }
-//     );
-//     console.log("Paystack Refund Response:", paystackRefundResponse);
+//     const hash = crypto
+//       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
+//       .update(JSON.stringify(req.body))
+//       .digest("hex");
 
-//     if (paystackRefundResponse.status === 200) {
-//       res.json({ success: true, msg: 'Refund has been queued for processing' });
+//     console.log("Calculated Hash:", hash);
+//     console.log("Received Signature:", req.headers["x-paystack-signature"]);
+
+//     if (hash === req.headers["x-paystack-signature"]) {
+//       const event = req.body;
+//       console.log("Received Paystack Webhook Event:", event);
+
+//       if (event && event.event === "charge.success") {
+//         console.log("Emitting transactionSuccess event:", event.data);
+
+//         try {
+//           const order = await Orders.findOne({}).sort({ createdAt: -1 });
+//           if (!order) {
+//             return res.status(404).json({ msg: "Order not found" });
+//           }
+//           if (order.paymentMethod === "Pay on Delivery") {
+//             return;
+//           }
+//           order.paystackWebhook = event.data;
+//           await order.save();
+//           console.log("paystackWebhook saved to database");
+
+//           req.app.get("webhookNamespace").emit("transactionSuccess", event.data, (error) => {
+//             if (error) {
+//               console.error("Error emitting transactionSuccess event:", error);
+//             } else {
+//               console.log("transactionSuccess event emitted successfully");
+//             }
+//           });
+
+//           console.log("Charge successful:", event.data);
+//           return res.status(200).json({ msg: "Charge successful" });
+//         } catch (databaseError) {
+//           console.error("Error updating order in the database:", databaseError);
+//           return res.status(500).json({ msg: "Error updating order in the database" });
+//         }
+//       } else if (event && event.event === "refund.processed") {
+//         // Handle refund processed event
+//         console.log("Refund processed:", event.data);
+//         return res.status(400).json({ msg: 'Error handling refund processed event' });
+//       } else if (event && event.event === "refund.pending") {
+//         // Handle refund pending event
+//         console.log("Refund pending:", event.data);
+//         return res.status(400).json({ msg: 'Error handling refund pending event' });
+//       } else {
+//         console.error("Unexpected Paystack event type:", event.event);
+//         return res.status(400).json({ msg: 'Unexpected Paystack event type' });
+//       }
 //     } else {
-//       res.status(400).json({ success: false, msg: 'Refund failed' });
+//       console.error("Signatures do not match");
+//       return res.status(400).json({ msg: "Signatures do not match" });
 //     }
 //   } catch (error) {
-//     res.status(500).json({ success: false, msg: error });
-//     console.log(error);
+//     console.error("Error processing webhook:", error);
+//     return res.status(500).json({ msg: "An error occurred while processing the webhook" });
 //   }
-// }
+// };
+
+//refundOrder
+const refundOrder = async (req, res) => {
+  const { paystackTransactionId,amount } = req.body;
+
+  console.log(paystackTransactionId,amount)
+
+  if(!paystackTransactionId || !amount){
+    return res.status(400).json({msg:"Inputs cant be empty"})
+  };
+  if(paystackTransactionId.length !== 10){
+    return res.status(400).json({msg:"Ole Barawu!!!"})
+  }
+
+  try {
+    // a scenerio in which a client gets debited without us getting his order.
+    const paystackRefundResponse = await axios.post(
+      'https://api.paystack.co/refund',
+      { transaction: paystackTransactionId, amount: amount * 100 }, // Paystack expects the amount in kobo
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    console.log("Paystack Refund Response:", paystackRefundResponse);
+
+    if (paystackRefundResponse.status === 200) {
+      res.json({ success: true, msg: 'Refund has been queued for processing' });
+    } else {
+      res.status(400).json({ success: false, msg: 'Refund failed' });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, msg: error });
+    console.log(error);
+  }
+}
 
 
-module.exports = { initializePayment, webhook};
+module.exports = { initializePayment, webhook, refundOrder };
