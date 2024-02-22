@@ -285,7 +285,7 @@ const crypto = require("crypto");
                 }
               });
             // Handle charge success event
-            console.log("Charge successful:", event.data);
+            console.log("Charge successful...");
             return res.status(200).json({ msg: "Charge successful" });
           } catch (databaseError) {
             console.error("Error updating order in the database:", databaseError);
