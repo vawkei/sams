@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { acceptpayment } from "../../store/paystack/paystackIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
 
+
 const PayWithPaystack = () => {
   const [formValidity, setFormValidity] = useState({
     firstName: true,
@@ -138,6 +139,7 @@ const PayWithPaystack = () => {
       coupon: coupon ? coupon : null,
       orderStatus: "Order Placed",
       paymentMethod:"Pay with Paystack",
+      paystackWebhook:{}, 
       email: user.email,
     };
 
