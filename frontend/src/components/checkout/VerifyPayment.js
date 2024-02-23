@@ -88,7 +88,7 @@ const VerifyPayment = () => {
   console.log(incomingOrder);
   const query = useQuery();
 
-  const webhookData = getWebhookData();
+  
   // const navigateToOrdersHandler = () => {
   //   navigate("/order-history");
   // };
@@ -97,6 +97,9 @@ const VerifyPayment = () => {
     try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
+
+        await new Promise(resolve => setTimeout(resolve, 5000)); 
+        const webhookData = getWebhookData();
 
         const orderWithWebhook = {
           ...incomingOrder,
