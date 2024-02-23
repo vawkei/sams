@@ -139,7 +139,7 @@ const PayWithPaystack = () => {
       coupon: coupon ? coupon : null,
       orderStatus: "Order Placed",
       paymentMethod:"Pay with Paystack",
-      paystackWebhook:{}, 
+      paystackWebhook:[], 
       email: user.email,
     };
 
