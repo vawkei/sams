@@ -278,7 +278,7 @@ const webhook = async (req, res) => {
           // order.paystackWebhook = event.data;
           // await order.save();
           // console.log("paystackWebhook saved to database");
-          setWebhookData(event.data); // Store the webhook data
+          setWebhookData.push(event.data); // Store the webhook data
 
           req.app.get("webhookNamespace").emit("transactionSuccess", event.data, (error) => {
             if (error) {
