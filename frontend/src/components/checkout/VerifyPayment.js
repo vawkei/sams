@@ -1,3 +1,4 @@
+
 // import classes from "./VerifyPayment.module.css";
 // import { useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -73,7 +74,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
-import { getWebhookData } from "../../../../backend/utils/webhookData";
+
+import { getWebhookData } from "../../utils/WebhookUtils";
 // import {toast} from "react-toastify"
 //import Button from "../ui/button/Button";
 function useQuery() {

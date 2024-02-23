@@ -11,3 +11,8 @@ export const getCartQuantityById = (product,id)=>{
 //   const foundProduct = product.find(item => item._id === id);
 //   return foundProduct ? foundProduct.productCartQty : 0;
 // };
+
+
+
+
+// module.exports = { setWebhookData, getWebhookData };
