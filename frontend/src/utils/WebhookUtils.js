@@ -1,7 +1,7 @@
-let webhookData = {};
+let webhookData = [];
 
 const setWebhookData = (data) => {
-  webhookData = data;
+  webhookData.push(data);
 };
 
 const getWebhookData = () => {
