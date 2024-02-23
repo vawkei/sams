@@ -245,7 +245,7 @@ const initializePayment = payStack;
 
 
 const crypto = require("crypto");
-// const webhook = (req, res) => {
+
 const webhook = async (req, res) => {
   try {
     const hash = crypto
