@@ -6,7 +6,9 @@ const Orders = require("../models/orders");
 
 const callbackUrl = "https://your-backend-url.com/paystack-callback"; // Replace with your actual backend URL. this is for card payment
 
-const { setWebhookData } = require("../utils/webhookData");
+// const { setWebhookData } = require("../utils/webhookData");
+
+const {setWebhookData} = require("../../frontend/src/utils/WebhookUtils")
 
 
 const payStack = {
