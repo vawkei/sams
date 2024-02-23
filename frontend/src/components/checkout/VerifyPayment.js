@@ -1,4 +1,3 @@
-
 // import classes from "./VerifyPayment.module.css";
 // import { useEffect } from "react";
 // import { useDispatch, useSelector } from "react-redux";
@@ -66,6 +65,9 @@
 
 // export default VerifyPayment;
 
+
+
+
 //from my previous commit========================================================
 import classes from "./VerifyPayment.module.css";
 import { useEffect } from "react";
@@ -74,8 +76,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
-
-import { getWebhookData } from "../../utils/WebhookUtils";
 // import {toast} from "react-toastify"
 //import Button from "../ui/button/Button";
 function useQuery() {
@@ -87,8 +87,6 @@ const VerifyPayment = () => {
   const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
   const query = useQuery();
-
-  
   // const navigateToOrdersHandler = () => {
   //   navigate("/order-history");
   // };
@@ -97,24 +95,17 @@ const VerifyPayment = () => {
     try {
       if (reference) {
         await dispatch(verifypayment({ reference }));
-
-        await new Promise(resolve => setTimeout(resolve, 5000)); 
-        const webhookData = getWebhookData();
-
-        const orderWithWebhook = {
-          ...incomingOrder,
-          paystackWebhook: webhookData,
-        };
-
-        await dispatch(createOrder(orderWithWebhook));
+        await dispatch(createOrder(incomingOrder));
 
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
+        
 
-        const clearer = setTimeout(() => {
+        const clearer = setTimeout(()=>{
           navigate("/checkout");
-        }, 8000);
-        return () => clearTimeout(clearer);
+        },8000)
+        return ()=>clearTimeout(clearer)
+
       } else {
         console.log("No reference found");
         throw new Error("No reference found");
