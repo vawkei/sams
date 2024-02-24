@@ -247,13 +247,11 @@ const initializePayment = payStack;
 
 // 2 parents 703a2a8 + bdfe4dd
 // commit b4494b8
-const crypto = require("crypto");
-
 const webhook = async (req, res) => {
   try {
     const hash = crypto
+      .createHmac("sha512", process.env.PAYSTACK_LIVE_SECRET_KEY)
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-   
       .update(JSON.stringify(req.body)) // Stringify the object to create a hash
       .digest("hex");
 
@@ -316,9 +314,6 @@ const webhook = async (req, res) => {
       .json({ msg: "An error occurred while processing the webhook" });
   }
 };
-
-
-
 
 
 
