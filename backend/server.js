@@ -30,13 +30,13 @@ const io = socketIo(httpServer, {
   // autoConnect:false,
 });
 
-// Import and initialize express-session here
-// const session = require("express-session");
-// const MongoDBStore = require("connect-mongodb-session")(session);
-// const store = new MongoDBStore({
-//   uri: process.env.MONGO_URI,
-//   collection: "sessions",
-// });
+//Import and initialize express-session here
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  collection: "sessions",
+});
 
 // rest of the packages
 
@@ -74,15 +74,15 @@ webhookNamespace.on("connection", (socket) => {
 
 app.use(cookieParser());
 
-// app.use(
-//   session({
-//     secret: process.env.EXPRESS_SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     store: store,
-//     cookie: { secure: false }, // Set secure to true if you're using HTTPS
-//   })
-// );
+app.use(
+  session({
+    secret: process.env.EXPRESS_SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+    cookie: { secure: false }, // Set secure to true if you're using HTTPS
+  })
+);
 
 app.use("/api/v1/paystack", paystackRoute);
 //note: we put the paystackRoute above the express.json() cuz we dont want the express.json() applied to it, since we will be using a webhook for the paystackRoute.

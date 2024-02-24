@@ -34,7 +34,7 @@ const payStack = {
       });
       console.log("AcceptPayment respnse:", paystackResponse);
 
-      // req.session.transactionReference = paystackResponse.data.data.reference;
+       req.session.transactionReference = paystackResponse.data.data.reference;
       res.status(200).json({
         paymentUrl: paystackResponse.data.data.authorization_url,
         ref: paystackResponse.data.data.reference,
@@ -47,8 +47,8 @@ const payStack = {
 
   //VerifyPayment controller==========================================================:
   verifyPayment: async (req, res) => {
-    // const referenceFrmDBackend = req.session.transactionReference;
-    // console.log("Received referenceBackend:", referenceFrmDBackend);
+     const referenceFrmDBackend = req.session.transactionReference;
+     console.log("Received referenceBackend:", referenceFrmDBackend);
 
     const { reference } = req.body;
     console.log("Received reference:", reference);
