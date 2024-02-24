@@ -34,7 +34,7 @@ const payStack = {
       });
       console.log("AcceptPayment respnse:", paystackResponse);
 
-       req.session.transactionReference = paystackResponse.data.data.reference;
+      // req.session.transactionReference = paystackResponse.data.data.reference;
       res.status(200).json({
         paymentUrl: paystackResponse.data.data.authorization_url,
         ref: paystackResponse.data.data.reference,
@@ -47,8 +47,8 @@ const payStack = {
 
   //VerifyPayment controller==========================================================:
   verifyPayment: async (req, res) => {
-     const referenceFrmDBackend = req.session.transactionReference;
-     console.log("Received referenceBackend:", referenceFrmDBackend);
+    // const referenceFrmDBackend = req.session.transactionReference;
+    // console.log("Received referenceBackend:", referenceFrmDBackend);
 
     const { reference } = req.body;
     console.log("Received reference:", reference);
@@ -247,17 +247,13 @@ const initializePayment = payStack;
 
 // 2 parents 703a2a8 + bdfe4dd
 // commit b4494b8
-
-//today
-// 1 parent bdfe4dd
-// commit 526d46f
 const crypto = require("crypto");
 
 const webhook = async (req, res) => {
   try {
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-      
+   
       .update(JSON.stringify(req.body)) // Stringify the object to create a hash
       .digest("hex");
 

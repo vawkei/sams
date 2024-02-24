@@ -100,7 +100,7 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.orders);
-  console.log(orders);
+  console.log(orders.slice(0,10));
   const [transactionData, setTransactionData] = useState(null);
   useEffect(() => {
     const getorders = async () => {

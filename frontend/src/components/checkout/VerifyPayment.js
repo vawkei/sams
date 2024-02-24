@@ -116,7 +116,7 @@ const VerifyPayment = () => {
   };
   useEffect(() => {
     submitHandler();
-  }, [navigate]);
+  }, []);
   return (
     <div className={classes["verification"]}>
       <h2>Payment Verified</h2>
