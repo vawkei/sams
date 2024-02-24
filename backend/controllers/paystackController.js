@@ -257,7 +257,7 @@ const webhook = async (req, res) => {
   try {
     const hash = crypto
       .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
-   
+      
       .update(JSON.stringify(req.body)) // Stringify the object to create a hash
       .digest("hex");
 
