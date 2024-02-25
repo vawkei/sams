@@ -278,15 +278,20 @@ const webhook = async (req, res) => {
           );
           console.log("These are the details of current user:", currentUser);
 
-          const paystackResponse = {
-            //surname: currentUser.surname,
-          };
-          const webhook = await Webhooks.create({
-            event: event.data,
-            firstName: currentUser[0].name,
-            createdBy: currentUser[0]._id,
-            cartItems: currentUser.cartItems,
-          });
+        
+          console.log("firstname1:",currentUser.name,);
+          console.log("createdBy1:",currentUser._id,);
+          console.log("cartItems1:", currentUser.cartItems,)
+          console.log("firstname:",currentUser[0].name,);
+          console.log("createdBy:",currentUser[0]._id,);
+          console.log("cartItems2:", currentUser[0].cartItems,)
+          return
+          // const webhook = await Webhooks.create({
+          //   event: event.data,
+          //   firstName: currentUser[0].name,
+          //   createdBy: currentUser[0]._id,
+          //   cartItems: currentUser.cartItems,
+          // });
           console.log("created and saved webhook to db:", webhook);
           console.log("firstname:",currentUser[0].name,);
           console.log("createdBy:",currentUser._id,);
