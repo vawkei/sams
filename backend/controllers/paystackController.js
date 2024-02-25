@@ -12,10 +12,10 @@ const payStack = {
     //request body from the client:
     const email = req.body.email;
     const amount = req.body.amount;
-    const first_name = req.body.firstName;
-    const last_name = surname;
+    const firstName = req.body.firstName;
+    const surname = req.body.surname;
 
-    if (!email || !amount) {
+    if (!email || !amount || !firstName || !surname) {
       res.status(400).json({ msg: "EMAIL and AMOUNT is needed" });
       return;
     }
@@ -23,8 +23,8 @@ const payStack = {
     const params = JSON.stringify({
       email: email,
       amount: amount * 100,
-      first_name:first_name,
-      last_name:last_name
+      first_name:firstName,
+      last_name:surname
     });
 
     const paystackApiEndpoint =
