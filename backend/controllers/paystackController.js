@@ -279,13 +279,14 @@ const webhook = async (req, res) => {
           console.log("These are the details of current user:", currentUser);
 
           const paystackResponse = {
+            //surname: currentUser.surname,
+          };
+          const webhook = await Webhooks.create({
             event: event.data,
             firstName: currentUser.name,
-            //surname: currentUser.surname,
             createdBy: currentUser._id,
-            cartItems:currentUser.cartItems
-          };
-          const webhook = await Webhooks.create({paystackResponse});
+            cartItems: currentUser.cartItems,
+          });
           console.log("created and saved webhook to db:", webhook);
 
           // Emit the event to all connected clients
