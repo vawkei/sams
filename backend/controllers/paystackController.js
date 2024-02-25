@@ -290,7 +290,6 @@ const webhook = async (req, res) => {
             email:currentUser.email,
             createdBy: currentUser._id,
             cartItems: currentUser.cartItems,
-            timeReceived: new Date().toDateString(),
             dateReceived : new Date()
           });
           console.log("created and saved webhook to db:", webhook);
