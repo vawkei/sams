@@ -15,7 +15,7 @@ const payStack = {
     const firstName = req.body.firstName;
     const surname = req.body.surname;
 
-    if (!email || !amount || !firstName || !surname) {
+    if (!email || !amount) {
       res.status(400).json({ msg: "EMAIL and AMOUNT is needed" });
       return;
     }
