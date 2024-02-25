@@ -96,15 +96,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../../store/order/orderIndex";
 import Button from "../ui/button/Button"
 import io from "socket.io-client";
+import { getWebhookEvent } from "../../store/paystack/paystackIndex";
+
+
 const Checkout = () => {
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   const orders = useSelector((state) => state.order.orders);
   console.log(orders.slice(0,10));
+  
+  const webhookResponse = useSelector((state)=>state.paystack.webhookResponse)
+  console.log(webhookResponse)
+
   const [transactionData, setTransactionData] = useState(null);
+  
+  
   useEffect(() => {
     const getorders = async () => {
       await dispatch(getOrders());
+      await dispatch(getWebhookEvent())
 
     };
     const clearer = setTimeout(async() => {
