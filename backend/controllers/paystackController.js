@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const Orders = require("../models/orders");
 
-const callbackUrl = "https://your-backend-url.com/paystack-callback"; // Replace with your actual backend URL. this is for card payment
+const Webhooks = require("../models/webhooks");
 
 const payStack = {
   //acceptPayment controller=========================================================:
@@ -242,11 +242,7 @@ const initializePayment = payStack;
 //   }
 // };
 
-
-
-
-// 2 parents 703a2a8 + bdfe4dd
-// commit b4494b8
+//goingtestagain 1 parent bdfe4dd commit 526d46f
 const crypto = require("crypto");
 const webhook = async (req, res) => {
   try {
@@ -267,12 +263,23 @@ const webhook = async (req, res) => {
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
         try {
-          const order = await Orders.findOne({}).sort({ createdAt: -1 });
-          if (!order) {
-            return res.status(404).json({ msg: "Order not found" });
-          }
-          order.paystackWebhook = event.data;
-          await order.save();
+          const order = await Orders.find({});
+          // if (!order) {
+          //   return res.status(404).json({ msg: "Order not found" });
+          // }
+          // order.paystackWebhook = event.data;
+          // await order.save();
+          const paystackResponse = {
+            event: event.data,
+            firstName: order.firstName,
+            surname: order.surname,
+            cartItems: order.cartItems,
+            orderDate:order.orderDate,
+            createdBy: order.createdBy,
+          };
+          const webhook = await Webhooks.create(paystackResponse);
+          console.log("created and saved webhook to db:", webhook);
+
           // Emit the event to all connected clients
           req.app
             .get("webhookNamespace")
@@ -288,7 +295,9 @@ const webhook = async (req, res) => {
             });
           // Handle charge success event
           console.log("Charge successful:", event.data);
-          return res.status(200).json({ msg: "Charge successful" });
+          return res
+            .status(200)
+            .json({ msg: "Charge successful", webhook: webhook });
         } catch (databaseError) {
           console.error("Error updating order in the database:", databaseError);
           return res
@@ -315,9 +324,6 @@ const webhook = async (req, res) => {
       .json({ msg: "An error occurred while processing the webhook" });
   }
 };
-
-
-
 
 //codeD:
 //payWithPaystackWebhook with web socket handling charge.success and refunds======:
@@ -389,41 +395,40 @@ const webhook = async (req, res) => {
 
 //refundOrder
 const refundOrder = async (req, res) => {
-  const { paystackTransactionId,amount } = req.body;
+  const { paystackTransactionId, amount } = req.body;
 
-  console.log(paystackTransactionId,amount)
+  console.log(paystackTransactionId, amount);
 
-  if(!paystackTransactionId || !amount){
-    return res.status(400).json({msg:"Inputs cant be empty"})
-  };
-  if(paystackTransactionId.length !== 10){
-    return res.status(400).json({msg:"Ole Barawu!!!"})
+  if (!paystackTransactionId || !amount) {
+    return res.status(400).json({ msg: "Inputs cant be empty" });
+  }
+  if (paystackTransactionId.length !== 10) {
+    return res.status(400).json({ msg: "Ole Barawu!!!" });
   }
 
   try {
     // a scenerio in which a client gets debited without us getting his order.
     const paystackRefundResponse = await axios.post(
-      'https://api.paystack.co/refund',
+      "https://api.paystack.co/refund",
       { transaction: paystackTransactionId, amount: amount * 100 }, // Paystack expects the amount in kobo
       {
         headers: {
           Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       }
     );
     console.log("Paystack Refund Response:", paystackRefundResponse);
 
     if (paystackRefundResponse.status === 200) {
-      res.json({ success: true, msg: 'Refund has been queued for processing' });
+      res.json({ success: true, msg: "Refund has been queued for processing" });
     } else {
-      res.status(400).json({ success: false, msg: 'Refund failed' });
+      res.status(400).json({ success: false, msg: "Refund failed" });
     }
   } catch (error) {
     res.status(500).json({ success: false, msg: error });
     console.log(error);
   }
-}
-
+};
 
 module.exports = { initializePayment, webhook, refundOrder };
