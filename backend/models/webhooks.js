@@ -21,13 +21,16 @@ const webhookSchema = mongoose.Schema({
     // },
     cartItems:{
         type:[Object],
+    },
+    timeReceived:{
+        type:Date,
+        required:[true,"enter time received"]
+    },
+    dateReceived:{
+        type:Date,
+        required:[true,"enter date received"]
     }
 
-    // createdBy:{
-    //     type:mongoose.Types.ObjectId,
-    //     ref:"user",
-    //    // required:[true,"Please provide user"]
-    // }
 },{timestamps:true});
 
 module.exports = mongoose.model("webhooks",webhookSchema)
