@@ -10,11 +10,15 @@ const webhookSchema = mongoose.Schema({
         trim:true,
         required:[true,"Please insert name"]
     },
-    createdBy:{
+    email:{
         type:String,
-        trim:true,
-        required:[true,"Please insert name"]
+        required:[true,"enter email"]
     },
+    // createdBy:{
+    //     type:String,
+    //     trim:true,
+    //     required:[true,"Please insert name"]
+    // },
     cartItems:{
         type:[Object],
     }
