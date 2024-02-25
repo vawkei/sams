@@ -2,7 +2,7 @@ const https = require("https");
 
 const axios = require("axios");
 
-const Users = require("../models/user")
+const Users = require("../models/user");
 
 const Orders = require("../models/orders");
 
@@ -25,8 +25,8 @@ const payStack = {
     const params = JSON.stringify({
       email: email,
       amount: amount * 100,
-      first_name:firstName,
-      last_name:surname
+      first_name: firstName,
+      last_name: surname,
     });
 
     const paystackApiEndpoint =
@@ -270,20 +270,20 @@ const webhook = async (req, res) => {
       if (event && event.event === "charge.success") {
         console.log("Emitting transactionSuccess event:", event.data);
         try {
-          const order = await Orders.find({});
-        
-          // if (!order) {
-          //   return res.status(404).json({ msg: "Order not found" });
-          // }
-          // order.paystackWebhook = event.data;
-          // await order.save();
+          // const order = await Orders.find({});
+          const users = await Users.find({});
+
+          const currentUser = users.filter(
+            (user) => user.email === event.data.customer.email
+          );
+          console.log("These are the details of current user:", currentUser);
+
           const paystackResponse = {
             event: event.data,
-            firstName: order.firstName,
-            surname: order.surname,
-            // cartItems: order.cartItems,
-            //orderDate:order.orderDate,
-            createdBy: event.data.customer.firstName,
+            firstName: currentUser.name,
+            surname: currentUser.surname,
+            createdBy: currentUser.email,
+            cartItems:currentUser.cartItems
           };
           const webhook = await Webhooks.create(paystackResponse);
           console.log("created and saved webhook to db:", webhook);

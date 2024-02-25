@@ -5,12 +5,25 @@ const webhookSchema = mongoose.Schema({
         type:[Object],
         required:[true,"Webhook needed"]
     },
+    firstName:{
+        type:String,
 
+    },
+    surname:{
+        type:String
+    },
     createdBy:{
-        type:mongoose.Types.ObjectId,
-        ref:"user",
-       // required:[true,"Please provide user"]
+        type:String
+    },
+    cartItems:{
+        type:[Object]
     }
+
+    // createdBy:{
+    //     type:mongoose.Types.ObjectId,
+    //     ref:"user",
+    //    // required:[true,"Please provide user"]
+    // }
 },{timestamps:true});
 
 module.exports = mongoose.model("webhooks",webhookSchema)
