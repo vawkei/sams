@@ -337,7 +337,23 @@ const webhook = async (req, res) => {
   }
 };
 
-//refundOrder
+//getWebhookEvent=================================================================:
+const getWebhookEvent = async(req,res)=>{
+  try{
+
+    const webhooks = await Webhooks.find({})
+
+    if(!webhooks){
+      return res.status(404).json({msg:"No webhooks"})
+    };
+
+    res.status(200).json({webhooks})
+  }catch(error){
+    res.status(500).json({msg:"Some sh!t went wrong"})
+  }
+}
+
+//refundOrder=====================================================================:
 const refundOrder = async (req, res) => {
   const { paystackTransactionId, amount } = req.body;
 
@@ -375,4 +391,4 @@ const refundOrder = async (req, res) => {
   }
 };
 
-module.exports = { initializePayment, webhook, refundOrder };
+module.exports = { initializePayment, webhook,getWebhookEvent,refundOrder };

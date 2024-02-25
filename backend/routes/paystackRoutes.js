@@ -5,7 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 const {authenticateUser,adminOnly} = require("../middlewares/authenticate-user");
-const {initializePayment,webhook, refundOrder} = require("../controllers/paystackController");
+const {initializePayment,webhook,getWebhookEvent, refundOrder} = require("../controllers/paystackController");
 
 //paystack routes
 router.post("/acceptpayment", express.json(), initializePayment.acceptPayment);
@@ -16,17 +16,11 @@ router.post("/charge",express.json(), initializePayment.initiateCardPayment);
 
 router.post("/refundOrder",express.json(),authenticateUser,adminOnly, refundOrder)
 
-// router.post(
-//   "/webhook",,
-//   express.raw({ type: "application/json" }),
-//   webhook
-// );
+//to post/send the webhook from paystack, router.post()
+router.post("/webhook",express.json(),webhook);
 
-router.post(
-  "/webhook",
-  express.json(),
-  webhook
-);
+//we have got the webhook in our db, to get it to our server
+router.get("/getWebhookEvent",express.json(),getWebhookEvent);
 
 module.exports = router;
 //=============================codeA stops here====================================
@@ -47,41 +41,3 @@ module.exports = router;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//codeB
-// const express = require("express");
-// const router = express.Router();
-// const {
-//   initializePayment,
-//   webhook,
-// } = require("../controllers/paystackController");
-
-// module.exports = () => {
-//   router.post(
-//     "/acceptpayment",
-//     express.json(),
-//     initializePayment.acceptPayment
-//   );
-//   router.post(
-//     "/verifypayment",
-//   
