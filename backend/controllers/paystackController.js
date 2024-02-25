@@ -283,12 +283,12 @@ const webhook = async (req, res) => {
           };
           const webhook = await Webhooks.create({
             event: event.data,
-            firstName: currentUser.name,
-            createdBy: currentUser._id,
+            firstName: currentUser[0].name,
+            createdBy: currentUser[0]._id,
             cartItems: currentUser.cartItems,
           });
           console.log("created and saved webhook to db:", webhook);
-          console.log("firstname:",currentUser.name,);
+          console.log("firstname:",currentUser[0].name,);
           console.log("createdBy:",currentUser._id,);
           // Emit the event to all connected clients
           req.app
