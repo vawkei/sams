@@ -271,7 +271,7 @@ const webhook = async (req, res) => {
         console.log("Emitting transactionSuccess event:", event.data);
         try {
           // const order = await Orders.find({});
-          const users = await Users.find({});
+          const users = await Users.find({}).select("-password");
 
           const currentUser = users.filter(
             (user) => user.email === event.data.customer.email
@@ -281,11 +281,11 @@ const webhook = async (req, res) => {
           const paystackResponse = {
             event: event.data,
             firstName: currentUser.name,
-            surname: currentUser.surname,
-            createdBy: currentUser.email,
+            //surname: currentUser.surname,
+            createdBy: currentUser._id,
             cartItems:currentUser.cartItems
           };
-          const webhook = await Webhooks.create(paystackResponse);
+          const webhook = await Webhooks.create({paystackResponse});
           console.log("created and saved webhook to db:", webhook);
 
           // Emit the event to all connected clients
