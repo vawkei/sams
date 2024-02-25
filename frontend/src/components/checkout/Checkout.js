@@ -110,7 +110,7 @@ const Checkout = () => {
   const webhookResponse = useSelector((state)=>state.paystack.webhookResponse)
   console.log(webhookResponse)
 
-  const [transactionData, setTransactionData] = useState(null);
+  // const [transactionData, setTransactionData] = useState(null);
   
   
   useEffect(() => {
@@ -127,35 +127,35 @@ const Checkout = () => {
   
   }, [dispatch]);
 
-  useEffect(() => {
-    // const socket = io(process.env.REACT_APP_BACKEND_URL);
-    const socket = io(
-      `${process.env.REACT_APP_BACKEND_URL}/api/v1/paystack/webhook`,
-      {
-        path: "/api/v1/paystack/webhook",
-        // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
-      }
-    );
-    socket.on("connect", () => {
-      console.log("Connected to WebSocket server");
-      // Set up event listener after the connection is established
-      socket.on("transactionSuccess", (transactionData) => {
-        console.log("Transaction successful:", transactionData);
-        console.log("Received transactionSuccess event:", transactionData);
-        setTransactionData(transactionData);
-      });
-    });
-    socket.on("connect_error", (error) => {
-      console.error("Connection error:", error);
-    });
-    socket.on("disconnect", () => {
-      console.log("Disconnected from WebSocket server");
-    });
-    // Clean up the effect
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  // useEffect(() => {
+  //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
+  //   const socket = io(
+  //     `${process.env.REACT_APP_BACKEND_URL}/api/v1/paystack/webhook`,
+  //     {
+  //       path: "/api/v1/paystack/webhook",
+  //       // The path is part of the URL used to establish the Socket.IO connection. It helps route the connection to the appropriate namespace
+  //     }
+  //   );
+  //   socket.on("connect", () => {
+  //     console.log("Connected to WebSocket server");
+  //     // Set up event listener after the connection is established
+  //     socket.on("transactionSuccess", (transactionData) => {
+  //       console.log("Transaction successful:", transactionData);
+  //       console.log("Received transactionSuccess event:", transactionData);
+  //       setTransactionData(transactionData);
+  //     });
+  //   });
+  //   socket.on("connect_error", (error) => {
+  //     console.error("Connection error:", error);
+  //   });
+  //   socket.on("disconnect", () => {
+  //     console.log("Disconnected from WebSocket server");
+  //   });
+  //   // Clean up the effect
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
   const navigateHandler = () => {
     navigate("/order-history");
   };
@@ -163,7 +163,7 @@ const Checkout = () => {
     <div className={classes["checkout-container"]}>
       <h2>Checkout Successful</h2>
       <p>Thank you for your purchase</p>
-      <p>Transaction Data: {JSON.stringify(transactionData)}</p>
+      <p>Transaction Data: {JSON.stringify(webhookResponse)}</p>
       {/* <p>{webhookResponse}</p> */}
       <Button onClick={navigateHandler}>Go to Order History</Button>
     </div>
