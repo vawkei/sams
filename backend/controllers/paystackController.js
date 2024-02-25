@@ -2,6 +2,8 @@ const https = require("https");
 
 const axios = require("axios");
 
+const Users = require("../models/user")
+
 const Orders = require("../models/orders");
 
 const Webhooks = require("../models/webhooks");
@@ -269,6 +271,7 @@ const webhook = async (req, res) => {
         console.log("Emitting transactionSuccess event:", event.data);
         try {
           const order = await Orders.find({});
+        
           // if (!order) {
           //   return res.status(404).json({ msg: "Order not found" });
           // }
@@ -279,8 +282,8 @@ const webhook = async (req, res) => {
             firstName: order.firstName,
             surname: order.surname,
             // cartItems: order.cartItems,
-            orderDate:order.orderDate,
-            createdBy: order.createdBy,
+            //orderDate:order.orderDate,
+            createdBy: event.data.customer.firstName,
           };
           const webhook = await Webhooks.create(paystackResponse);
           console.log("created and saved webhook to db:", webhook);

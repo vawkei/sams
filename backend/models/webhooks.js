@@ -8,8 +8,8 @@ const webhookSchema = mongoose.Schema({
 
     createdBy:{
         type:mongoose.Types.ObjectId,
-        ref:"orders",
-        required:[true,"Please provide user"]
+        ref:"user",
+       // required:[true,"Please provide user"]
     }
 },{timestamps:true});
 
