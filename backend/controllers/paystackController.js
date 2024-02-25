@@ -273,19 +273,17 @@ const webhook = async (req, res) => {
           // const order = await Orders.find({});
           const users = await Users.find({}).select("-password");
 
-          const currentUser = users.filter(
+          const currentUser = users.find(
             (user) => user.email === event.data.customer.email
           );
           console.log("These are the details of current user:", currentUser);
 
-          const paystackResponse = {
-            //surname: currentUser.surname,
-          };
           const webhook = await Webhooks.create({
             event: event.data,
-            firstName: currentUser.name,
-            createdBy: currentUser._id,
-            cartItems: currentUser.cartItems,
+            firstName: currentUser && currentUser.name ? currentUser.name : "",
+            email: currentUser && currentUser.email ? currentUser.email : "",
+            cartItems:
+              currentUser && currentUser.cartItems ? currentUser.cartItems : "",
           });
           console.log("created and saved webhook to db:", webhook);
 
