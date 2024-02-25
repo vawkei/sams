@@ -19,7 +19,7 @@ const verifypayment = async(reference)=>{
 
 //getWebhookEvent:
 const getWebhookEvent = async()=>{
-    const response = await axios.get(API_URL + "webhook");
+    const response = await axios.get(API_URL + "getWebhookEvent");
     return response.data;
 };
 
