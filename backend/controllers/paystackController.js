@@ -278,15 +278,18 @@ const webhook = async (req, res) => {
           );
           console.log("These are the details of current user:", currentUser);
 
+          const paystackResponse = {
+            //surname: currentUser.surname,
+          };
           const webhook = await Webhooks.create({
             event: event.data,
-            firstName: currentUser && currentUser.name ? currentUser.name : "",
-            email: currentUser && currentUser.email ? currentUser.email : "",
-            cartItems:
-              currentUser && currentUser.cartItems ? currentUser.cartItems : "",
+            firstName: currentUser.name,
+            createdBy: currentUser._id,
+            cartItems: currentUser.cartItems,
           });
           console.log("created and saved webhook to db:", webhook);
-
+          console.log("firstname:",currentUser.name,);
+          console.log("createdBy:",currentUser._id,);
           // Emit the event to all connected clients
           req.app
             .get("webhookNamespace")
@@ -301,7 +304,7 @@ const webhook = async (req, res) => {
               }
             });
           // Handle charge success event
-          console.log("Charge successful:", event.data);
+          //console.log("Charge successful:", event.data);
           return res
             .status(200)
             .json({ msg: "Charge successful", webhook: webhook });
