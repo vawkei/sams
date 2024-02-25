@@ -12,6 +12,9 @@ const payStack = {
     //request body from the client:
     const email = req.body.email;
     const amount = req.body.amount;
+    const first_name = req.body.firstName;
+    const last_name = surname;
+
     if (!email || !amount) {
       res.status(400).json({ msg: "EMAIL and AMOUNT is needed" });
       return;
@@ -20,6 +23,8 @@ const payStack = {
     const params = JSON.stringify({
       email: email,
       amount: amount * 100,
+      first_name:first_name,
+      last_name:last_name
     });
 
     const paystackApiEndpoint =
@@ -273,7 +278,7 @@ const webhook = async (req, res) => {
             event: event.data,
             firstName: order.firstName,
             surname: order.surname,
-            cartItems: order.cartItems,
+            // cartItems: order.cartItems,
             orderDate:order.orderDate,
             createdBy: order.createdBy,
           };
