@@ -94,11 +94,11 @@ const createOrder = async (req, res) => {
 const updateOrderWebhook =async (req,res)=>{
 
   const {webhookResponse} = req.body;
-  console.log(req.body);
-  console.log(webhookResponse);
+  console.log("This is the webhook:",req.body);
+  console.log("This is the webhook:",webhookResponse);
 
   if(!webhookResponse){
-    return res.status(404).json("No webhook response found")
+    return res.status(404).json({msg:"No webhook response found"})
   }
   
   try{
