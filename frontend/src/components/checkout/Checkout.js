@@ -167,8 +167,9 @@ const Checkout = () => {
   //no.1
   useEffect(() => {
     const getorders = async () => {
-      // await dispatch(getOrders());
+      await dispatch(getOrders());
       await dispatch(getWebhookEvent());
+      
       await dispatch(clearCart());
     };
 

@@ -94,13 +94,23 @@ const createOrder = async (req, res) => {
 const updateOrderWebhook =async (req,res)=>{
 
   const {webhookResponse} = req.body;
+  console.log(req.body);
   console.log(webhookResponse);
 
+  if(!webhookResponse){
+    return res.status(404).json("No webhook response found")
+  }
+  
   try{
 
-    // const order = await Order.findOne({}).sort({ createdAt: - 1 });
-    // order.paystackWebhook = webhookResponse;
-    // await order.save()
+    const currentUsersMostRecentOrder = await Order.findOne({createdBy:req.user.userId}).sort("-createdAt");
+
+    if(!currentUsersMostRecentOrder){
+      return res.status(404).json("no recent order for current user")
+    }
+
+    currentUsersMostRecentOrder.paystackWebhook = webhookResponse;
+    await currentUsersMostRecentOrder.save()
 
     res.status(200).json({msg:"paystack webhook updated"})
   }catch(error){
