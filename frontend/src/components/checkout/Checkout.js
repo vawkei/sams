@@ -161,7 +161,7 @@ const Checkout = () => {
   const webhookResponse = useSelector((state) => state.paystack.webhookResponse);
   console.log(webhookResponse);
 
-  // const [transactionData, setTransactionData] = useState(null);
+  // const [transactionData, setTransactionData] = useSate(null);
 
 
   //no.1
