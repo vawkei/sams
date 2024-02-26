@@ -11,7 +11,7 @@ const createOrder = async (formData) => {
 
 //updateOrderWebhook:
 const updateOrderWebhook = async (webhookResponse) => {
-  const response = await axios.post(API_URL, + "webhookResponse", webhookResponse);
+  const response = await axios.post(API_URL, + "updateOrderWebhook", webhookResponse);
   return response.data;
 };
 
