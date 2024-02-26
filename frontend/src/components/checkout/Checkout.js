@@ -169,7 +169,7 @@ const Checkout = () => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      
+      await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
       await dispatch(clearCart());
     };
 
@@ -181,16 +181,16 @@ const Checkout = () => {
   }, [dispatch]);
 
   //no.2
-  useEffect(() => {
-    const updateorderwebhook = async () => {
-      await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
-    };
+  // useEffect(() => {
+  //   const updateorderwebhook = async () => {
+  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
+  //   };
 
-    const clearer = setTimeout(async () => {
-      await updateorderwebhook();
-    }, 8000);
-    return () => clearTimeout(clearer);
-  }, [dispatch]);
+  //   const clearer = setTimeout(async () => {
+  //     await updateorderwebhook();
+  //   }, 8000);
+  //   return () => clearTimeout(clearer);
+  // }, [dispatch]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
