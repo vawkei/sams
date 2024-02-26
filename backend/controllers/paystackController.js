@@ -341,7 +341,7 @@ const webhook = async (req, res) => {
 const getWebhookEvent = async(req,res)=>{
   try{
 
-    const webhooks = await Webhooks.findOne({}).sort({ createdAt:-1 })
+    const webhooks = await Webhooks.findOne({}).sort(" createdAt:-1 ")
 
     if(!webhooks){
       return res.status(404).json({msg:"No webhooks"})
