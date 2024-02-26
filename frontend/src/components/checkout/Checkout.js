@@ -172,7 +172,7 @@ const Checkout = () => {
       <p>Thank you for your purchase</p>
       <p>Transaction Data: {JSON.stringify(webhookResponse)}</p>
       {/* <p>{webhookResponse}</p> */}
-      <Button onClick={navigateHandler}>Go to Order History</Button>
+      <Button onClick={navigateHandler} className={classes.btn}>Go to Order History</Button>
     </div>
   );
 };
