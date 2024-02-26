@@ -5,6 +5,7 @@ import classes from "./PayWithPaystack.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { acceptpayment } from "../../store/paystack/paystackIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
+import { clearCart } from "../../store";
 
 const PayWithPaystack = () => {
   const [formValidity, setFormValidity] = useState({
@@ -146,6 +147,8 @@ const PayWithPaystack = () => {
     dispatch(
       checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
     );
+
+    await dispatch(clearCart());
 
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));
