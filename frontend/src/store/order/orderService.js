@@ -10,6 +10,12 @@ const createOrder =async (formData)=>{
     return response.data
 };
 
+//updateOrderWebhook:
+const updateOrderWebhook = async(webhookResponse)=>{
+    const response = await axios.post(API_URL,webhookResponse);
+    return response.data
+};
+
 //getAdminOrders:
 const getAdminOrders = async()=>{
     const response = await axios.get(API_URL + "getAdminOrders");
@@ -33,6 +39,6 @@ const updateOrderStatus = async(id,formData)=>{
     return response.data
 };
 
-const orderService = {createOrder,getAdminOrders,getOrders,getSingleOrder,updateOrderStatus};
+const orderService = {createOrder,updateOrderWebhook,getAdminOrders,getOrders,getSingleOrder,updateOrderStatus};
 
 export default orderService;

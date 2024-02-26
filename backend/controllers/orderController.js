@@ -88,7 +88,27 @@ const createOrder = async (req, res) => {
   //res.send("createOrders route");
 };
 
-//getAdminOrders:=====================================================================
+
+
+//updateOrderWebkook:==============================================================
+const updateOrderWebhook =async (req,res)=>{
+
+  const {webhookResponse} = req.body;
+  console.log(webhookResponse);
+
+  try{
+
+    const order = await Order.findOne({createdBy:req.user.userId}).sort({ createdAt: - 1 });
+    order.paystackWebhook = webhookResponse;
+    await order.save()
+
+    res.status(200).json({msg:"paystack webhook updated"})
+  }catch(error){
+    res.status(500).json({msg:error.message})
+  }
+}
+
+//getAdminOrders:==================================================================
 const getAdminOrders = async (req, res) => {
   const { userId } = req.user;
   //console.log(userId);
@@ -215,6 +235,7 @@ const updateOrderStatus = async (req, res) => {
 
 module.exports = {
   createOrder,
+  updateOrderWebhook,
   getAdminOrders,
   getOrders,
   getSingleOrder,
