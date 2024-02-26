@@ -94,19 +94,13 @@ const createOrder = async (req, res) => {
 const updateOrderWebhook =async (req,res)=>{
 
   const {webhookResponse} = req.body;
-  console.log("This is the webhook response:",webhookResponse);
-
-  if(!webhookResponse){
-    return res.status(404).json({msg:"webhook response not found!"})
-  }
-
-  
+  console.log(webhookResponse);
 
   try{
 
-    const order = await Order.findOne({createdBy:req.user.userId}).sort({ createdAt: - 1 });
-    order.paystackWebhook = webhookResponse;
-    await order.save()
+    // const order = await Order.findOne({}).sort({ createdAt: - 1 });
+    // order.paystackWebhook = webhookResponse;
+    // await order.save()
 
     res.status(200).json({msg:"paystack webhook updated"})
   }catch(error){
