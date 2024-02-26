@@ -122,18 +122,18 @@ const Checkout = () => {
   }, [dispatch]);
 
   //no.2
-  useEffect(() => {
-    const updateorderwebhook = async () => {
+  // useEffect(() => {
+  //   const updateorderwebhook = async () => {
 
-      await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
-    };
+  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
+  //   };
 
-    const clearer = setTimeout(async () => {
-      await updateorderwebhook();
-    }, 6000);
+  //   const clearer = setTimeout(async () => {
+  //     await updateorderwebhook();
+  //   }, 6000);
     
-    return () => clearTimeout(clearer);
-  }, [dispatch]);
+  //   return () => clearTimeout(clearer);
+  // }, [dispatch]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
