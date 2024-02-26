@@ -99,6 +99,8 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const orders = useSelector((state) => state.order.orders);
+  console.log(orders.slice(0, 10));
 
   const webhookResponse = useSelector(
     (state) => state.paystack.webhookResponse
@@ -110,30 +112,29 @@ const Checkout = () => {
 
   //no.1
   useEffect(() => {
-    const getwebhookevent = async () => {
+    const getorders = async () => {
+      await dispatch(getOrders());
       await dispatch(getWebhookEvent());
     };
 
     const clearer = setTimeout(async () => {
-      await getwebhookevent();
-    }, 3000);
+      await getorders();
+    }, 5000);
 
     return () => clearTimeout(clearer);
   }, [dispatch]);
 
   //no.2
-  // useEffect(() => {
-  //   const updateorderwebhook = async () => {
+  useEffect(() => {
+    const updateorderwebhook = async () => {
+      await dispatch(updateOrderWebhook({webhookResponse}));
+    };
 
-  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
-  //   };
-
-  //   const clearer = setTimeout(async () => {
-  //     await updateorderwebhook();
-  //   }, 6000);
-    
-  //   return () => clearTimeout(clearer);
-  // }, [dispatch]);
+    const clearer = setTimeout(async () => {
+      await updateorderwebhook();
+    }, 8000);
+    return () => clearTimeout(clearer);
+  }, [dispatch]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -173,7 +174,7 @@ const Checkout = () => {
       <p>Thank you for your purchase</p>
       <p>Transaction Data: {JSON.stringify(webhookResponse)}</p>
       {/* <p>{webhookResponse}</p> */}
-      <Button onClick={navigateHandler} className={classes.btn}>Go to Order History</Button>
+      <Button onClick={navigateHandler}>Go to Order History</Button>
     </div>
   );
 };
