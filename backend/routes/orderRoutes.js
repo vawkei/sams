@@ -16,7 +16,7 @@ const {
 } = require("../middlewares/authenticate-user");
 
 router.post("/", authenticateUser, createOrder);
-router.post("/updateOrderWebkook", authenticateUser, updateOrderWebhook);
+router.patch("/updateOrderWebkook", authenticateUser, updateOrderWebhook);
 router.get("/getAdminOrders", authenticateUser, adminOnly, getAdminOrders);
 router.get("/", authenticateUser, getOrders);
 router.get("/:id", authenticateUser, getSingleOrder);
