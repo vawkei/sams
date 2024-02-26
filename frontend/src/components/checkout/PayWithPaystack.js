@@ -148,7 +148,7 @@ const PayWithPaystack = () => {
       checkoutDetailsFormActions.SAVE_CHECKOUT_DETAILS_DATA({ formData })
     );
 
-    await dispatch(clearCart());
+   //await dispatch(clearCart());
 
     try {
       const transactionReference = await dispatch(acceptpayment(paymentData));
