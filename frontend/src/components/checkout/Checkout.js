@@ -111,7 +111,7 @@ const Checkout = () => {
   );
   console.log(webhookResponse);
 
-  // const [transactionData, setTransactionData] = useSate(null);
+  // const [transactionData, setTransactionData] = useState(null);
 
   //no.1
   useEffect(() => {
