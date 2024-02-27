@@ -169,7 +169,7 @@ const Checkout = () => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
+      await dispatch(updateOrderWebhook({webhookResponse}));
       await dispatch(clearCart());
     };
 
