@@ -20,7 +20,7 @@ router.post("/refundOrder",express.json(),authenticateUser,adminOnly, refundOrde
 router.post("/webhook",express.json(),webhook);
 
 //we have got the webhook in our db, to get it to our server
-router.get("/getWebhookEvent",express.json(),getWebhookEvent);
+router.get("/getWebhookEvent",express.json(), authenticateUser, getWebhookEvent);
 
 module.exports = router;
 //=============================codeA stops here====================================
