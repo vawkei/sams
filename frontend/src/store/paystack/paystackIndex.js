@@ -136,6 +136,7 @@ const paystackSlice = createSlice({
       .addCase(getWebhookEvent.fulfilled,(state,action)=>{
         state.isLoading = false;
         state.webhookResponse = action.payload.webhooks;
+        state.message = action.payload.msg;
         console.log(action.payload)
       })
       .addCase(getWebhookEvent.rejected,(state,action)=>{

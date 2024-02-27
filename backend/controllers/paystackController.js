@@ -276,12 +276,16 @@ const webhook = async (req, res) => {
           const currentUser = users.find(
             (user) => user.email === event.data.customer.email
           );
+          if(!currentUser){
+            return res.status(404).json({msg:"Must be current user"})
+          };
+
           console.log("These are the details of current user:", currentUser);
 
-          console.log("firstname1:", currentUser.name);
-          console.log("email1:", currentUser.email);
-          console.log("createdBy1:", currentUser._id);
-          console.log("cartItems1:", currentUser.cartItems);
+          console.log("firstname:", currentUser.name);
+          console.log("email:", currentUser.email);
+          console.log("createdBy:", currentUser._id);
+          console.log("cartItems:", currentUser.cartItems);
 
           const webhook = await Webhooks.create({
             event: event.data,
@@ -341,13 +345,13 @@ const webhook = async (req, res) => {
 const getWebhookEvent = async(req,res)=>{
   try{
 
-    const webhooks = await Webhooks.findOne({}).sort(" createdAt:-1 ")
+    const webhooks = await Webhooks.findOne({createdBy:req.user.userId}).sort(" - createdAt")
 
     if(!webhooks){
       return res.status(404).json({msg:"No webhooks"})
     };
 
-    res.status(200).json({webhooks})
+    res.status(200).json({webhooks:webhooks,msg:"fetched webhooks successfully"})
   }catch(error){
     res.status(500).json({msg:"Some sh!t went wrong"})
   }
