@@ -85,61 +85,6 @@
 // //     at n.value (polling.js:320:14)
 // //     at polling.js:294:30
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //from my previous commit========================================================
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
@@ -158,18 +103,22 @@ const Checkout = () => {
   const orders = useSelector((state) => state.order.orders);
   console.log(orders.slice(0, 10));
 
-  const webhookResponse = useSelector((state) => state.paystack.webhookResponse);
+  const message = useSelector((state)=>state.paystack.message);
+  console.log(message);
+
+  const webhookResponse = useSelector(
+    (state) => state.paystack.webhookResponse
+  );
   console.log(webhookResponse);
 
   // const [transactionData, setTransactionData] = useSate(null);
-
 
   //no.1
   useEffect(() => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      await dispatch(updateOrderWebhook({webhookResponse}));
+      await dispatch(updateOrderWebhook({ webhookResponse }));
       await dispatch(clearCart());
     };
 
@@ -181,16 +130,16 @@ const Checkout = () => {
   }, [dispatch]);
 
   //no.2
-  // useEffect(() => {
-  //   const updateorderwebhook = async () => {
-  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
-  //   };
-
-  //   const clearer = setTimeout(async () => {
-  //     await updateorderwebhook();
-  //   }, 8000);
-  //   return () => clearTimeout(clearer);
-  // }, [dispatch]);
+  useEffect(() => {
+    if (message === "fetched webhooks successfully") {
+      const updateorderwebhook = async () => {
+        await dispatch(
+          updateOrderWebhook({ webhookResponse: webhookResponse })
+        );
+      };
+      updateorderwebhook();
+    }
+  }, [dispatch,message]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -235,4 +184,3 @@ const Checkout = () => {
   );
 };
 export default Checkout;
-
