@@ -341,17 +341,19 @@ const webhook = async (req, res) => {
   }
 };
 
+    
 //getWebhookEvent=================================================================:
 const getWebhookEvent = async(req,res)=>{
   try{
 
-    const webhooks = await Webhooks.findOne({createdBy:req.user.userId}).sort(" - createdAt")
+    const webhooks = await Webhooks.findOne({}).sort({ createdAt:-1 })
+    // const webhooks = await Webhooks.findOne({createdBy:req.user.userId}).sort(" - createdAt")
 
     if(!webhooks){
       return res.status(404).json({msg:"No webhooks"})
     };
 
-    res.status(200).json({webhooks:webhooks,msg:"fetched webhooks successfully"})
+    res.status(200).json({webhooks})
   }catch(error){
     res.status(500).json({msg:"Some sh!t went wrong"})
   }

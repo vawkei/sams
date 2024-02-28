@@ -85,6 +85,61 @@
 // //     at n.value (polling.js:320:14)
 // //     at polling.js:294:30
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //from my previous commit========================================================
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
@@ -103,22 +158,18 @@ const Checkout = () => {
   const orders = useSelector((state) => state.order.orders);
   console.log(orders.slice(0, 10));
 
-  const message = useSelector((state)=>state.paystack.message);
-  console.log(message);
-
-  const webhookResponse = useSelector(
-    (state) => state.paystack.webhookResponse
-  );
+  const webhookResponse = useSelector((state) => state.paystack.webhookResponse);
   console.log(webhookResponse);
 
-  // const [transactionData, setTransactionData] = useState(null);
+  // const [transactionData, setTransactionData] = useSate(null);
+
 
   //no.1
   useEffect(() => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      // await dispatch(updateOrderWebhook({ webhookResponse }));
+      //await dispatch(updateOrderWebhook(webhookResponse));
       await dispatch(clearCart());
     };
 
@@ -127,19 +178,23 @@ const Checkout = () => {
     }, 5000);
 
     return () => clearTimeout(clearer);
-  }, [dispatch]);
+  }, [dispatch,webhookResponse]);
 
-  //no.2
-  useEffect(() => {
-    if (message === "fetched webhooks successfully") {
-      const updateorderwebhook = async () => {
-        await dispatch(
-          updateOrderWebhook({ webhookResponse: webhookResponse })
-        );
-      };
-      updateorderwebhook();
-    }
-  }, [dispatch,message]);
+  
+  
+  const message = useSelector((state)=>state.paystack.message);
+  console.log(message);
+  
+  // useEffect(() => {
+  //   if (message === "fetched webhooks successfully") {
+  //     const updateorderwebhook = async () => {
+  //       await dispatch(
+  //         updateOrderWebhook({ webhookResponse: webhookResponse })
+  //       );
+  //     };
+  //     updateorderwebhook();
+  //   }
+  // }, [dispatch,message]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -184,3 +239,4 @@ const Checkout = () => {
   );
 };
 export default Checkout;
+
