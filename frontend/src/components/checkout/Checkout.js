@@ -181,20 +181,20 @@ const Checkout = () => {
   }, [dispatch,webhookResponse]);
 
   
-  
+  // the network is terrible
   const message = useSelector((state)=>state.paystack.message);
   console.log(message);
   
-  // useEffect(() => {
-  //   if (message === "fetched webhooks successfully") {
-  //     const updateorderwebhook = async () => {
-  //       await dispatch(
-  //         updateOrderWebhook({ webhookResponse: webhookResponse })
-  //       );
-  //     };
-  //     updateorderwebhook();
-  //   }
-  // }, [dispatch,message]);
+  useEffect(() => {
+    if (message === "fetched webhooks successfully") {
+      const updateorderwebhook = async () => {
+        await dispatch(
+          updateOrderWebhook({ webhookResponse: webhookResponse })
+        );
+      };
+      updateorderwebhook();
+    }
+  }, [dispatch,message]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
