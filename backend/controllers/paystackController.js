@@ -352,10 +352,10 @@ const getWebhookEvent = async(req,res)=>{
     if(!webhooks){
       return res.status(404).json({msg:"No webhooks"})
     };
-
-    res.status(200).json({webhooks})
+    console.log("This is the webhook from getWebhookEvent:",webhooks)
+    res.status(200).json({webhooks:webhooks})
   }catch(error){
-    res.status(500).json({msg:"Some sh!t went wrong"})
+    res.status(500).json({msg:"Cant understand what went wrong"})
   }
 }
 

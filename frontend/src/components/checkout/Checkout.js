@@ -145,7 +145,7 @@ import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, updateOrderWebhook } from "../../store/order/orderIndex";
+import { getOrders, } from "../../store/order/orderIndex";
 import Button from "../ui/button/Button";
 import io from "socket.io-client";
 import { getWebhookEvent } from "../../store/paystack/paystackIndex";
@@ -169,7 +169,7 @@ const Checkout = () => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      //await dispatch(updateOrderWebhook(webhookResponse));
+      
       await dispatch(clearCart());
     };
 
@@ -178,23 +178,19 @@ const Checkout = () => {
     }, 5000);
 
     return () => clearTimeout(clearer);
-  }, [dispatch,webhookResponse]);
+  }, [dispatch]);
 
-  
-  // the network is terrible
-  const message = useSelector((state)=>state.paystack.message);
-  console.log(message);
-  
-  useEffect(() => {
-    if (message === "fetched webhooks successfully") {
-      const updateorderwebhook = async () => {
-        await dispatch(
-          updateOrderWebhook({ webhookResponse: webhookResponse })
-        );
-      };
-      updateorderwebhook();
-    }
-  }, [dispatch,message]);
+  // //no.2
+  // useEffect(() => {
+  //   const updateorderwebhook = async () => {
+  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
+  //   };
+
+  //   const clearer = setTimeout(async () => {
+  //     await updateorderwebhook();
+  //   }, 8000);
+  //   return () => clearTimeout(clearer);
+  // }, [dispatch]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -239,4 +235,3 @@ const Checkout = () => {
   );
 };
 export default Checkout;
-
