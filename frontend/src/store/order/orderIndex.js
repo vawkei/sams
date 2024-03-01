@@ -26,16 +26,16 @@ export const createOrder = createAsyncThunk(
     }
 );
 //updateOrderWebhook:
-// export const updateOrderWebhook = createAsyncThunk(
-//     "orders/updateOrderWebhook",async(webhookResponse,thunkAPI)=>{
-//         try{
-//             return await orderService.updateOrderWebhook(webhookResponse)
-//         }catch(error){
-//             const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
-//             return thunkAPI.rejectWithValue(message) 
-//         }
-//     }
-// );
+export const updateOrderWebhook = createAsyncThunk(
+    "orders/updateOrderWebhook",async(webhookResponse,thunkAPI)=>{
+        try{
+            return await orderService.updateOrderWebhook(webhookResponse)
+        }catch(error){
+            const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
+            return thunkAPI.rejectWithValue(message) 
+        }
+    }
+);
 
 //getAdminOrders:
 export const getAdminOrders = createAsyncThunk(
@@ -122,20 +122,20 @@ const orderSlice = createSlice({
             toast.error(action.payload,{position:"top-left"})
         })
         //updateOrderWebhook:
-        // .addCase(updateOrderWebhook.pending,(state)=>{
-        //     state.isLoading = true
-        // })
-        // .addCase(updateOrderWebhook.fulfilled,(state,action)=>{
-        //     state.isLoading = false;
-        //     console.log(action.payload);
-        //     toast.success(action.payload.msg)
-        // })
-        // .addCase(updateOrderWebhook.rejected,(state,action)=>{
-        //     state.isLoading=false;
-        //     state.isError = true;
-        //     console.log(action.payload)
-        //     toast.error(action.payload)
-        // })
+        .addCase(updateOrderWebhook.pending,(state)=>{
+            state.isLoading = true
+        })
+        .addCase(updateOrderWebhook.fulfilled,(state,action)=>{
+            state.isLoading = false;
+            console.log(action.payload);
+            toast.success(action.payload.msg)
+        })
+        .addCase(updateOrderWebhook.rejected,(state,action)=>{
+            state.isLoading=false;
+            state.isError = true;
+            console.log(action.payload)
+            toast.error(action.payload)
+        })
         // getAdminOrders:
         .addCase(getAdminOrders.pending,(state)=>{
             state.isLoading = true
