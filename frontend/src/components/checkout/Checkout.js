@@ -145,7 +145,7 @@ import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, } from "../../store/order/orderIndex";
+import { getOrders, updateOrderWebhook, } from "../../store/order/orderIndex";
 import Button from "../ui/button/Button";
 import io from "socket.io-client";
 import { getWebhookEvent } from "../../store/paystack/paystackIndex";
@@ -156,7 +156,10 @@ const Checkout = () => {
   const dispatch = useDispatch();
 
   const orders = useSelector((state) => state.order.orders);
+  const message = useSelector((state) => state.paystack.message);
+  
   console.log(orders.slice(0, 10));
+  console.log(message);
 
   const webhookResponse = useSelector((state) => state.paystack.webhookResponse);
   console.log(webhookResponse);
@@ -181,16 +184,16 @@ const Checkout = () => {
   }, [dispatch]);
 
   // //no.2
-  // useEffect(() => {
-  //   const updateorderwebhook = async () => {
-  //     await dispatch(updateOrderWebhook({webhookResponse:webhookResponse}));
-  //   };
-
-  //   const clearer = setTimeout(async () => {
-  //     await updateorderwebhook();
-  //   }, 8000);
-  //   return () => clearTimeout(clearer);
-  // }, [dispatch]);
+  useEffect(() => {
+    if (message === "fetched webhooks successfully") {
+      const updateorderwebhook = async () => {
+        await dispatch(
+          updateOrderWebhook({ webhookResponse: webhookResponse })
+        );
+      };
+      updateorderwebhook();
+    }
+  }, [dispatch,message]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -230,7 +233,7 @@ const Checkout = () => {
       <p>Thank you for your purchase</p>
       <p>Transaction Data: {JSON.stringify(webhookResponse)}</p>
       {/* <p>{webhookResponse}</p> */}
-      <Button onClick={navigateHandler}>Go to Order History</Button>
+      <Button onClick={navigateHandler} className={classes.btn}>Go to Order History</Button>
     </div>
   );
 };

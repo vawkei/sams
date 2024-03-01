@@ -91,32 +91,32 @@ const createOrder = async (req, res) => {
 
 
 //updateOrderWebkook:==============================================================
-// const updateOrderWebhook =async (req,res)=>{
+const updateOrderWebhook =async (req,res)=>{
 
-//   const {webhookResponse} = req.body;
-//   console.log("This is the webhook1:",req.body);
-//   console.log("This is the webhook2:",webhookResponse);
+  const {webhookResponse} = req.body;
+  console.log("This is the webhook1:",req.body);
+  console.log("This is the webhook2:",webhookResponse);
 
-//   if(!webhookResponse){
-//     return res.status(404).json({msg:"No webhook response found"})
-//   }
+  if(!webhookResponse){
+    return res.status(404).json({msg:"No webhook response found"})
+  }
   
-//   try{
+  try{
 
-//     const currentUsersMostRecentOrder = await Order.findOne({createdBy:req.user.userId}).sort("-createdAt");
+    const currentUsersMostRecentOrder = await Order.findOne({createdBy:req.user.userId}).sort("-createdAt");
 
-//     if(!currentUsersMostRecentOrder){
-//       return res.status(404).json("no recent order for current user")
-//     }
+    if(!currentUsersMostRecentOrder){
+      return res.status(404).json("no recent order for current user")
+    }
 
-//     currentUsersMostRecentOrder.paystackWebhook = webhookResponse;
-//     await currentUsersMostRecentOrder.save()
+    currentUsersMostRecentOrder.paystackWebhook = webhookResponse;
+    await currentUsersMostRecentOrder.save()
 
-//     res.status(200).json({msg:"paystack webhook updated"})
-//   }catch(error){
-//     res.status(500).json({msg:error.message})
-//   }
-// }
+    res.status(200).json({msg:"paystack webhook updated"})
+  }catch(error){
+    res.status(500).json({msg:error.message})
+  }
+}
 
 //getAdminOrders:==================================================================
 const getAdminOrders = async (req, res) => {
@@ -245,7 +245,7 @@ const updateOrderStatus = async (req, res) => {
 
 module.exports = {
   createOrder,
-  // updateOrderWebhook,
+  updateOrderWebhook,
   getAdminOrders,
   getOrders,
   getSingleOrder,
