@@ -85,67 +85,12 @@
 // //     at n.value (polling.js:320:14)
 // //     at polling.js:294:30
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //from my previous commit========================================================
 import classes from "./Checkout.module.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrders, updateOrderWebhook, } from "../../store/order/orderIndex";
+import { getOrders, updateOrderWebhook } from "../../store/order/orderIndex";
 import Button from "../ui/button/Button";
 import io from "socket.io-client";
 import { getWebhookEvent } from "../../store/paystack/paystackIndex";
@@ -155,24 +100,28 @@ const Checkout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [showButton, setShowButton] = useState(false);
+
   const orders = useSelector((state) => state.order.orders);
   const message = useSelector((state) => state.paystack.message);
-  
+  const updateOrderMessage = useSelector((state)=>state.order.message)
+
   console.log(orders.slice(0, 10));
   console.log(message);
 
-  const webhookResponse = useSelector((state) => state.paystack.webhookResponse);
+  const webhookResponse = useSelector(
+    (state) => state.paystack.webhookResponse
+  );
   console.log(webhookResponse);
 
   // const [transactionData, setTransactionData] = useSate(null);
-
 
   //no.1
   useEffect(() => {
     const getorders = async () => {
       await dispatch(getOrders());
       await dispatch(getWebhookEvent());
-      
+
       await dispatch(clearCart());
     };
 
@@ -193,7 +142,14 @@ const Checkout = () => {
       };
       updateorderwebhook();
     }
-  }, [dispatch,message]);
+  }, [dispatch, message]);
+
+
+  useEffect(()=>{
+    if(updateOrderMessage === "paystack webhook updated"){
+        setShowButton(true)
+    }
+  },[updateOrderMessage]);
 
   // useEffect(() => {
   //   // const socket = io(process.env.REACT_APP_BACKEND_URL);
@@ -233,7 +189,9 @@ const Checkout = () => {
       <p>Thank you for your purchase</p>
       <p>Transaction Data: {JSON.stringify(webhookResponse)}</p>
       {/* <p>{webhookResponse}</p> */}
-      <Button onClick={navigateHandler} className={classes.btn}>Go to Order History</Button>
+      {showButton && <Button onClick={navigateHandler} className={classes.btn}>
+        Go to Order History
+      </Button>}
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify"
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "../../store";
+import { couponSliceActions } from "../../store/coupon/couponIndex";
 
 const PayOnDelivery = () => {
   const [formValidity, setFormValidity] = useState({
@@ -138,6 +139,7 @@ const PayOnDelivery = () => {
       if (message === "Order created") {
         localStorage.setItem("cartItems", JSON.stringify([]));
         dispatch(cartSliceActions.RESET_CART());
+        dispatch(couponSliceActions.REMOVE_COUPON());
   
         await dispatch(clearCart());
         navigate("/checkout-ondelivery");

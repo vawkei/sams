@@ -127,6 +127,7 @@ const orderSlice = createSlice({
         })
         .addCase(updateOrderWebhook.fulfilled,(state,action)=>{
             state.isLoading = false;
+            state.message = action.payload.msg
             console.log(action.payload);
             toast.success(action.payload.msg)
         })
