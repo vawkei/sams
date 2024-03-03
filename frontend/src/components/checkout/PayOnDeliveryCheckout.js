@@ -1,3 +1,4 @@
+import Button from "../ui/button/Button";
 import classes from "./Checkout.module.css";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +15,7 @@ const PayOnDeliveryCheckout = () => {
           <h2>Checkout Successful</h2>
           <p>Thank you for your purchase</p>
           <p>You will get your items shortly</p>
-          <button onClick={navigateHandler}>Go to Order History</button>
+          <Button onClick={navigateHandler} className={classes.btn}>Go to Order History</Button>
         </div>
     
      );

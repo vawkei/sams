@@ -109,6 +109,10 @@ const updateOrderWebhook =async (req,res)=>{
       return res.status(404).json("no recent order for current user")
     }
 
+    if(req.user.userId !== webhookResponse.createdBy){
+      return res.status(401).json({msg:"user ids don't match"})
+    }
+
     currentUsersMostRecentOrder.paystackWebhook = webhookResponse;
     await currentUsersMostRecentOrder.save()
 
