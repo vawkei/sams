@@ -35,7 +35,7 @@ const payStack = {
     try {
       const paystackResponse = await axios.post(paystackApiEndpoint, params, {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`, //secret key from the dashboard
+          Authorization: `Bearer ${process.env.PAYSTACK_LIVE_SECRET_KEY}`, //secret key from the dashboard
           "Content-Type": "application/json",
         },
       });
@@ -67,7 +67,7 @@ const payStack = {
         `https://api.paystack.co/transaction/verify/${reference}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`, //secret key from the dashboard
+            Authorization: `Bearer ${process.env.PAYSTACK_LIVE_SECRET_KEY}`, //secret key from the dashboard
           },
         }
       );
@@ -104,7 +104,7 @@ const payStack = {
 
       const paystackResponse = await axios.post(paystackApiEndpoint, params, {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_API_KEY}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_LIVE_SECRET_KEY}`,
           "Content-Type": "application/json",
         },
       });
@@ -255,7 +255,7 @@ const webhook = async (req, res) => {
   try {
     const hash = crypto
 
-      .createHmac("sha512", process.env.PAYSTACK_TEST_SECRET_KEY)
+      .createHmac("sha512", process.env.PAYSTACK_LIVE_SECRET_KEY)
       .update(JSON.stringify(req.body)) // Stringify the object to create a hash
       .digest("hex");
 
@@ -379,7 +379,7 @@ const refundOrder = async (req, res) => {
       { transaction: paystackTransactionId, amount: amount * 100 }, // Paystack expects the amount in kobo
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_TEST_SECRET_KEY}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_LIVE_SECRET_KEY}`,
           "Content-Type": "application/json",
         },
       }

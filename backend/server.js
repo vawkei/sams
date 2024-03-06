@@ -20,15 +20,25 @@ const httpServer = http.createServer(app);
 const corsOptions = {
   origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
   methods: ["GET", "POST"],
-  allowedHeaders: ["my-custom-header"],
+  allowedHeaders: ["Content-Type", "Authorization","my-custom-header"],
   credentials: true,
 };
 const io = socketIo(httpServer, {
   cors: corsOptions,
-  path:"/api/v1/paystack/webhook",
+  // path: "/api/v1/orders/",
   // transports:["websocket"],
   // autoConnect:false,
 });
+
+io.on("connection", (socket) => {
+  console.log("Socket is active");
+
+  socket.on("newlyCreatedOrder", (data) => {
+    console.log('newlyCreatedOrder:', data);
+  });
+});
+
+module.exports = {io};
 
 //Import and initialize express-session here
 const session = require("express-session");
@@ -42,10 +52,8 @@ const store = new MongoDBStore({
 
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
-//const webhookNamespace = io.of("/webhook");
-
-const webhookNamespace = io.of("/api/v1/paystack/webhook");
-app.set('webhookNamespace', webhookNamespace);
+// const webhookNamespace = io.of("/api/v1/paystack/webhook");
+// app.set('webhookNamespace', webhookNamespace);
 
 const paystackRoute = require("./routes/paystackRoutes");
 const userRoute = require("./routes/userRoutes");
@@ -64,13 +72,12 @@ app.use(
   })
 );
 
-webhookNamespace.on("connection", (socket) => {
-  console.log("Client connected to /webhook namespace");
-  socket.on("transactionSuccess", (data) => {
-    console.log('Received "someEvent" in /webhook namespace:', data);
-  });
-});
-
+// webhookNamespace.on("connection", (socket) => {
+//   console.log("Client connected to /webhook namespace");
+//   socket.on("transactionSuccess", (data) => {
+//     console.log('Received "someEvent" in /webhook namespace:', data);
+//   });
+// });
 
 app.use(cookieParser());
 
@@ -152,16 +159,6 @@ const start = async () => {
 };
 
 start();
-
-
-
-
-
-
-
-
-
-
 
 //======== This is the one before deployment: Use this in DEVELOPMENT MODE=======//
 
