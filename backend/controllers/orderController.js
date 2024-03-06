@@ -2,6 +2,7 @@ const Order = require("../models/orders");
 const User = require("../models/user");
 const { orderSuccessEmail } = require("../emailTemplates/orderTemplates");
 const sendEmail = require("../utils/sendEmail");
+const {io} = require("../server")
 
 const { updateProductQuantity } = require("../utils/index");
 
@@ -47,9 +48,9 @@ const createOrder = async (req, res) => {
   if ( firstName !== user.name ) {
     return res.status(404).json({ msg: "invalid credentials" });
   };
-  if(residentialAddress !== user.address){
-    return res.status(404).json({msg: "invalid credentials"})
-  }
+  // if(residentialAddress !== user.address){
+  //   return res.status(404).json({msg: "invalid credentials"})
+  // }
 
   const orderData = {
     firstName,
@@ -72,6 +73,10 @@ const createOrder = async (req, res) => {
     const order = await Order.create(orderData);
     await updateProductQuantity(cartItems);
 
+    console.log("Start Emitting the newly Created Order...")
+    io.emit("newlyCreatedOrder",order)
+    console.log("Finished Emitting the newly Created Order...")
+
     //send order email to user:
     const subject = "New order placed. sams";
     const send_to = user.email;
@@ -80,7 +85,7 @@ const createOrder = async (req, res) => {
 
     await sendEmail(subject, send_to, template, reply_to);
 
-    res.status(201).json({ msg: "Order created", order });
+    res.status(201).json({ msg: "Order created", order:order });
   } catch (error) {
     console.log(error);
     res.status(500).json({ msg: error.message });

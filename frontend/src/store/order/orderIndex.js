@@ -7,6 +7,7 @@ const initialOrderState = {
     orders:[],
     adminOrders:[],
     incomingOrder:{},
+    newlyCreatedOrder:[],
     message:"",
     isSuccess:false,
     isError:false,
@@ -111,6 +112,7 @@ const orderSlice = createSlice({
             state.isLoading = false;
             state.isSuccess = true;
             state.message=action.payload.msg;
+            // state.newlyCreatedOrder = action.payload.order;
             console.log(action.payload);
             toast.success(action.payload.msg,{position:"top-left"})
         })

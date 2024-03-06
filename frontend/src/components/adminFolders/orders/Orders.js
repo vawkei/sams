@@ -20,6 +20,7 @@ const Orders = () => {
 
   useEffect(() => {
     dispatch(getAdminOrders());
+    localStorage.setItem("newlyCreatedOrder",0)
   }, [dispatch]);
 
   //Pagination stuff:
