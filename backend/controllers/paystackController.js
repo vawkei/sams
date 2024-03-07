@@ -296,19 +296,6 @@ const webhook = async (req, res) => {
             dateReceived: new Date(),
           });
           console.log("created and saved webhook to db:", webhook);
-          // Emit the event to all connected clients
-          req.app
-            .get("webhookNamespace")
-            .emit("transactionSuccess", event.data, (error) => {
-              if (error) {
-                console.error(
-                  "Error emitting transactionSuccess event:",
-                  error
-                );
-              } else {
-                console.log("transactionSuccess event emitted successfully");
-              }
-            });
           // Handle charge success event
           //console.log("Charge successful:", event.data);
           return res
