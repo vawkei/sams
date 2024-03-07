@@ -7,7 +7,7 @@ const initialOrderState = {
     orders:[],
     adminOrders:[],
     incomingOrder:{},
-    newlyCreatedOrder:[],
+    newOrderCount:0,
     message:"",
     isSuccess:false,
     isError:false,
@@ -100,7 +100,15 @@ const orderSlice = createSlice({
             state.isLoading = false;
             state.isError = false;
             state.isSuccess = false
-        }   
+        } ,
+        ADD_NEW_ORDER_COUNT(state){
+            state.newOrderCount += 1;
+            localStorage.setItem("newlyCreatedOrder",state.newOrderCount)
+        },
+        REMOVE_NEW_ORDER_COUNT(state){
+            state.newOrderCount = 0;
+            localStorage.setItem("newlyCreatedOrder",state.newOrderCount)
+        }  
     },
     extraReducers(builder){
         builder

@@ -3,7 +3,7 @@ import Button from "../ui/button/Button";
 import Card from "../ui/card/Card";
 import classes from "./PayWithPaystack.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { createOrder } from "../../store/order/orderIndex";
+import { createOrder, orderSliceActions } from "../../store/order/orderIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
 import { cartSliceActions } from "../../store/cart/cartIndex";
 import { useNavigate } from "react-router-dom";
@@ -144,6 +144,7 @@ const PayOnDelivery = () => {
         await dispatch(clearCart());
         navigate("/checkout-ondelivery");
       }
+      dispatch(orderSliceActions.RESET_ORDER_STATE())
     };
   
     handleOrderCreated();
@@ -151,14 +152,6 @@ const PayOnDelivery = () => {
   
   const onCancel = () => {};
 
-  //   let time = 2000;
-  //   let clearIntervalP;
-  //   useEffect(() => {
-  //     clearIntervalP = setInterval(() => {
-  //       setShowP((prev) => !prev);
-  //     }, time);
-  //     return () => clearInterval(clearIntervalP);
-  //   }, [showP]);
 
   return (
     <div className={classes.container}>
