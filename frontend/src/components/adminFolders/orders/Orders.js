@@ -22,7 +22,7 @@ const Orders = () => {
 
   useEffect(() => {
     dispatch(getAdminOrders());
-    // dispatch(orderSliceActions.REMOVE_NEW_ORDER_COUNT())
+    dispatch(orderSliceActions.REMOVE_NEW_ORDER_COUNT())
   }, [dispatch]);
 
   //Pagination stuff:
