@@ -265,7 +265,7 @@ const webhook = async (req, res) => {
     if (hash === req.headers["x-paystack-signature"]) {
       // Retrieve the request's body:
       const event = req.body; // req.body is now a JavaScript object
-      console.log("Received Paystack Webhook Event:", event);
+      //console.log("Received Paystack Webhook Event:", event);
 
       // Do something with the event:
       if (event && event.event === "charge.success") {
@@ -334,7 +334,7 @@ const getWebhookEvent = async (req, res) => {
     //const webhooks = await Webhooks.findOne({}).sort({ createdAt:-1 })
     const webhooks = await Webhooks.findOne({
       createdBy: req.user.userId,
-    }).sort(" - createdAt");
+    }).sort("-createdAt");
 
     if (!webhooks) {
       return res.status(404).json({ msg: "No webhooks" });
