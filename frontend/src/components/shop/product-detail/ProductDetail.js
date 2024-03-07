@@ -32,6 +32,7 @@ const ProductDetail = () => {
 
   const { product, message, isLoading } = useSelector((state) => state.product);
   console.log(product);
+  
 
   const { user } = useSelector((state) => state.auth);
   console.log(user);
@@ -156,7 +157,9 @@ const ProductDetail = () => {
                               <b>{rating.name}</b>
                             </h3>
                             <div className={classes.actionOne}>
-                              <Button
+                              {rating.userId === user?._id ?(
+                                <>
+                                  <Button
                                 className={classes.btn}
                                 onClick={() =>
                                   deleteReviewHandler(product._id)
@@ -168,6 +171,9 @@ const ProductDetail = () => {
                                 onClick={showEditFormHandler}>
                                 Edit review
                               </Button>
+                                </>
+                              ):("")}
+                              
                             </div>
                             {/*=====editForm starts here==================================== */}
                             {showEditForm && (

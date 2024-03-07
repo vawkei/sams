@@ -1,5 +1,5 @@
 import "./Orders.css";
-import { getAdminOrders } from "../../../store/order/orderIndex";
+import { getAdminOrders, orderSliceActions } from "../../../store/order/orderIndex";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +9,12 @@ const Orders = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.order.adminOrders);
-  console.log(orders);
+  //console.log(orders);
   const filteredProducts = orders;
 
   const isLoading = useSelector((state) => state.order.isLoading);
+
+  
 
   const orderStatusHandler = (id) => {
     navigate(`/admin/order-details/${id}`);
@@ -20,7 +22,7 @@ const Orders = () => {
 
   useEffect(() => {
     dispatch(getAdminOrders());
-    localStorage.setItem("newlyCreatedOrder",0)
+    dispatch(orderSliceActions.REMOVE_NEW_ORDER_COUNT())
   }, [dispatch]);
 
   //Pagination stuff:

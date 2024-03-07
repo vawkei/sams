@@ -92,7 +92,7 @@ app.use(
 );
 
 app.use("/api/v1/paystack", paystackRoute);
-//note: we put the paystackRoute above the express.json() cuz we dont want the express.json() applied to it, since we will be using a webhook for the paystackRoute.
+//note: we put the paystackRoute above the express.json() cuz we dont want the express.json() applied to it, since we will be using a webhook for the paystackRoute.//
 
 app.use(express.json());
 
@@ -160,7 +160,7 @@ const start = async () => {
 
 start();
 
-//======== This is the one before deployment: Use this in DEVELOPMENT MODE=======//
+//======== This is the one before deployment: Used this in DEVELOPMENT MODE=======//
 
 // require("dotenv").config();
 // require("express-async-errors");
