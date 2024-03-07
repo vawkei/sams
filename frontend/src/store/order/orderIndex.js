@@ -103,7 +103,7 @@ const orderSlice = createSlice({
         } ,
         ADD_NEW_ORDER_COUNT(state){
             state.newOrderCount += 1;
-            localStorage.setItem("newlyCreatedOrder",state.newOrderCount)
+             localStorage.setItem("newlyCreatedOrder",state.newOrderCount)
         },
         REMOVE_NEW_ORDER_COUNT(state){
             state.newOrderCount = 0;
