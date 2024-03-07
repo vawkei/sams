@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import paystackService from "./paystackService";
 import { toast } from "react-toastify";
 
-const FRONT_URL = process.env.REACT_APP_FRONTEND_URL;
+
 
 const initialPaystackState = {
   message: "",
@@ -10,7 +10,6 @@ const initialPaystackState = {
   isError: false,
   isLoading: false,
   isLoggedIn: false,
-  //checkoutDatass: {},
   webhookResponse:null,
   paymentUrl: "",
 };

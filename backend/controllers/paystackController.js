@@ -276,9 +276,9 @@ const webhook = async (req, res) => {
           const currentUser = users.find(
             (user) => user.email === event.data.customer.email
           );
-          if(!currentUser){
-            return res.status(404).json({msg:"Must be current user"})
-          };
+          if (!currentUser) {
+            return res.status(404).json({ msg: "Must be current user" });
+          }
 
           console.log("These are the details of current user:", currentUser);
 
@@ -341,23 +341,25 @@ const webhook = async (req, res) => {
   }
 };
 
-    
 //getWebhookEvent=================================================================:
-const getWebhookEvent = async(req,res)=>{
-  try{
+const getWebhookEvent = async (req, res) => {
+  try {
+    //const webhooks = await Webhooks.findOne({}).sort({ createdAt:-1 })
+    const webhooks = await Webhooks.findOne({
+      createdBy: req.user.userId,
+    }).sort(" - createdAt");
 
-    const webhooks = await Webhooks.findOne({}).sort({ createdAt:-1 })
-    // const webhooks = await Webhooks.findOne({createdBy:req.user.userId}).sort(" - createdAt")
-
-    if(!webhooks){
-      return res.status(404).json({msg:"No webhooks"})
-    };
-    console.log("This is the webhook from getWebhookEvent:",webhooks)
-    res.status(200).json({webhooks:webhooks,msg:"fetched webhooks successfully"})
-  }catch(error){
-    res.status(500).json({msg:"Cant understand what went wrong"})
+    if (!webhooks) {
+      return res.status(404).json({ msg: "No webhooks" });
+    }
+    console.log("This is the webhook from getWebhookEvent:", webhooks);
+    res
+      .status(200)
+      .json({ webhooks: webhooks, msg: "fetched webhooks successfully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Cant understand what went wrong" });
   }
-}
+};
 
 //refundOrder=====================================================================:
 const refundOrder = async (req, res) => {
@@ -397,4 +399,4 @@ const refundOrder = async (req, res) => {
   }
 };
 
-module.exports = { initializePayment, webhook,getWebhookEvent,refundOrder };
+module.exports = { initializePayment, webhook, getWebhookEvent, refundOrder };

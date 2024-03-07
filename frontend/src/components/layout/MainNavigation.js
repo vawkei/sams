@@ -1,6 +1,6 @@
 //This was the state of the code when Ese came:
 import classes from "./MainNavigation.module.css";
-import { Link, NavLink,  useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import DrawerToggleButton from "../ui/drawerToggleButton/DrawerToggleButton";
@@ -24,10 +24,9 @@ const MainNavigation = () => {
   //console.log(user);
   const { cartTotalQty, cartItems } = useSelector((state) => state.cart);
   //console.log(cartTotalQty);
-  const {newOrderCount} = useSelector((state)=>state.order);
+  const { newOrderCount } = useSelector((state) => state.order);
   console.log(newOrderCount);
 
-  /* {isLoggedIn ? (user ? `hi ${user.name}` : "Hello!") : "Hello!"} */
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -74,12 +73,12 @@ const MainNavigation = () => {
         console.log("newlyCreatedOrder:", order);
 
         //setNewOrder(order);
-         // console.log(newOrder);
+        // console.log(newOrder);
         // setNewOrderCount((currentState) => currentState + 1);
-
-        dispatch(orderSliceActions.ADD_NEW_ORDER_COUNT())
         // const updatedOrderCount = newOrderCount + 1;
         // localStorage.setItem("newlyCreatedOrder", updatedOrderCount);
+
+        dispatch(orderSliceActions.ADD_NEW_ORDER_COUNT());
       });
     });
 
@@ -93,7 +92,7 @@ const MainNavigation = () => {
     return () => {
       socket.disconnect();
     };
-  }, [dispatch,newOrderCount]);
+  }, [dispatch, newOrderCount]);
 
   const logo = isMobile ? (
     <motion.div
@@ -172,11 +171,8 @@ const MainNavigation = () => {
             <AdminOnlyLink>
               <NavLink className={navDataHandler} to={"/admin/home"}>
                 <li style={{ color: "red" }}>
-                  {`Admin ${
-                     localStorage.getItem("newlyCreatedOrder")
-                  }`}
+                  {`Admin ${localStorage.getItem("newlyCreatedOrder")}`}
                 </li>
-                {/* <li>{newOrder === null?"": JSON.stringify(newOrder)}</li> */}
               </NavLink>
             </AdminOnlyLink>
 
