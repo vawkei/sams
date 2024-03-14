@@ -55,7 +55,7 @@ function App() {
 
   return (
     <Layout>
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         <ToastContainer />
         <Routes location={location} key={location.key}>
           <Route path="/" element={<HomePage />} />
