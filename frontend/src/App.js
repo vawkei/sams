@@ -14,6 +14,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ShopPage from "./pages/ShopPage";
 import ProductDetail from "./components/shop/product-detail/ProductDetail";
+import ProductReview from "./components/shop/product-detail/ProductReview";
 import CartPage from "./pages/CartPage";
 import PayWithPaystack from "./pages/PayWithPaystackPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -76,6 +77,7 @@ function App() {
           />
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/product-detail/:id" element={<ProductDetail />} />
+          <Route path="/product-review" element={<ProductReview />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment-method" element={<PaymentMethod />} />
           <Route
