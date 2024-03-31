@@ -9,21 +9,36 @@ import store from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import ScrollToTop from "./components/ScrollToTop";
+import { HelmetProvider } from "react-helmet-async";
 //import { persistor } from "./store/order/saveOrderToVerify";
 
 let persistor = persistStore(store);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
-      <BrowserRouter>
-        <ScrollToTop />
+  <HelmetProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <ScrollToTop />
           <App />
-      </BrowserRouter>
-    </PersistGate>
-  </Provider>
-);
+        </BrowserRouter>
+      </PersistGate>
+    </Provider>
+  </HelmetProvider>
+); //====================================Before Helmet============================
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <Provider store={store}>
+//     <PersistGate loading={null} persistor={persistor}>
+//       <BrowserRouter>
+//         <ScrollToTop />
+//           <App />
+//       </BrowserRouter>
+//     </PersistGate>
+//   </Provider>
+// );
 
 //=====================================================================
 // const root = ReactDOM.createRoot(document.getElementById("root"));
