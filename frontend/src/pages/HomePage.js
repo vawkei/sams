@@ -13,8 +13,8 @@ const HomePage = () => {
   return (
     <div style={{ margin: "-3rem auto" }}>
      
-      <Helmet>
-        <title>Home</title>
+      {/* <Helmet> */}
+        {/* <title>Home</title>
         <link rel="canonical" href={fullUrl} />
         <meta
           name="description"
@@ -29,9 +29,9 @@ const HomePage = () => {
         <meta property="og:image" content={cloudinaryImageUrl} />
         <meta property="og:url" content={fullUrl} />
         <meta property="og:type" content="website" />
-        <meta property="og:site_name" content={fullUrl} />{" "}
+        <meta property="og:site_name" content={fullUrl} />{" "} */}
         {/* Use the actual name of your restaurant */}
-      </Helmet>
+      {/* </Helmet> */}
 
       <Home />
     </div>
