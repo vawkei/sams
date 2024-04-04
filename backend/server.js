@@ -18,7 +18,8 @@ const cloudinary = require("cloudinary").v2;
 const httpServer = http.createServer(app);
 
 const corsOptions = {
-  origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+ origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+  // origin: ["http://localhost:3001", "www.samsapp.live"],need 2 create dns
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization","my-custom-header"],
   credentials: true,
