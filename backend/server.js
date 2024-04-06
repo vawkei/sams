@@ -50,7 +50,7 @@ const store = new MongoDBStore({
 });
 
 // rest of the packages
-
+const redirectMiddleware = require("./middlewares/redirect-middleware")
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
 // const webhookNamespace = io.of("/api/v1/paystack/webhook");
@@ -114,6 +114,11 @@ app.use("/api/v1/categories", categoryRoute);
 app.use("/api/v1/coupons", couponRoute);
 app.use("/api/v1/orders", orderRoute);
 
+
+// Middleware to handle URL redirections
+app.use(redirectMiddleware);
+
+// Middleware to handle URL errors
 app.use(errorMiddleware);
 
 const port = process.env.PORT || 5001;
