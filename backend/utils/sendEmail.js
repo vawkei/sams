@@ -19,7 +19,7 @@ const sendEmail = async (subject, send_to, template, reply_to, cc, from) => {
     product: {
       // Appears in header & footer of e-mails
       name: "Sams webapp",
-      link: "https://samsapp.vercel.app/",
+      link: "https://samsapp.onrender.app/",
     },
   });
 
