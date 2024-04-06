@@ -51,6 +51,7 @@ const store = new MongoDBStore({
 
 // rest of the packages
 const redirectMiddleware = require("./middlewares/redirect-middleware")
+const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
 // const webhookNamespace = io.of("/api/v1/paystack/webhook");
@@ -117,7 +118,8 @@ app.use("/api/v1/orders", orderRoute);
 
 // Middleware to handle URL redirections
 app.use(redirectMiddleware);
-
+//Middleware to handle URL redirections
+app.use(notFoundMiddleware);
 // Middleware to handle URL errors
 app.use(errorMiddleware);
 

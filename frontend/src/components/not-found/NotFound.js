@@ -11,7 +11,7 @@ const NotFound = () => {
 
   return (
     <div className={classes.disclaimer}>
-        <p>This Page doesn't exist...</p>
+         <h1>404 - Page Not Found</h1>
         <div className={classes.action}>
           <Button onClick={navigateHandler} className={classes.btn}>
             Click here to Go Home
