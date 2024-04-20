@@ -5,6 +5,7 @@ import classes from "./PayWithPaystack.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { acceptpayment } from "../../store/paystack/paystackIndex";
 import { checkoutDetailsFormActions } from "../../store/order/saveOrderToVerify";
+import Spinner from "../ui/spinner/Spinner";
 
 
 const PayWithPaystack = () => {
@@ -33,7 +34,7 @@ const PayWithPaystack = () => {
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   //console.log(user);
 
-  const { message } = useSelector((state) => state.paystack);
+  const { message,isLoading } = useSelector((state) => state.paystack);
   //console.log(message);
   const { coupon } = useSelector((state) => state.coupon);
   const incomingOrder = useSelector((state) => state.form.incomingOrder);
@@ -169,6 +170,7 @@ const PayWithPaystack = () => {
 
   return (
     <div className={classes.container}>
+      {isLoading && <Spinner />}
       {cartItems.length === 0 ? (
         <p>Cart is Freaking Empty</p>
       ) : (

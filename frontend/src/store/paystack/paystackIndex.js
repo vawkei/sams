@@ -89,7 +89,7 @@ const paystackSlice = createSlice({
     builder
       //acceptpayment:
       .addCase(acceptpayment.pending, (state) => {
-        // state.isLoading = true;
+        state.isLoading = true;
       })
       .addCase(acceptpayment.fulfilled, (state, action) => {
 
