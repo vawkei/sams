@@ -18,7 +18,9 @@ const {
   saveCartDb,
   getCartDb,
   getAllUsers,
-  sendContactMail
+  newsletterSubscription,
+  sendContactMail,
+  sendNewsletter
 } = require("../controllers/userController");
 
 const {authenticateUser, adminOnly} =require("../middlewares/authenticate-user");
@@ -49,6 +51,12 @@ router.patch("/updateUserPhoto",authenticateUser, updateUserPhoto);
 
 //sendContactMail:
 router.post("/sendContactMail",authenticateUser, sendContactMail);
+
+//newsletterSubscription:
+router.patch("/newsletterSubscription",authenticateUser,newsletterSubscription)
+
+//sendNewsletter:
+router.post("/sendNewsletter",authenticateUser,adminOnly,sendNewsletter)
 
 //user Cart:
  router.patch("/clearCart",authenticateUser,clearCart);

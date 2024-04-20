@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const customizedEmail = async ({ subject, to, html }) => {
+const customizedEmail = async ({ subject, to, html, bcc }) => {
   // create email transporter
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -15,6 +15,7 @@ const customizedEmail = async ({ subject, to, html }) => {
   return transporter.sendMail({
     from: '"Sams"<sams@gmail.com>',
     to,
+    bcc,
     subject,
     html,
   });

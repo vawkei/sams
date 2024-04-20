@@ -6,6 +6,7 @@
         align-items: center; */
     width: 98%;
     padding: 1.5rem;
+    margin-top: 3rem;
     position: relative;
     border: 1px red solid;
   }

@@ -51,7 +51,7 @@ const filterSlice = createSlice({
         const {products,sort} = action.payload;
         //console.log(products,sort)
         let tempProducts = [];
-        if(sort === "Latest"){
+        if(sort === "All"){
             tempProducts = products
         };
         if(sort === "Lowest-price"){

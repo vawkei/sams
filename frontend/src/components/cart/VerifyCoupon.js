@@ -1,40 +1,55 @@
 import classes from "./VerifyCoupon.module.css";
 import Button from "../ui/button/Button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../ui/card/Card";
 import { useSelector, useDispatch } from "react-redux";
 import {
   couponSliceActions,
   getSingleCoupon,
 } from "../../store/coupon/couponIndex";
-
+import Spinner from "../ui/spinner/Spinner";
 
 const VerifyCoupon = () => {
   const [showForm, setShowForm] = useState(false);
   const [couponName, setCouponName] = useState("");
+  const [showHaveACouponQuestion, setShowHaveACouponQuestion] = useState(true);
 
   const couponItem = useSelector((state) => state.coupon.coupon);
+  const isError = useSelector((state) => state.coupon.isError);
+  const message = useSelector((state) => state.coupon.message);
+  const isLoading = useSelector((state) => state.coupon.isLoading);
   console.log(couponItem);
+  console.log(isError, message);
 
-  const {initialCartTotalAmount} = useSelector((state) => state.cart);
-  console.log(initialCartTotalAmount)
+  const { initialCartTotalAmount } = useSelector((state) => state.cart);
+  console.log(initialCartTotalAmount);
 
   const dispatch = useDispatch();
 
   const showFormHandler = () => {
     setShowForm(true);
+    //setShowHaveACouponQuestion(false)
   };
 
   const removeCouponHandler = () => {
     dispatch(couponSliceActions.REMOVE_COUPON());
-    setShowForm(false)
+    setShowForm(false);
+    setShowHaveACouponQuestion(true);
   };
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     await dispatch(getSingleCoupon(couponName));
-    setCouponName("")
+    setCouponName("");
+    setShowForm(false);
+    // setShowHaveACouponQuestion(false);
   };
+
+  useEffect(() => {
+    if (couponItem) {
+      setShowHaveACouponQuestion(false);
+    }
+  }, [couponItem]);
 
   return (
     <div>
@@ -54,25 +69,45 @@ const VerifyCoupon = () => {
           </form>
         </Card>
       ) : (
-        <div className={classes["have-A-coupon"]}>
-          <h4>Have a coupon ?</h4>
-          <p
-            onClick={showFormHandler}
-            style={{ color: "blue", cursor: "pointer" }}>
-            Add a coupon
-          </p>
-        </div>
+        <>
+          {/* {isLoading && (
+            <div className={classes.spinner}>
+              <Spinner />
+            </div>
+          )} */}
+          {showHaveACouponQuestion && (
+            <div className={classes["have-A-coupon"]}>
+              <h4>Have a coupon ?</h4>
+              <p
+                onClick={showFormHandler}
+                style={{ color: "blue", cursor: "pointer" }}>
+                Add a coupon
+              </p>
+            </div>
+          )}
+        </>
       )}
       {couponItem && (
         <div className={classes["coupon-discount-container"]}>
           <div className={classes["coupon-discount"]}>
-            <p>Coupon: {couponItem?.name}</p> ||
-            <p>Initial Amount:{initialCartTotalAmount}</p> ||
-            <p>Discount: {couponItem?.discount} % off</p>
+            <p>
+              <b>Coupon:</b> {couponItem?.name} ||
+            </p>
+            <p>
+              <b>Payment Before Discount:</b>
+              {initialCartTotalAmount} ||
+            </p>
+            <p>
+              <b>Discount:</b> {couponItem?.discount} % slashed
+            </p>
           </div>
-          
-            <p onClick={removeCouponHandler} style={{ color: "red", cursor: "pointer" }} className={classes["remove-coupon"]}>Remove coupon</p>
-        
+
+          <p
+            onClick={removeCouponHandler}
+            style={{ color: "red", cursor: "pointer" }}
+            className={classes["remove-coupon"]}>
+            Remove coupon
+          </p>
         </div>
       )}
     </div>
@@ -80,4 +115,3 @@ const VerifyCoupon = () => {
 };
 
 export default VerifyCoupon;
-

@@ -1,7 +1,7 @@
 import classes from "./Refund.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { refundOrder } from "../../../store/paystack/paystackIndex";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { toast } from "react-toastify";
 import Card from "../../ui/card/Card";
 import Button from "../../ui/button/Button";
@@ -30,6 +30,8 @@ const Refund = () => {
   };
 
   return (
+    <Fragment>
+      <h2>Send Refund</h2>
     <Card className={classes.cardClass}>
       {isLoading && <Loader />}
       <h2>paystack TransactionId</h2>
@@ -55,6 +57,7 @@ const Refund = () => {
         </div>
       </form>
     </Card>
+    </Fragment>
   );
 };
 

@@ -9,6 +9,7 @@ import OrderStatusChat from "./charts/OrderStatusChat";
 import LastFiveDaysOrderChart from "./charts/LastFiveDaysOrderChart";
 import WeekDaysSalesAmountChart from "./charts/WeekDaysSalesAmountChart";
 import MonthlySalesAmountChart from "./charts/MonthlySalesAmountChart";
+import ProductSalesChart from "./charts/ProductSalesChart";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -153,32 +154,30 @@ const Home = () => {
   }, {});
   //console.log(weekdaysOrders);
 
-
   //9:ordersByWeekDaysLineChart=======================================================
 
   const weeklyDailyArray = [];
 
-  const getOrderWeek = adminOrders.map((order)=>{
-  let weeklyOrders = order.orderDate;
-  weeklyOrders = new Date(weeklyOrders).toDateString().slice(0,3)
-  weeklyDailyArray.push(weeklyOrders)
-  return weeklyOrders
-});
+  const getOrderWeek = adminOrders.map((order) => {
+    let weeklyOrders = order.orderDate;
+    weeklyOrders = new Date(weeklyOrders).toDateString().slice(0, 3);
+    weeklyDailyArray.push(weeklyOrders);
+    return weeklyOrders;
+  });
   console.log(getOrderWeek);
-  console.log(weeklyDailyArray)
+  console.log(weeklyDailyArray);
 
-  
   const getOrderWeekFunc = (order, value) => {
     return order.filter((n) => n === value).length;
   };
 
-  const mon = getOrderWeekFunc(weeklyDailyArray,"Mon");
-  const tue = getOrderWeekFunc(weeklyDailyArray,"Tue");
-  const wed = getOrderWeekFunc(weeklyDailyArray,"Wed");
-  const thu = getOrderWeekFunc(weeklyDailyArray,"Thu");
-  const fri = getOrderWeekFunc(weeklyDailyArray,"Fri");
-  const sat = getOrderWeekFunc(weeklyDailyArray,"Sat");
-  const sun = getOrderWeekFunc(weeklyDailyArray,"Sun");
+  const mon = getOrderWeekFunc(weeklyDailyArray, "Mon");
+  const tue = getOrderWeekFunc(weeklyDailyArray, "Tue");
+  const wed = getOrderWeekFunc(weeklyDailyArray, "Wed");
+  const thu = getOrderWeekFunc(weeklyDailyArray, "Thu");
+  const fri = getOrderWeekFunc(weeklyDailyArray, "Fri");
+  const sat = getOrderWeekFunc(weeklyDailyArray, "Sat");
+  const sun = getOrderWeekFunc(weeklyDailyArray, "Sun");
 
   //10:LastFiveDaysSalesLineChartDateExtraction=======================================
 
@@ -264,8 +263,7 @@ const Home = () => {
   }, 0);
   //console.log(day5sTotalOrderAmount);
 
-
-//12:LastFiveDaysTotalOrdersLineChart=================================================
+  //12:LastFiveDaysTotalOrdersLineChart=================================================
 
   let array = [];
   adminOrders.map((orders) => {
@@ -283,6 +281,33 @@ const Home = () => {
   const day_3 = getSalesOfLast5Days(array, day3.toDateString());
   const day_4 = getSalesOfLast5Days(array, day4.toDateString());
   const day_5 = getSalesOfLast5Days(array, day5.toDateString());
+
+  //13: product sales===================================================
+
+  const productNames = products.map((product) => {
+    return product.name;
+  });
+  console.log(productNames);
+
+  const productSales = products.map((product) => {
+    return product.sold;
+  });
+  console.log(productSales);
+
+  //14. TotalAmount made per product sold=========================================
+  //****commented this one****
+  const totalAmountMadePerProduct = products.reduce((acc, product) => {
+    //const currentProduct = acc[product.name] || 0 ;
+    acc[product.name] = product.price * product.sold;
+    return acc;
+  }, {});
+  console.log(totalAmountMadePerProduct);
+
+  //turning the object into an array:
+  const arrTotalAmountMadePerProduct = Object.keys(
+    totalAmountMadePerProduct
+  ).map((key) => totalAmountMadePerProduct[key]);
+  console.log(arrTotalAmountMadePerProduct); 
 
   useEffect(() => {
     dispatch(getProducts());
@@ -354,6 +379,11 @@ const Home = () => {
               showOrderstatusChartHandler={showOrderstatusChartHandler}
             />
           )}
+          <ProductSalesChart
+            productNames={productNames}
+            productSales={productSales}
+            totalAmountMadePerProduct={arrTotalAmountMadePerProduct}
+         />
         </div>
       </>
     </div>
@@ -361,32 +391,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// //step1:filter out the orders by month:
-// const getOrderMonth = adminOrders.map((order)=>{
-//   let ordermonth = order.orderDate;
-//   ordermonth = new Date(ordermonth).toDateString().slice(4, 7);
-//   return ordermonth
-// });
-
-// //step2:get the orders that tally with getOrderMonth:
-// const getOrdersByMonth = adminOrders.filter((allOrders) => {
-//   let x = allOrders.orderDate;
-//   x = new Date(x).toDateString().slice(4, 7);
-//   const ava =  getOrderMonth.map((xyx)=>{
-//     return xyx === x
-//   })
-//   return ava;
-// });
-
-// //step3:get the orderAmount per month:
-// const TotalMonthOrder = getOrdersByMonth.map(
-//   (allMonthsOrders) => allMonthsOrders.orderAmount
-// );
-
-// //step3:add the TotalMonthOrder for the particular month:
-// const salesByMonth = TotalMonthOrder.reduce((a,b)=>{
-//   return a + b
-// },0);
-
-// //console.log(salesByMonth)

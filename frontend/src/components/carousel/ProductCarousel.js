@@ -9,37 +9,37 @@ import { useNavigate } from "react-router-dom";
 
 var nairaSymbol = "\u20A6";
 
-
 const ProductCarousel = () => {
-  
   const navigate = useNavigate();
 
-const navigateToShopHandler =()=>{
-  navigate("/shop")
-};
+  const navigateToShopHandler = () => {
+    navigate("/shop");
+  };
 
-const products = carouselData.map((data) => {
-  return (
-    <Card key={data._id} className={classes.cardClass}>
-      <img src={data.url} alt="product image" />
-      <div className={classes.content}>
-        <h2>{data.name}</h2>
-        <p>
-          {nairaSymbol}
-          {data.price}
-        </p>
-        <p>{data.description}</p>
-        <div className={classes.action}>
-          <Button className={classes.btn} onClick={navigateToShopHandler}>Order Now</Button>
-        </div>
+  const products = carouselData.map((data) => {
+    return (
+      <div>
+        <Card key={data._id} className={classes.cardClass}>
+          <img src={data.url} alt="product image" />
+          <div className={classes.content}>
+            <h2>{data.name}</h2>
+            <p>
+              {nairaSymbol}
+              {data.price}
+            </p>
+            <p>{data.description}</p>
+            <div className={classes.action}>
+              <Button className={classes.btn} onClick={navigateToShopHandler}>
+                Order Now
+              </Button>
+            </div>
+          </div>
+        </Card>
       </div>
-    </Card>
-  );
-});
-
+    );
+  });
 
   return (
-    
     <div>
       <Carousel
         responsive={responsive}
@@ -48,10 +48,8 @@ const products = carouselData.map((data) => {
         autoPlaySpeed={300}
         customTransition="all 500ms ease"
         transitionDuration={1000}
-        showDots={false}
-        
-        >
-        {products }
+        showDots={false}>
+        {products}
       </Carousel>
     </div>
   );

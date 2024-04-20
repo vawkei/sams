@@ -12,6 +12,7 @@ import OrderStatus from "../orders/OrderStatus";
 import OrderDetails from "../orders/OrderDetails";
 import AllUsers from "../all-users/AllUsers";
 import Refund from "../refund/Refund";
+import SendNewsletter from "../send-newsletter/SendNewsletter";
 
 
 const AdminRoutes = () => {
@@ -32,6 +33,7 @@ const AdminRoutes = () => {
                     <Route  path="category" element={<Category />} />
                     <Route  path="coupon" element={<Coupon />} />
                     <Route  path="refund" element={<Refund />} />
+                    <Route  path="newsletter" element={<SendNewsletter />} />
 
                     <Route  path="edit-product/:id" element={<EditProduct />} />
                 </Routes>

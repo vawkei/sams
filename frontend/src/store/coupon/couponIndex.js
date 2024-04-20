@@ -275,16 +275,20 @@ const couponSlice = createSlice({
         .addCase(getSingleCoupon.fulfilled,(state,action)=>{
             state.isLoading=false;
             state.coupon=action.payload.coupon;
+            toast.success(action.payload.msg,{position:"top-center"})
+            console.log(action.payload)
+            console.log(action.payload.msg)
+            
             //save to local storage:
             localStorage.setItem("coupon", JSON.stringify(state.coupon));
-            // console.log(action.payload)
-            // console.log(action.payload.coupon)
         })
         .addCase(getSingleCoupon.rejected,(state,action)=>{
             state.isLoading= false;
             state.coupon=null;
             state.isError=true;
+            state.message = action.payload
             console.log(action.payload)
+            toast.error(action.payload,{position:"top-center"})
         })
         //deleteCoupon:
         .addCase(deleteCoupon.pending,(state)=>{

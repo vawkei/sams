@@ -1,13 +1,10 @@
 .contact{
     display: flex;
-    gap: 3rem;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-/* form{
-    display: flex;
-    gap: 3rem;
-    justify-content: space-between;
-} */
+
 .cardClass1{
     padding: 2rem;
     width: 50%;
@@ -19,6 +16,7 @@
 .control label{
     display: block;
     font: bold;
+    padding: 0.5rem;
 }
 .control input{
     width: 100%;
@@ -31,10 +29,9 @@
     padding: 1rem;
 }
 .action .btn{
-    /* padding: 1rem;
-    width: 100%; */
+    /* padding: 1rem; */
     width: 100%;
-    padding: 0.1rem 9rem;
+    padding: 0.1rem 7.75rem;
 }
 .action .btn:hover{
 background-color: white;
@@ -71,13 +68,4 @@ border: none;
         width: 100%;
     }
     
-    .cardClass2{
-        display: none;
-    }
-    .action .btn{
-        /* padding: 1rem;
-        width: 100%; */
-        width: 100%;
-        padding: 0.1rem 6rem;
-    }
 }

@@ -10,6 +10,7 @@ import { BiCategory } from "react-icons/bi";
 import { RiCoupon2Line } from "react-icons/ri";
 import { FaRegUser } from "react-icons/fa6";
 import { RiRefund2Line } from "react-icons/ri";
+import { MdAlternateEmail } from "react-icons/md";
 
 
 
@@ -68,6 +69,11 @@ const NavBar = () => {
           <li>
             <NavLink className={navDataHandler} to={"refund"}>
             <RiRefund2Line size={40} />
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={navDataHandler} to={"newsletter"}>
+            <MdAlternateEmail size={40} />  
             </NavLink>
           </li>
         </ul>

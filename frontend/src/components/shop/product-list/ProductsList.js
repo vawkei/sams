@@ -35,12 +35,12 @@ import { getCartDb } from "../../../store/cart/cartIndex";
 
 const ProductsList = (props) => {
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("Latest");
+  const [sort, setSort] = useState("All");
 
   const { filteredProducts } = useSelector((state) => state.filter);
   //console.log(filteredProducts);
   const { products } = useSelector((state) => state.product);
-  //console.log(products);
+  console.log(products);
 
   const dispatch = useDispatch();
 
@@ -61,7 +61,7 @@ const ProductsList = (props) => {
   const indexFirstItem = indexLastItem - itemsPerPage; //=0
 
   const currentItems = filteredProducts.slice(indexFirstItem, indexLastItem);
-  console.log(currentItems);
+  //console.log(currentItems);
 
   return (
     <div className={classes["productsList-container"]}>
@@ -74,7 +74,7 @@ const ProductsList = (props) => {
         <div className={classes.sort}>
           <label htmlFor="">Sort by:</label>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
-            <option value="Latest">Latest</option>
+            <option value="All">All</option>
             <option value="Lowest-price">Lowest-price</option>
             <option value="Highest-price">Highest-price</option>
             <option value="A-Z">A-Z</option>

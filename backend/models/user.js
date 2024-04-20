@@ -80,6 +80,11 @@ const userSchema = mongoose.Schema(
     },
     cartItems:{
       type:[Object]
+    },
+    newsletterSubscription:{
+      type:String,
+      enum:["yes","no"],
+      default:"no"
     }
   },
   { timestamp: true }

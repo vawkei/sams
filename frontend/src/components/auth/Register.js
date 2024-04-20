@@ -208,7 +208,7 @@ const Register = () => {
       (
         
         <>
-          {isLoading && <Loader />}
+          {/* {isLoading && <Loader />} */}
           <h1>Register</h1>
           {showRegForm ? (
             <section className={classes.auth}>

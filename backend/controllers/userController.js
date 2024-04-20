@@ -9,6 +9,7 @@ const sendVerificationEmail = require("../utils/sendVerificationEmail");
 const sendPasswordResetEmail = require("../utils/sendPasswordReset.Email");
 //const sendPasswordResetEmail = require("../utils/sendPasswordResetEmail");
 const sendContactEmail = require("../utils/sendContactEmail");
+const sendNewsletterMail = require("../utils/sendNewsletter");
 
 //1. register====================================================================:
 const register = async (req, res) => {
@@ -239,13 +240,13 @@ const resetPassword = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const U = await User.find().select("-password");
-    
-    const users = U.filter((x)=>{
-      return x.isVerified
-    })
-    
+
+    const users = U.filter((x) => {
+      return x.isVerified;
+    });
+
     console.log(users);
-    
+
     if (!users) {
       return res.status(404).json({ msg: "No users found" });
     }
@@ -419,9 +420,9 @@ const sendContactMail = async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.user.userId });
 
-    if(user.name !== name){
-      return res.status(404).json({msg:"Please use your first name"})
-    };
+    if (user.name !== name) {
+      return res.status(404).json({ msg: "Please use your first name" });
+    }
 
     if (!user) {
       return res
@@ -430,7 +431,7 @@ const sendContactMail = async (req, res) => {
     }
 
     const userEmail = user.email;
-    console.log(userEmail)
+    console.log(userEmail);
 
     console.log("Before sending email");
 
@@ -447,15 +448,63 @@ const sendContactMail = async (req, res) => {
     res.status(500).json({ msg: error.message || "Internal Server Error" });
   }
 };
+//14:newsletterSubscription===============================================:
+const newsletterSubscription = async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.user.userId });
+    console.log(user);
+    user.newsletterSubscription = "yes";
+    await user.save();
+    res
+      .status(200)
+      .json({ msg: "Congratulations you have subscribed to our newsletter" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "error:", error });
+  }
+};
+//15. sendNewsletter:======================================================:
+const sendNewsletter = async (req, res) => {
+  
+  const { subject, message } = req.body;
+  console.log(subject,message)
+  
+  try {
+     const users = await User.find({ newsletterSubscription: "yes" });
+    // const users = await User.find({});
+    //console.log(users);
+    if (!users) {
+      return res.status(404).json({ msg: "No user found" });
+    }
+ 
+    const usersEmail = users.map((usex) => {
+      return usex.email;
+    });
+    console.log(usersEmail);
 
-//14.
+
+    console.log("Sending newsletter");
+    await sendNewsletterMail({
+      // name: usersName.join(","),
+      email: usersEmail.join(","),
+      subject: subject,
+      message: message,
+    });
+
+    
+    console.log("Finished sending newsletter");
+    res.status(200).json({ msg: "Newsletter sent successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "error:", error });
+  }
+};
+//16.
 //clearCart==================================================================:
 const clearCart = async (req, res) => {
   //const { cartItems } = req.body;
 
-
   try {
-
     const user = await User.findById(req.user.userId);
 
     user.cartItems = [];
@@ -465,7 +514,6 @@ const clearCart = async (req, res) => {
     res.status(500).json(error);
   }
 };
-
 
 module.exports = {
   register,
@@ -484,4 +532,6 @@ module.exports = {
   getCartDb,
   saveCartDb,
   sendContactMail,
+  newsletterSubscription,
+  sendNewsletter,
 };

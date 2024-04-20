@@ -70,6 +70,18 @@ const sendContactMail = async (formData) => {
   return response.data
 };
 
+//newsletterSubscription:
+const newsletterSubscription = async()=>{
+  const response = await axios.patch(API_URL + "newsletterSubscription");
+  return response.data
+}
+
+//sendNewsletter:
+const sendNewsletter = async(formData)=>{
+  const response = await axios.post(API_URL + "sendNewsletter", formData);
+  return response.data
+}
+
 //clearCart;
 const clearCart = async () =>{
   const response = await axios.patch(API_URL + "clearCart")
@@ -89,6 +101,8 @@ const authService = {
   getLoginStatus,
   updateUserPhoto,
   sendContactMail,
+  newsletterSubscription,
+  sendNewsletter,
   clearCart
 };
 

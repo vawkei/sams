@@ -222,6 +222,28 @@ export const sendContactMail = createAsyncThunk(
     }
   }
 );
+//newsletterSubscription:
+export const newsletterSubscription = createAsyncThunk(
+  "auth/newsletterSubscription", async(_,thunkApi)=>{
+    try{
+      return await authService.newsletterSubscription()
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+);
+//sendNewsletter:
+export const sendNewsletter = createAsyncThunk(
+  "auth/sendNewsletter",async(formData,thunkApi)=>{
+    try{
+      return await authService.sendNewsletter(formData)
+    }catch(error){
+      const message = (error.response && error.response.data && error.response.data.msg) || error.msg || error.toString();
+      return thunkApi.rejectWithValue(message)
+    }
+  }
+);
 
 //clearCart"
 export const clearCart = createAsyncThunk(
@@ -496,6 +518,42 @@ const authSlice = createSlice({
         state.isError = true;
         console.log(action.payload)
         toast.error(action.payload,{position:"top-left"})
+      })
+      //newsletterSubscription:===================================================
+      .addCase(newsletterSubscription.pending,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(newsletterSubscription.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.message =  action.payload.msg;
+        console.log(action.payload.msg);
+        toast.success(action.payload.msg,{position:"top-left"})
+      })
+      .addCase(newsletterSubscription.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.isError = true;
+        console.log(action.payload.msg)
+        toast.error(action.payload.msg,{position:"top-left"})
+      })
+      //sendNewsletter:===================================================
+      .addCase(sendNewsletter.pending,(state)=>{
+        state.isLoading = true;
+      })
+      .addCase(sendNewsletter.fulfilled,(state,action)=>{
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        // state.message =  action.payload.msg;
+        console.log(action.payload.msg);
+        toast.success(action.payload.msg,{position:"top-left"})
+      })
+      .addCase(sendNewsletter.rejected,(state,action)=>{
+        state.isLoading = false;
+        state.isError = true;
+        console.log(action.payload.msg)
+        toast.error(action.payload.msg,{position:"top-left"})
       })
       //clearCart:=======================================================
       .addCase(clearCart.pending,(state)=>{
