@@ -213,7 +213,7 @@ const ContactForm = () => {
               <h4>
                 <b>Call us</b>
               </h4>
-              <p>Mon-Fri from 8am to 5pm</p>
+              <p>Mon-Sun from 8am to 5pm</p>
               <br />
               <p>
                 <b>04024024401k</b>

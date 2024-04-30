@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <div>
       <Slider />
-      {/* <HomeInfoBox /> */}
+      <HomeInfoBox />
       <ProductCarousel />
       <div className={classes.subscribe}>
         {showSubButton && (

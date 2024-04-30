@@ -14,7 +14,7 @@ const ShopPage = () => {
         <link rel="canonical" href={fullUrl} />
         <meta
           property="og:description"
-          content="Discover a variety of delightful items at the sams shop. Explore our selection and find the perfect products to enhance your culinary experience in Ovwian Town."
+          content="Discover a variety of delightful food items at the sams shop. Explore our selection and find the perfect products to enhance your culinary experience in Ovwian Town."
         />
         <meta
           name="description"

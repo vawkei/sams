@@ -46,6 +46,7 @@ const MainFooter = () => {
         <div className={classes.footer}>
             <h2> <Link to={"/"}>&copy;{brand}</Link></h2>
             <p>{dateInFull}</p>
+            
         </div>
      );
 }
