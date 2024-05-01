@@ -15,7 +15,6 @@ const Slider = () => {
   const prev = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
   };
-  
 
   let timeInterval = 3000;
   let slideInterval;
@@ -49,13 +48,14 @@ const Slider = () => {
             }>
             {index === currentSlide && (
               <div className={classes.slideFirstDiv}>
-                <div className={classes["main-image"]}>
-                  <img src={slide.image} alt={slide.heading} />
+                <div
+                  className={`${classes["main-image"]} ${classes["blur-load"]}`}>
+                  <img src={slide.image} alt={slide.heading} loading="lazy" />
                 </div>
 
                 <div className={classes.content}>
                   <h3>{slide.heading}</h3>
-                  <p>{slide.desc.slice(0,50)}...</p>
+                  <p>{slide.desc.slice(0, 50)}...</p>
                 </div>
               </div>
             )}
