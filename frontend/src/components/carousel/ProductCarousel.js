@@ -48,7 +48,9 @@ const ProductCarousel = () => {
         autoPlaySpeed={300}
         customTransition="all 500ms ease"
         transitionDuration={1000}
-        showDots={false}>
+        showDots={false}
+        arrows={false}
+        >
         {products}
       </Carousel>
     </div>
