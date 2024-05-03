@@ -1,5 +1,5 @@
 import Layout from "./components/layout/Layout";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
@@ -35,6 +35,17 @@ import PayOnDeliveryCheckout from "./components/checkout/PayOnDeliveryCheckout";
 import ContactPage from "./pages/ContactPage";
 //import PayWithPaystack from "./components/checkout/PayWithPaystack";
 
+
+const NavigateToPreferredDomain = ()=>{
+  const preferredDomain = process.env.REACT_APP_FRONTEND_URL;
+  const currentDomain = window.location.hostname;
+
+  if(currentDomain !==preferredDomain){
+    return <Navigate to={`${preferredDomain}${window.location.pathname}`}/>
+  }
+  return null
+};
+
 function App() {
   axios.defaults.withCredentials = true;
 
@@ -59,6 +70,7 @@ function App() {
       <AnimatePresence mode="wait">
         <ToastContainer />
         <Routes location={location} key={location.key}>
+          <Route element={<NavigateToPreferredDomain />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
