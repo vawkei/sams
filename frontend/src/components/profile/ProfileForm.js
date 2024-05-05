@@ -12,24 +12,22 @@ import { getSingleUser, updateUser, updateUserPhoto } from "../../store/index";
 
 const ProfileForm = () => {
   const dispatch = useDispatch();
-  
-  const { isLoggedIn, user,isLoading } = useSelector((state) => state.auth);
+
+  const { isLoggedIn, user, isLoading } = useSelector((state) => state.auth);
   //console.log(user);
 
-
   const [enteredName, setEnteredName] = useState("");
-  const [enteredEmail,setEnteredEmail] = useState("" );
+  const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPhone, setEnteredPhone] = useState("");
   const [enteredAddress, setEnteredAddress] = useState("");
   const [enteredTown, setEnteredTown] = useState("");
   const [enteredState, setEnteredState] = useState("");
-  const [enteredSurname,setEnteredSurname] = useState("");
- 
+  const [enteredSurname, setEnteredSurname] = useState("");
+
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   const [useStateIsLoading] = useState(false);
-
 
   useEffect(() => {
     if (user === null) {
@@ -37,17 +35,17 @@ const ProfileForm = () => {
     }
   }, [dispatch, user]);
 
-  useEffect(()=>{
-    if( isLoggedIn && user){
+  useEffect(() => {
+    if (isLoggedIn && user) {
       setEnteredName(user.name || "");
-      setEnteredEmail(user.email || "")
+      setEnteredEmail(user.email || "");
       setEnteredPhone(user.phone || "");
-      setEnteredAddress(user.address ||"");
+      setEnteredAddress(user.address || "");
       setEnteredSurname(user.surname || "");
       setEnteredState(user.state || "");
       setEnteredTown(user.town || "");
     }
-  },[user]);
+  }, [user]);
 
   const handleImageChange = (e) => {
     setProfileImage(e.target.files[0]);
@@ -56,11 +54,11 @@ const ProfileForm = () => {
 
   const saveImage = async (e) => {
     e.preventDefault();
-    
+
     try {
       const image = new FormData();
       image.append("image", profileImage);
-      
+
       if (
         imagePreview !== null &&
         (profileImage.type === "image/jpeg" ||
@@ -90,44 +88,50 @@ const ProfileForm = () => {
   };
 
   //update form inputs to mongdb:
-  const submitHandler =async (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const userData = {
       name: enteredName,
-      surname:enteredSurname,
+      surname: enteredSurname,
       phone: enteredPhone,
       address: enteredAddress,
-      town:enteredTown,
-      state:enteredState
+      town: enteredTown,
+      state: enteredState,
     };
-   // console.log(profileData);
-   await dispatch(updateUser(userData))
+    // console.log(profileData);
+    await dispatch(updateUser(userData));
     setEnteredName("");
     setEnteredSurname("");
     setEnteredPhone("");
     setEnteredAddress("");
     setEnteredTown("");
-    setEnteredState("")
+    setEnteredState("");
   };
 
   return (
     <>
       {useStateIsLoading && <Loader />}
-      {isLoading && <Spinner />}
+      <div className={classes.spinner}>{isLoading && <Spinner />}</div>
+
       <div className={classes["over-all-container"]}>
         <ProfileHeader />
         <h2>
           {isLoggedIn
-            ? (user
+            ? user
               ? `Welcome ${user.name}`
-              : "You are UNAUTHORIZED")
+              : "You are UNAUTHORIZED"
             : "You are UNAUTHORIZED"}
         </h2>
         {/* {isLoggedIn ? (user ?  `hi ${user.name}` : "Hello!") : "Hello!"} */}
         <Card className={classes.container}>
           <div className={classes["image-area"]}>
             <img
-              src={imagePreview ? imagePreview : (user ? user.photo: "You are UNAUTHORIZED")
+              src={
+                imagePreview
+                  ? imagePreview
+                  : user
+                  ? user.photo
+                  : "You are UNAUTHORIZED"
               }
             />
             {imagePreview ? (
@@ -147,7 +151,6 @@ const ProfileForm = () => {
                 <b>Role:</b> {isLoggedIn ? (user ? user.role : "") : ""}
               </label>
               <input
-                
                 type="file"
                 accept="image/*"
                 name="image"
@@ -155,7 +158,9 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="name"><b>Name:</b></label>
+              <label htmlFor="name">
+                <b>Name:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter name"
@@ -165,7 +170,9 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="name"><b>Surname:</b></label>
+              <label htmlFor="name">
+                <b>Surname:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter your surname"
@@ -175,11 +182,15 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="email"><b>Email:</b></label>
+              <label htmlFor="email">
+                <b>Email:</b>
+              </label>
               <input type="text" disabled value={enteredEmail} />
             </div>
             <div className={classes.control}>
-              <label htmlFor="phone"><b>Phone:</b></label>
+              <label htmlFor="phone">
+                <b>Phone:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter phone number"
@@ -189,7 +200,9 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="address"><b>Address:</b></label>
+              <label htmlFor="address">
+                <b>Address:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter residential address here"
@@ -199,7 +212,9 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="phone"><b>Town:</b></label>
+              <label htmlFor="phone">
+                <b>Town:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter town of residence"
@@ -209,7 +224,9 @@ const ProfileForm = () => {
               />
             </div>
             <div className={classes.control}>
-              <label htmlFor="state"><b>State:</b></label>
+              <label htmlFor="state">
+                <b>State:</b>
+              </label>
               <input
                 type="text"
                 placeholder="Please enter state of residence"
@@ -229,61 +246,3 @@ const ProfileForm = () => {
 };
 
 export default ProfileForm;
-
-
-
-// const uploadImageToCloudinary = async () => {
-//   try {
-//     const image = new FormData();
-//     image.append('file', profileImage);
-
-//     if (
-//       profileImage &&
-//       (profileImage.type === 'image/jpeg' ||
-//         profileImage.type === 'image/jpg' ||
-//         profileImage.type === 'image/png')
-//     ) {
-//       const cloudinaryUrl = 'YOUR_CLOUDINARY_UPLOAD_URL'; // Replace with your Cloudinary upload URL
-
-//       const response = await fetch(cloudinaryUrl, {
-//         method: 'POST',
-//         body: image,
-//         headers: {
-//           'X-Requested-With': 'XMLHttpRequest',
-//         },
-//       });
-
-//       if (response.ok) {
-//         const reader = response.body.getReader();
-
-//         const contentLength = +response.headers.get('Content-Length');
-//         let receivedLength = 0;
-//         let chunks = [];
-
-//         while (true) {
-//           const { done, value } = await reader.read();
-
-//           if (done) {
-//             break;
-//           }
-
-//           chunks.push(value);
-//           receivedLength += value.length;
-
-//           const progress = (receivedLength / contentLength) * 100;
-//           setUploadProgress(progress);
-//         }
-
-//         const blob = new Blob(chunks);
-//         const imageDataUrl = URL.createObjectURL(blob);
-
-//         // Handle the Cloudinary response as needed
-//         console.log('Upload complete:', imageDataUrl);
-//       } else {
-//         console.error('Failed to upload image to Cloudinary:', response.statusText);
-//       }
-//     }
-//   } catch (error) {
-//     console.error('Error uploading image:', error);
-//   }
-// };

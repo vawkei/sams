@@ -44,4 +44,10 @@
         padding: 1rem;
         /* background-color: red; */
     }
+    .spinner{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
