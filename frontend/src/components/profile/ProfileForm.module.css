@@ -34,3 +34,14 @@
 /* .save-PhotoButton .btn{
     padding:0.5rem 3rem ;
 } */
+
+
+@media screen and (max-width:760px){
+    .container{
+        margin: -5rem auto; 
+        width: 80%;
+        max-width: 35rem;
+        padding: 1rem;
+        /* background-color: red; */
+    }
+}

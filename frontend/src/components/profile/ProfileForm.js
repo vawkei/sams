@@ -13,7 +13,6 @@ import { getSingleUser, updateUser, updateUserPhoto } from "../../store/index";
 const ProfileForm = () => {
   const dispatch = useDispatch();
   
-  const navigate = useNavigate();
   const { isLoggedIn, user,isLoading } = useSelector((state) => state.auth);
   //console.log(user);
 
@@ -29,7 +28,7 @@ const ProfileForm = () => {
   const [profileImage, setProfileImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
-  const [useStateIsLoading, setUseStateIsLoading] = useState(false);
+  const [useStateIsLoading] = useState(false);
 
 
   useEffect(() => {
