@@ -1,0 +1,245 @@
+.slider {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    /* background-color: red; */
+    margin-top: -2rem;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* overflow: hidden; */
+    /* background-color: orange; */
+    z-index: 100;
+    top: -5rem;
+    left: -16rem; 
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: translateX(-50%);
+  }
+
+  .slideFirstDiv {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    
+  }
+
+  .slideFirstDiv p {
+    text-align: left;
+    inline-size: 250px;
+    font-size: 14px;
+  } 
+
+  .main-image {
+    width: 100vw;
+    height: 100vh;
+  }
+  .main-image img {
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: none;
+    /* object-fit: cover; */
+    z-index: 0;
+  }
+
+  .current {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .prev {
+    position: absolute;
+    top: 10rem;
+    left: 0;
+    color: orange;
+    z-index: 400;
+  }
+  .next {
+    position: absolute;
+    top: 10rem;
+    right: 0;
+    color: green;
+    z-index: 400;
+  }
+
+  .content {
+    position: absolute;
+    top: 25rem;
+    left: 40rem;
+    text-align: center;
+    background-color: blue;
+    border-radius: 6px;
+    padding: 1.5rem;
+    animation-name: slide-up;
+    animation-duration: 2.5s;
+  
+    /* justify-self: center;
+    align-items: center;
+    flex-direction: column; */
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(40px);
+    }
+    to {
+      transform: translateY(0px);
+    }
+  }
+
+
+
+  /* MEDIA QUERY STARTS HERE: */
+
+
+/* This is for screen sizes smaller than 360px: Galaxyfold,galaxy S8+ */
+@media screen and (max-width: 640px) {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+    }
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      /* background-color: green; */
+      top: -6rem;
+      left: -1rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+  
+    .slide img {
+      width: 100%;
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: center;
+      inline-size: 250px;
+      font-size: 14px;
+    }
+    .content {
+      position: absolute;
+      top: 60vh;
+      left: 3rem;
+      width: 80%;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  
+  @media screen and (min-width: 641px) and (max-width:1200px ) {
+    .slider {
+      position: relative;
+      top: 1vh;
+      width: 100%;
+      height: 80vh;
+      overflow: scroll;
+      /* background-color: burlywood; */
+    }
+    .slide {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      /* background-color: red; */
+      top: 0;
+      left: -1rem;
+      opacity: 0;
+      transition: all 0.5s ease;
+      transform: translateX(-50%);
+    }
+    .current {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .prev {
+      position: absolute;
+      top: 20rem;
+      left: 0;
+      color: orange;
+    }
+    .next {
+      position: absolute;
+      top: 20rem;
+      right: 0;
+      color: green;
+    }
+
+    .main-image{
+        margin-top: 1.1rem;
+    }
+  
+    .slide img {
+      width: 100%;
+      
+    }
+  
+    .slideFirstDiv {
+      display: flex;
+      flex-direction: column;
+      /* margin-top: 1rem; */
+    }
+  
+    .slideFirstDiv {
+      text-align: center;
+    }
+  
+    .slideFirstDiv p {
+      text-align: center;
+      inline-size: 250px;
+      font-size: 14px;
+    }
+    .content {
+      position: absolute;
+      top: 50vh;
+      left: 30vw;
+      width: 40%;
+      text-align: center;
+      background-color: black;
+      color: white;
+      border-radius: 6px;
+      padding: 1.5rem;
+      animation-name: slide-up;
+      animation-duration: 2.5s;
+    }
+  }
+  
+  

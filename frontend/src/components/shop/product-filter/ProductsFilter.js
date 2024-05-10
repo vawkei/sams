@@ -7,7 +7,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { filterSliceAction } from "../../../store/product/FilterProduct";
 
-const ProductsFilter = () => {
+const ProductsFilter = (props) => {
   const [category, setCategory] = useState("ALL");
   const [price, setPrice] = useState(1000);
 
@@ -56,7 +56,7 @@ const ProductsFilter = () => {
   return (
     <Fragment>
       <div className={classes.filterComp}>
-        <div className={classes.category}>
+        <div className={classes.category} onClick={props.showMobileFilterHandler}>
           <h4>Categories</h4>
           {allCategories.map((cat, index) => {
             return (
