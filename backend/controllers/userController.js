@@ -378,7 +378,7 @@ const getCartDb = async (req, res) => {
 
   try {
     const user = await User.findOne({ _id: userId });
-    console.log(user);
+    // console.log(user);
     res.status(200).json({ userCart: user.cartItems });
   } catch (error) {
     res.status(500).json(error);

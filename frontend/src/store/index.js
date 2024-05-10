@@ -329,7 +329,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.isError = false;
         console.log(action.payload);
-        toast.success(action.payload,{position:"top-left"})
+        toast.success(action.payload.msg,{position:"top-left"})
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;

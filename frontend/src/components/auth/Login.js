@@ -58,7 +58,7 @@ const Login = () => {
       !enteredEmail ||
       !enteredPassword
     ) {
-      console.log("Please fill out the inputs");
+      // console.log("Please fill out the inputs");
       toast.error("Please fill out the inputs",{position:"top-left"})
       return;
     }
