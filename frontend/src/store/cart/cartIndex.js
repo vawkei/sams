@@ -249,7 +249,7 @@ const cartSlice = createSlice({
         if (action.payload.userCart.length > 0) {
           window.location.href = `${FRONT_URL}/cart`;
         } else {
-          window.location.href = `${FRONT_URL}/`;
+          window.location.href = `${FRONT_URL}`;
         }
         //handled this in the Login.js useEffect
 
