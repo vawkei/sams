@@ -69,7 +69,8 @@
               hostname === "www.samsapp.onrender.com"
           ) {
               // Redirect to the preferred URL
-              window.location.href = preferredUrl + window.location.pathname;
+              //window.location.href = preferredUrl + window.location.pathname;
+              window.location.replace(preferredUrl + window.location.pathname)
           }
       };
 
