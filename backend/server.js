@@ -105,6 +105,10 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+
+// Middleware to handle URL redirections
+app.use(redirectMiddleware);
+
 //Routes:
 app.get("/", (req, res) => {
   res.send("<h1>We live Baby</h1>");
@@ -116,8 +120,7 @@ app.use("/api/v1/coupons", couponRoute);
 app.use("/api/v1/orders", orderRoute);
 
 
-// Middleware to handle URL redirections
-app.use(redirectMiddleware);
+
 //Middleware to handle URL redirections
 app.use(notFoundMiddleware);
 // Middleware to handle URL errors
