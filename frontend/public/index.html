@@ -56,6 +56,30 @@
     <div id="loader"></div>
     <div id="deleteModal"></div>
     <div id="root"></div>
+     <!-- Redirection middleware logic: added this here for the handle URL canonicalization stuff -->
+    <script>
+      // Redirection middleware logic
+      const redirectMiddleware = () => {
+          const { protocol, hostname } = window.location;
+          const preferredUrl = "https://samsapp.onrender.com";
+
+          // Check if the current URL needs redirection
+          if (
+              (protocol === "http:" && hostname === "samsapp.onrender.com") ||
+              hostname === "www.samsapp.onrender.com"
+          ) {
+              // Redirect to the preferred URL
+              window.location.href = preferredUrl + window.location.pathname;
+          }
+      };
+
+      // Execute the redirection middleware
+      redirectMiddleware();
+      
+  </script>
+
+     <!-- Redirection middleware logic: for the handling of URL canonicalization stuff  ENDS HERE-->
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -68,3 +92,11 @@
     -->
   </body>
 </html>
+
+
+
+
+
+
+
+
