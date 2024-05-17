@@ -11,14 +11,16 @@ import { persistStore } from "redux-persist";
 import ScrollToTop from "./components/ScrollToTop";
 import { HelmetProvider } from "react-helmet-async";
 //import { persistor } from "./store/order/saveOrderToVerify";
+
+
 // Include polyfill for fetch()
-import "whatwg-fetch";
+// import "whatwg-fetch";
 
-// Include polyfill for requestAnimationFrame
-import "raf/polyfill";
+// // Include polyfill for requestAnimationFrame
+// import "raf/polyfill";
 
-// Include babel-polyfill
-import 'babel-polyfill';
+// // Include babel-polyfill
+// import 'babel-polyfill';
 
 let persistor = persistStore(store);
 
