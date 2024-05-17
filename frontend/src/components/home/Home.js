@@ -17,7 +17,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   const newsletterSubscriptionHandler = async () => {
-    console.log("sending subscription...");
+    //console.log("sending subscription...");
     await dispatch(newsletterSubscription());
   };
 

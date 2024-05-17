@@ -14,11 +14,11 @@ export const dataInfo = [
         heading:"Secure Payment",
         description:"Make secure payments for your meals",
     },
-    {
-        icon:<BsCartCheck />,
-        heading:"Quality Meals",
-        description:"We sell and deliver quality meals"
-    },
+    // {
+    //     icon:<BsCartCheck />,
+    //     heading:"Quality Meals",
+    //     description:"We sell and deliver quality meals"
+    // },
     {
         icon: <BsClockHistory />,
         heading:"Open 24/7",

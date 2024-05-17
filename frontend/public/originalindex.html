@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,6 +25,7 @@
     <!-- <link rel="manifest" href="%PUBLIC_URL%/manifest.json" /> -->
     <link rel="manifest" href="" />
 
+
      <!-- Structured Data Markup -->
     <script type="application/ld+json">
       {
@@ -55,6 +48,7 @@
       }
     </script>
 
+
     <title>SamsApp - Food Delivery</title>
   </head>
   <body>
@@ -63,8 +57,7 @@
     <div id="loader"></div>
     <div id="deleteModal"></div>
     <div id="root"></div>
-
-    <!-- Redirection middleware logic: added this here for the handle URL canonicalization stuff -->
+     <!-- Redirection middleware logic: added this here for the handle URL canonicalization stuff -->
     <script>
       // Redirection middleware logic
       const redirectMiddleware = () => {
@@ -77,41 +70,17 @@
               hostname === "www.samsapp.onrender.com"
           ) {
               // Redirect to the preferred URL
-              window.location.replace(preferredUrl + window.location.pathname);
+              //window.location.href = preferredUrl + window.location.pathname;
+              window.location.replace(preferredUrl + window.location.pathname)
           }
       };
 
       // Execute the redirection middleware
       redirectMiddleware();
-    </script>
-    <!-- Redirection middleware logic: for the handling of URL canonicalization stuff ENDS HERE -->
+      
+  </script>
 
-    <!-- Enhanced Debugging Script to Capture Errors -->
-    <script>
-      window.onerror = function (message, url, lineNo, colNo, error) {
-        console.log(arguments);
-
-        let container = document.createElement('div');
-        container.style.color = 'red';
-        container.style.position = 'fixed';
-        container.style.background = '#eee';
-        container.style.padding = '2em';
-        container.style.top = '1em';
-        container.style.left = '1em';
-
-        let msg = document.createElement('pre');
-        msg.innerText = [
-          'Message: ' + message,
-          'URL: ' + url,
-          'Line: ' + lineNo,
-          'Column: ' + colNo,
-          'Stack: ' + (error && error.stack)
-        ].join('\n');
-
-        container.appendChild(msg);
-        document.body.appendChild(container);
-      };
-    </script>
+     <!-- Redirection middleware logic: for the handling of URL canonicalization stuff  ENDS HERE-->
 
     <!--
       This HTML file is a template.
@@ -125,4 +94,3 @@
     -->
   </body>
 </html>
-

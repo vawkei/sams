@@ -112,7 +112,7 @@ const Login = () => {
       <h1>Login</h1>
       <section className={classes.auth}>
         <div className={classes.image}>
-          <img src={signImage} alt="" width={400} height={300} />
+          <img src={signImage} alt="login" width={400} height={300} />
         </div>
         <div className={classes.cardDiv}>
           <Card className={classes.cardClass}>
