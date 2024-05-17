@@ -170,7 +170,7 @@ const productSlice = createSlice({
             state.isLoading=false;
             state.isSuccess = false;
             state.isError = true;
-            state.products = null;
+            state.products = [];
             console.log(action.payload)
         })
 
