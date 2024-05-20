@@ -18,7 +18,7 @@ const cloudinary = require("cloudinary").v2;
 const httpServer = http.createServer(app);
 
 const corsOptions = {
- origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+ origin: ["http://localhost:4001", "https://samsapp.onrender.com"],
   // origin: ["http://localhost:3001", "www.samsapp.live"],need 2 create dns
   methods: ["GET", "POST"],
   allowedHeaders: ["Content-Type", "Authorization","my-custom-header"],
@@ -69,10 +69,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(
   cors({
-    origin: ["http://localhost:3001", "https://samsapp.onrender.com"],
+    origin: ["http://localhost:4001", "https://samsapp.onrender.com"],
     credentials: true,
   })
 );
+// https://api-samsfoodapp.onrender.com   api-samsapp
 
 // webhookNamespace.on("connection", (socket) => {
 //   console.log("Client connected to /webhook namespace");
@@ -123,7 +124,7 @@ app.use(notFoundMiddleware);
 // Middleware to handle URL errors
 app.use(errorMiddleware);
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 6001;
 //========start with this when the app is still basic without a db==========//
 
 // app.listen(port,"localhost",()=>{
