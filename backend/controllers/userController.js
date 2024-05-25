@@ -125,13 +125,17 @@ const login = async (req, res) => {
 
       const { _id, name, email, role, phone, photo } = user;
       res.cookie("token", token, {
-        path: "/",
-        httpOnly: true,
+        path: "/", // The cookie is available to all paths on the domain. It ensures that the cookie is sent for requests to any endpoint on the domain
+        
+        httpOnly: true,//This option makes the cookie inaccessible to JavaScript running in the browser (document.cookie). It helps mitigate the risk of cross-site scripting (XSS) attacks.
+
         expires: new Date(Date.now() + oneDay),
         // secure:true, should be commented out during development
         // sameSite:"none"
-        secure: true,
-        sameSite: "none",
+        
+        secure: true,//This option ensures that the cookie is only sent over HTTPS connections. This is important for security but should be commented out during development if you're not using HTTPS on your local server.
+       
+        sameSite: "none",//This option allows the cookie to be sent with cross-site requests. It is necessary for some authentication scenarios, especially when dealing with third-party services like payment gateways. "none" means the cookie can be sent with both first-party and cross-site requests, but it must be paired with the secure flag
       });
       res.status(201).json({
         msg: "User loggedin",

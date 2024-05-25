@@ -13,7 +13,7 @@ const Home = () => {
 
   const { user,message } = useSelector((state) => state.auth);
   console.log(user);
-  console.log(message)
+  // console.log(message)
   const dispatch = useDispatch();
 
   const newsletterSubscriptionHandler = async () => {
