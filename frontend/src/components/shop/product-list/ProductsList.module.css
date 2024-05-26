@@ -105,6 +105,9 @@
      .sort{
         width: 80%;
      }
+     /* .sort select{
+        width: 10rem;
+    } */
     .productsList-container{
         width: 100%;
         position: relative;

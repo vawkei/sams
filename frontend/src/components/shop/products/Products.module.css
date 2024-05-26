@@ -8,6 +8,7 @@
 .filter {
   width: 15%;
   background-color: black;
+  border: 1px solid #ccc;
   color: white;
   /* height: 80vh; */
   height: 100vh;
