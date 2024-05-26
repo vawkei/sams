@@ -12,7 +12,7 @@ const Home = () => {
   const [showSubButton, setShowButton] = useState(true);
 
   const { user,message } = useSelector((state) => state.auth);
-  console.log(user);
+  // console.log(user);
   // console.log(message)
   const dispatch = useDispatch();
 

@@ -118,6 +118,7 @@ const paystackSlice = createSlice({
         state.isLoading = false;
         state.iSuccess = true;
         state.message = action.payload.msg;
+        console.log(action.payload.msg)
         
         console.log(action.payload);
       })
