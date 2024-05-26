@@ -13,7 +13,7 @@ import orderSlice from "./order/orderIndex";
 import paystackSlice from "./paystack/paystackIndex";
 import filteredUserSlice from "./filterUser";
 import thunk from "redux-thunk";
-import {combineReducers} from "redux" 
+//import {combineReducers} from "redux" 
 import storage from "redux-persist/lib/storage";
 import {persistReducer} from "redux-persist" 
 import formSlice from "./order/saveOrderToVerify";
@@ -21,8 +21,10 @@ import {toast} from "react-toastify"
 
 
 
+
 const initialAuthState = {
-  isLoggedIn: false,
+ // isLoggedIn: false,
+  isLoggedIn: JSON.parse(localStorage.getItem("isLoggedInLs")) || false,
   isLoading: false,
   isSuccess: false,
   isError: false,
@@ -322,10 +324,9 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLoggedIn = true; 
+        localStorage.setItem("isLoggedInLs",JSON.stringify(state.isLoggedIn));
         state.isSuccess = true;
         state.notification = true;    
-        // state.message = action.payload;
-        //state.user = action.payload
         state.user = action.payload.user;
         state.isError = false;
         console.log(action.payload);
@@ -345,6 +346,7 @@ const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.isLoggedIn = false;
+        localStorage.setItem("isLoggedInLs",JSON.stringify(state.isLoggedIn));
         state.isError = false;
         state.user = null;
         state.message = action.payload;

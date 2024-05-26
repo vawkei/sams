@@ -52,7 +52,7 @@ const VerifyPayment = () => {
   };
 
   const verifiedSuccessfullyHandler = async () => {
-    if (message === "Payment verified successfull") {
+    if (message === "Payment verified successfully") {
       setShowText(true);
     }
   };
