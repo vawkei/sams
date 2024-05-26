@@ -6,6 +6,7 @@ import { cartSliceActions } from "../../store/cart/cartIndex";
 import { verifypayment } from "../../store/paystack/paystackIndex";
 import { createOrder } from "../../store/order/orderIndex";
 import { couponSliceActions } from "../../store/coupon/couponIndex";
+import Spinner from "../ui/spinner/Spinner";
 // import {toast} from "react-toastify"
 //import Button from "../ui/button/Button";
 
@@ -20,8 +21,8 @@ const VerifyPayment = () => {
 
   const { incomingOrder } = useSelector((state) => state.form);
   console.log(incomingOrder);
-  
-  const { message,isLoading } = useSelector((state) => state.paystack);
+
+  const { message} = useSelector((state) => state.paystack);
   console.log(message);
 
   const query = useQuery();
@@ -74,7 +75,7 @@ const VerifyPayment = () => {
         </Button> */}
         </>
       ) : (
-        {isLoading}
+        <Spinner />
       )}
     </div>
   );
