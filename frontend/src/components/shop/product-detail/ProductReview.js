@@ -69,92 +69,92 @@ const ProductReview = () => {
 
   return (
     <Card className={classes.reviewContainer}>
-      
       <div className={classes.topP}>
-      <p
-        onClick={() => backToProductDetails(product._id)}>
-        &larr; Back to Products
-      </p>
+        <p onClick={() => backToProductDetails(product._id)}>
+          &larr; Back to Products
+        </p>
       </div>
-      
+
       <div className={classes.mainContent}>
-      <h2>
-        <b>Product Review</b>
-      </h2>
-      {product?.ratings.map((rating) => {
-        return (
-          //============= reviews========================================
-          <div className={classes.rating} key={rating._id}>
-            <div className={classes.star}>
-              <StarsRating value={rating.star} />
-            </div>
-            <div className={classes.content}>
-              <p>{rating.productReview}</p>
-              <p>
-                <b>{rating.reviewDate}</b>
-              </p>
-            </div>
-            <h3>
-              <b>{rating.name}</b>
-            </h3>
-            <div className={classes.actionOne}>
-              {rating.userId === user?._id ? (
-                <>
-                  <Button
-                    className={classes.btn}
-                    onClick={() => deleteReviewHandler(product._id)}>
-                    Delete
-                  </Button>
-                  <Button className={classes.btn} onClick={showEditFormHandler}>
-                    Edit
-                  </Button>
-                </>
-              ) : (
-                ""
-              )}
-            </div>
-            {/*=====editForm starts here==================================== */}
-            {showEditForm && (
-              <div className={classes.backdrop}>
-                <form
-                  action=""
-                  onSubmit={(e) => editReviewHandler(e, product._id)}>
-                  <Card className={classes.editCardClass}>
-                    <div className={classes["edit-content"]}>
-                      <h3>{product?.name}</h3>
-                      <p>Rating:</p>
-                      <div className={classes.ratingContainer}>
-                        <StarsRating
-                          value={star}
-                          onChange={(star) => setStar(star)}
-                        />
-                      </div>
-                      <p>
-                        <b>Leave a review</b>
-                      </p>
-                      <textarea
-                        name=""
-                        id=""
-                        rows="5"
-                        value={productReview}
-                        onChange={(e) =>
-                          setProductReview(e.target.value)
-                        }></textarea>
-                      <div className={classes["edit-action"]}>
-                        <Button onClick={showEditFormHandlerFalse}>
-                          Cancel
-                        </Button>{" "}
-                        <Button>Submit</Button>
-                      </div>
-                    </div>
-                  </Card>
-                </form>
+        <h2>
+          <b>Product Review</b>
+        </h2>
+        {product?.ratings.map((rating) => {
+          return (
+            //============= reviews========================================
+            <div className={classes.rating} key={rating._id}>
+              <div className={classes.star}>
+                <StarsRating value={rating.star} />
               </div>
-            )}
-            {/*== morftide ends here ===========================*/}
-          </div>
-        );
-      })}
+              <div className={classes.content}>
+                <p>{rating.productReview}</p>
+                <p>
+                  <b>{rating.reviewDate}</b>
+                </p>
+              </div>
+              <h3>
+                <b>{rating.name}</b>
+              </h3>
+              <div className={classes.actionOne}>
+                {rating.userId === user?._id ? (
+                  <>
+                    <Button
+                      className={classes.btn}
+                      onClick={() => deleteReviewHandler(product._id)}>
+                      Delete
+                    </Button>
+                    <Button
+                      className={classes.btn}
+                      onClick={showEditFormHandler}>
+                      Edit
+                    </Button>
+                  </>
+                ) : (
+                  ""
+                )}
+              </div>
+              {/*=====editForm starts here==================================== */}
+              {showEditForm && (
+                <div className={classes.backdrop}>
+                  <form
+                    action=""
+                    onSubmit={(e) => editReviewHandler(e, product._id)}>
+                    <Card className={classes.editCardClass}>
+                      <div className={classes["edit-content"]}>
+                        <h3>{product?.name}</h3>
+                        <p>Rating:</p>
+                        <div className={classes.ratingContainer}>
+                          <StarsRating
+                            value={star}
+                            onChange={(star) => setStar(star)}
+                          />
+                        </div>
+                        <p>
+                          <b>Leave a review</b>
+                        </p>
+                        <textarea
+                          name=""
+                          id=""
+                          rows="5"
+                          value={productReview}
+                          onChange={(e) =>
+                            setProductReview(e.target.value)
+                          }></textarea>
+                        <div className={classes["edit-action"]}>
+                          <Button onClick={showEditFormHandlerFalse}>
+                            Cancel
+                          </Button>{" "}
+                          <Button>Submit</Button>
+                        </div>
+                      </div>
+                    </Card>
+                  </form>
+                </div>
+              )}
+              {/*== morftide ends here ===========================*/}
+            </div>
+          );
+        })}
       </div>
     </Card>
   );
