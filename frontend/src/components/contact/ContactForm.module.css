@@ -58,14 +58,6 @@ border: none;
     background-color: #ffeff1;
 }
 
-@media screen and (min-width:640px) and (max-width:1024px){
-    .contact{
-        display: flex;
-        gap: 1rem;
-        justify-content: space-between;
-    }   
-}
-
 @media screen and (max-width:640px){
     .cardClass1{
         width: 100%;
@@ -81,3 +73,12 @@ border: none;
         padding: 0.1rem 6rem;
     }
 }
+
+@media screen and (min-width:640px) and (max-width:1024px){
+    .contact{
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+    }   
+}
+

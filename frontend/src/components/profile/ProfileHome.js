@@ -14,7 +14,7 @@ const ProfileHome = () => {
   const { user, isLoading } = useSelector((state) => state.auth);
   // console.log(user);
   const { orders } = useSelector((state) => state.order);
-  // console.log(orders);
+  console.log(orders);
 
   const [showRefreshMessage, setShowRefreshMessage] = useState(true);
 
@@ -49,7 +49,6 @@ const ProfileHome = () => {
 
     return () => clearTimeout(timeClearer);
   }, [
-    dispatch,
     user,
     orders,
     orderAmount,

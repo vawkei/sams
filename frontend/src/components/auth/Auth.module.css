@@ -103,28 +103,6 @@ h1{
 
 
 /* MEDIA QUERY START HERE */
-
-@media screen and (min-width:640px) and (max-width:1024px){
-    .image{
-        display: none;
-    }
-    .cardClass{
-        width: 30rem;
-        max-width: 30rem;
-        margin-top: 5rem;
-        animation: slideIn;
-        animation-duration: 5s;
-        animation-delay: 0s;
-        animation-fill-mode: forwards;
-    }
-    .control input{
-        font: inherit;
-        font-size: 1.5rem;
-    }   
-}
-
-
-
 @media screen and (max-width:640px){
     .image{
         display: none;
@@ -165,4 +143,25 @@ h1{
         margin-top: 1rem;
     }
 }
+
+@media screen and (min-width:640px) and (max-width:1024px){
+    .image{
+        display: none;
+    }
+    .cardClass{
+        width: 30rem;
+        max-width: 30rem;
+        margin-top: 5rem;
+        animation: slideIn;
+        animation-duration: 5s;
+        animation-delay: 0s;
+        animation-fill-mode: forwards;
+    }
+    .control input{
+        font: inherit;
+        font-size: 1.5rem;
+    }   
+}
+
+
 
