@@ -14,6 +14,11 @@ const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 
+const rateLimiter = require('express-rate-limit');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const mongoSanitize = require('express-mongo-sanitize');
+
 // Initialize Socket.IO
 const httpServer = http.createServer(app);
 
@@ -57,6 +62,18 @@ app.use(cors(corsOptions)); // Apply CORS middleware
 // const redirectMiddleware = require("./middlewares/redirect-middleware")
 const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error-handler-middleware");
+
+
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 30, // Limit each IP to 30 requests per windowMs
+    message: 'Too many requests from this IP, please try again after 15 minutes'
+  })
+);
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
 // const webhookNamespace = io.of("/api/v1/paystack/webhook");
 // app.set('webhookNamespace', webhookNamespace);
