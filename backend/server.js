@@ -64,13 +64,13 @@ const notFoundMiddleware = require("./middlewares/not-found");
 const errorMiddleware = require("./middlewares/error-handler-middleware");
 
 
-app.use(
-  rateLimiter({
-    windowMs: 15 * 60 * 1000,
-    max: 30, // Limit each IP to 30 requests per windowMs
-    message: 'Too many requests from this IP, please try again after 15 minutes'
-  })
-);
+// app.use(
+//   rateLimiter({
+//     windowMs: 15 * 60 * 1000,
+//     max: 30, // Limit each IP to 30 requests per windowMs
+//     message: 'Too many requests from this IP, please try again after 15 minutes'
+//   })
+// );
 app.use(helmet());
 app.use(xss());
 app.use(mongoSanitize());
