@@ -46,7 +46,7 @@
 
   .action .btn{
     width: 100%;
-    padding: 1rem 9.5rem;
+    padding: 1.5rem 8.3rem;
     background-color: red;
   }
   
@@ -60,10 +60,11 @@
   .action{
     display: flex;
     justify-content: center;
+    flex-direction: column;
   }
   .action .btn{
     width: 100%;
-    padding: 0.2rem 5.5rem;
+    padding: 1.4rem 8rem;
     background-color: blue;
   }
 }

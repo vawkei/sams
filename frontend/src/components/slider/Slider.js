@@ -12,9 +12,11 @@ const Slider = () => {
 
   const next = () => {
     setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1);
+    setIsLoaded(false); // Reset isLoaded when the slide changes
   };
   const prev = () => {
     setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1);
+    setIsLoaded(false); 
   };
 
   let timeInterval = 3000;
