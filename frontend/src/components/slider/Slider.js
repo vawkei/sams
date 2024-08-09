@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const slideLength = SliderData.length;
   //console.log(slideLength);
@@ -25,13 +26,21 @@ const Slider = () => {
 
   useEffect(() => {
     function auto() {
-      slideInterval = setInterval(next, timeInterval);
+      slideInterval = setInterval(() => {
+        if (isLoaded) {
+          next();
+        }
+      }, timeInterval);
     }
     auto();
     return () => {
       clearInterval(slideInterval);
     };
-  }, [currentSlide, slideInterval]);
+  }, [isLoaded,currentSlide, slideInterval]);
+
+  const handleImageLoad = () => {
+    setIsLoaded(true);
+  };
 
   return (
     <div className={classes.slider}>
@@ -50,7 +59,12 @@ const Slider = () => {
               <div className={classes.slideFirstDiv}>
                 <div
                   className={`${classes["main-image"]} ${classes["blur-load"]}`}>
-                  <img src={slide.image} alt={slide.heading} loading="lazy" />
+                  <img
+                    src={slide.image}
+                    alt={slide.heading}
+                    onLoad={handleImageLoad}
+                    loading="lazy"
+                  />
                 </div>
 
                 <div className={classes.content}>
